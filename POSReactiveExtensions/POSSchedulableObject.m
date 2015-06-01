@@ -104,7 +104,6 @@
             continue;
         }
         NSError *error;
-        NSLog(@"~> %@", NSStringFromSelector(selector));
         id hooked = [object aspect_hookSelector:selector withOptions:AspectPositionBefore usingBlock:^(id<AspectInfo> aspectInfo) {
             if ([aspectInfo instance] == object && [RACScheduler currentScheduler] != scheduler) {
                 @throw [NSException exceptionWithName:NSInternalInconsistencyException
