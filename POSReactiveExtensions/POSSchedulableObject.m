@@ -57,11 +57,17 @@
 }
 
 - (instancetype)initWithScheduler:(RACScheduler *)scheduler {
-    return [self
-            initWithScheduler:scheduler
-            options:[[POSScheduleProtectionOptions
-                      defaultOptionsForClass:[self class]]
-                      exclude:[self.class selectorsForProtocol:@protocol(POSSchedulable)]]];
+    NSParameterAssert(scheduler);
+    if (self = [super init]) {
+        NSParameterAssert([self.class
+                           protect:self
+                           forScheduler:scheduler
+                           options:[[POSScheduleProtectionOptions
+                                     defaultOptionsForClass:[self class]]
+                                    exclude:[self.class selectorsForProtocol:@protocol(POSSchedulable)]]]);
+        _scheduler = scheduler;
+    }
+    return self;
 }
 
 - (instancetype)initWithScheduler:(RACScheduler *)scheduler options:(POSScheduleProtectionOptions *)options {
