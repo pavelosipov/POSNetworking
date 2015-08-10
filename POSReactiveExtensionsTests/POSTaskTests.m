@@ -122,4 +122,11 @@
     }];
 }
 
+- (void)testTaskShouldCreateSubjectOnDemand {
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+        return [RACSignal empty];
+    }];
+    XCTAssertNotNil([task signalForEvent:@"new_event"]);
+}
+
 @end

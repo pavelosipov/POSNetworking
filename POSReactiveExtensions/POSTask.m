@@ -117,7 +117,7 @@
 #pragma mark - POSTask
 
 - (RACSignal *)signalForEvent:(id)eventKey {
-    return [_context.subjects objectForKey:eventKey];
+    return [_context subjectForEvent:eventKey];
 }
 
 - (void)execute {
