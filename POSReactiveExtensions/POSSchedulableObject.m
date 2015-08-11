@@ -104,9 +104,9 @@
     for (NSValue *selectorValue in protectingSelectors) {
         SEL selector = (SEL)[selectorValue pointerValue];
         NSString *selectorName = NSStringFromSelector(selector);
-        if ([selectorName containsString:@"init"] ||
-            [selectorName containsString:@".cxx_destruct"] ||
-            [selectorName containsString:@"aspects__"]) {
+        if ([selectorName rangeOfString:@"init"].location != NSNotFound ||
+            [selectorName rangeOfString:@".cxx_destruct"].location != NSNotFound ||
+            [selectorName rangeOfString:@"aspects__"].location != NSNotFound) {
             continue;
         }
         NSError *error;
