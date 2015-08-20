@@ -1,6 +1,6 @@
 //
 //  POSTask.h
-//  POSReactiveExtensions
+//  POSRx
 //
 //  Created by Pavel Osipov on 26.01.15.
 //  Copyright (c) 2015 Pavel Osipov. All rights reserved.
