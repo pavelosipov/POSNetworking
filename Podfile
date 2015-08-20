@@ -1,11 +1,11 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
 platform :ios, '7.0'
-workspace 'POSReactiveExtensions'
+workspace 'POSRx'
 
-target "POSReactiveExtensions" do
+target "POSRx" do
 end
 
-target "POSReactiveExtensionsTests" do
-    pod 'POSReactiveExtensions', :path => '.'
+target "POSRxTests" do
+    pod 'POSRx', :path => '.'
 end

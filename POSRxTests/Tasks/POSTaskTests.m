@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import <POSReactiveExtensions/POSReactiveExtensions.h>
+#import <POSRx/POSRx.h>
 
 @interface POSTaskTests : XCTestCase
 @property (nonatomic) POSTask *task;

@@ -6,5 +6,5 @@
 //  Copyright (c) 2015 Pavel Osipov. All rights reserved.
 //
 
-#import <POSReactiveExtensions/POSSchedulableObject.h>
-#import <POSReactiveExtensions/POSTask.h>
+#import <POSRx/POSSchedulableObject.h>
+#import <POSRx/POSTask.h>

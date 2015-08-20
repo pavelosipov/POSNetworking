@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Pavel Osipov. All rights reserved.
 //
 
-#import <POSReactiveExtensions/POSReactiveExtensions.h>
+#import <POSRx/POSRx.h>
 
 @protocol Empty <NSObject>
 @end
