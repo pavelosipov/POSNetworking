@@ -1,2 +1,2 @@
-# POSReactiveExtensions
+# POSRx
 Utilities around ReactiveCocoa library
