@@ -94,24 +94,24 @@
 }
 
 + (instancetype)createTask:(RACSignal *(^)(POSTaskContext *context))executionBlock {
-    return [[POSTask alloc] initWithTask:executionBlock
-                               scheduler:RACScheduler.mainThreadScheduler
-                                executor:nil];
+    return [[self.class alloc] initWithTask:executionBlock
+                                  scheduler:RACScheduler.mainThreadScheduler
+                                   executor:nil];
 }
 
 + (instancetype)createTask:(RACSignal *(^)(POSTaskContext *context))executionBlock
                  scheduler:(RACScheduler *)scheduler {
-    return [[POSTask alloc] initWithTask:executionBlock
-                               scheduler:scheduler
-                                executor:nil];
+    return [[self.class alloc] initWithTask:executionBlock
+                                  scheduler:scheduler
+                                   executor:nil];
 }
 
 + (instancetype)createTask:(RACSignal *(^)(POSTaskContext *))executionBlock
                  scheduler:(RACScheduler *)scheduler
                   executor:(id<POSTaskExecutor>)executor {
-    return [[POSTask alloc] initWithTask:executionBlock
-                               scheduler:scheduler
-                                executor:executor];
+    return [[self.class alloc] initWithTask:executionBlock
+                                  scheduler:scheduler
+                                   executor:executor];
 }
 
 #pragma mark - POSTask
