@@ -12,4 +12,6 @@
 
 @property (nonatomic, readonly) RACScheduler *scheduler;
 
+- (RACDisposable *)schedule:(void (^)(void))block;
+
 @end

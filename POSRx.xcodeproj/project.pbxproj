@@ -42,9 +42,9 @@
 		212B41C51B85B89300B59E48 /* POSRxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = POSRxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		212B41CB1B85B89300B59E48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		212B41D51B85BBB200B59E48 /* POSRx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSRx.h; sourceTree = "<group>"; };
-		212B41D71B85BBB200B59E48 /* POSSchedulable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSSchedulable.h; sourceTree = "<group>"; };
-		212B41D81B85BBB200B59E48 /* POSSchedulableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSSchedulableObject.h; sourceTree = "<group>"; };
-		212B41D91B85BBB200B59E48 /* POSSchedulableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSSchedulableObject.m; sourceTree = "<group>"; };
+		212B41D71B85BBB200B59E48 /* POSSchedulable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSSchedulable.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		212B41D81B85BBB200B59E48 /* POSSchedulableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSSchedulableObject.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		212B41D91B85BBB200B59E48 /* POSSchedulableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSSchedulableObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		212B41DB1B85BBB200B59E48 /* POSTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSTask.h; sourceTree = "<group>"; };
 		212B41DC1B85BBB200B59E48 /* POSTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTask.m; sourceTree = "<group>"; };
 		212B41E21B85BC1D00B59E48 /* POSSchedulableObjectMocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSSchedulableObjectMocks.h; sourceTree = "<group>"; };

@@ -79,6 +79,10 @@
     return self;
 }
 
+- (RACDisposable *)schedule:(void (^)(void))block {
+    return [_scheduler schedule:block];
+}
+
 #pragma mark - POSSchedulable
 
 - (RACScheduler *)scheduler {
