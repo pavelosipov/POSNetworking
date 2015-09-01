@@ -151,7 +151,7 @@
     }
     // TODO: adopt for custom scheduler.
     RACMulticastConnection *connection = [[signal
-        subscribeOn:RACScheduler.mainThreadScheduler]
+        subscribeOn:self.scheduler]
         multicast:RACReplaySubject.subject];
     self.sourceSignal = connection.signal;
     @weakify(self);
