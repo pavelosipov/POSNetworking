@@ -129,8 +129,11 @@
 }
 
 - (void)cancel {
-    [_sourceSignalDisposable dispose];
-    self.sourceSignalDisposable = nil;
+    if (_sourceSignalDisposable) {
+        [_sourceSignalDisposable dispose];
+        self.sourceSignalDisposable = nil;
+        self.sourceSignal = nil;
+    }
 }
 
 - (void)cancelWithError:(NSError *)error {
