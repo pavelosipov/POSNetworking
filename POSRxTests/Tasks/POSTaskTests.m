@@ -106,7 +106,7 @@
 }
 
 - (void)testTaskKeepLastErrorUntilReexecution {
-    XCTestExpectation *expectation = [self expectationWithDescription:@"document open"];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"error emitted"];
     POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             [subscriber sendError:[NSError errorWithDomain:@"test" code:0 userInfo:nil]];
@@ -127,6 +127,29 @@
         return [RACSignal empty];
     }];
     XCTAssertNotNil([task signalForEvent:@"new_event"]);
+}
+
+- (void)testTaskBlockExecutionShouldBeShecduledWithSpecifiedScheduler {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"task's block executed"];
+    RACScheduler *taskScheduler = [RACScheduler scheduler];
+    [taskScheduler schedule:^{
+        POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+            return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+                XCTAssert([RACScheduler currentScheduler] == taskScheduler);
+                [subscriber sendCompleted];
+                [expectation fulfill];
+                return nil;
+            }];
+        } scheduler:taskScheduler];
+        [[RACScheduler mainThreadScheduler] schedule:^{
+            [task schedule:^{
+                [task execute];
+            }];
+        }];
+    }];
+    [self waitForExpectationsWithTimeout:1 handler:^(NSError *error) {
+        XCTAssertNil(error);
+    }];
 }
 
 @end
