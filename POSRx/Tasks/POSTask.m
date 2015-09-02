@@ -149,9 +149,8 @@
     if (!signal) {
         return;
     }
-    // TODO: adopt for custom scheduler.
     RACMulticastConnection *connection = [[signal
-        subscribeOn:self.scheduler]
+        deliverOn:self.scheduler]
         multicast:RACReplaySubject.subject];
     self.sourceSignal = connection.signal;
     @weakify(self);
