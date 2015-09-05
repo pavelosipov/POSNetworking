@@ -114,7 +114,9 @@
             continue;
         }
         NSError *error;
+        @weakify(object);
         id hooked = [object aspect_hookSelector:selector withOptions:AspectPositionBefore usingBlock:^(id<AspectInfo> aspectInfo) {
+            @strongify(object);
             if ([aspectInfo instance] == object && [RACScheduler currentScheduler] != scheduler) {
                 @throw [NSException exceptionWithName:NSInternalInconsistencyException
                                                reason:[NSString stringWithFormat:@"Incorrect scheduler to invoke '%@'.", selectorName]

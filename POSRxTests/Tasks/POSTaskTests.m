@@ -9,12 +9,30 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import <POSRx/POSRx.h>
+#import <POSAllocationTracker/POSAllocationTracker.h>
+
+@interface Dummy : NSObject
+@end
+
+@implementation Dummy
+@end
 
 @interface POSTaskTests : XCTestCase
-@property (nonatomic) POSTask *task;
 @end
 
 @implementation POSTaskTests
+
+- (void)setUp {
+    [super setUp];
+    XCTAssert([POSAllocationTracker instanceCountForClass:POSTask.class] == 0);
+    XCTAssert([POSAllocationTracker instanceCountForClass:RACDisposable.class] == 0);
+}
+
+- (void)tearDown {
+    XCTAssert([POSAllocationTracker instanceCountForClass:POSTask.class] == 0);
+    XCTAssert([POSAllocationTracker instanceCountForClass:RACDisposable.class] == 0);
+    [super tearDown];
+}
 
 - (void)testTaskExecutionSignalShouldEmitNOBeforeFirstExecution {
     POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
@@ -45,7 +63,9 @@
     [task.values subscribeNext:^(NSNumber *v) {
         XCTAssertNotNil(v);
     }];
+    @weakify(task);
     [task.executing subscribeNext:^(NSNumber *executing) {
+        @strongify(task);
         if (![executing boolValue] && executionCount < 2) {
             [task execute];
         }
@@ -75,6 +95,28 @@
     }];
 }
 
+- (void)testSchedulingEventFromNonTaskScheduler {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"document open"];
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            return [[RACScheduler scheduler] schedule:^{
+                [subscriber sendNext:@1];
+                [subscriber sendCompleted];
+            }];
+        }];
+    }];
+    [task.values subscribeNext:^(NSNumber *value) {
+        XCTAssertEqual(value, @1);
+        [expectation fulfill];
+    }];
+    [task execute];
+    [self waitForExpectationsWithTimeout:1 handler:^(NSError *error) {
+        [task.values subscribeNext:^(NSNumber *value) {
+            XCTAssertEqualObjects(value, @(1));
+        }];
+    }];
+}
+
 - (void)testTaskResetErrorAfterReexecution {
     XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
     __block int executionCount = 0;
@@ -93,7 +135,9 @@
     [task.errors subscribeNext:^(NSError *e) {
         XCTAssertNotNil(e);
     }];
+    @weakify(task);
     [task.executing subscribeNext:^(NSNumber *executing) {
+        @strongify(task);
         if (![executing boolValue] && executionCount < 2) {
             [task execute];
         }

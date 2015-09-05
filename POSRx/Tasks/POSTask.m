@@ -88,7 +88,9 @@
                 return [RACSignal return:error];
             }];
         }] replayLast] switchToLatest];
-        _errors = [RACSignal merge:@[_extraErrors, executionErrors]];
+        _errors = [[RACSignal
+                    merge:@[_extraErrors, executionErrors]]
+                    takeUntil:[self rac_willDeallocSignal]];
     }
     return self;
 }
@@ -153,11 +155,11 @@
         return;
     }
     RACMulticastConnection *connection = [[signal
-        deliverOn:self.scheduler]
+        subscribeOn:self.scheduler]
         multicast:RACReplaySubject.subject];
-    self.sourceSignal = connection.signal;
+    self.sourceSignal = [connection.signal deliverOn:self.scheduler];
     @weakify(self);
-    [connection.signal subscribeError:^(NSError *error) {
+    [self.sourceSignal subscribeError:^(NSError *error) {
         @strongify(self);
         self.sourceSignal = nil;
     } completed:^{
