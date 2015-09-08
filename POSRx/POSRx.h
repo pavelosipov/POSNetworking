@@ -6,5 +6,13 @@
 //  Copyright (c) 2015 Pavel Osipov. All rights reserved.
 //
 
-#import <POSRx/POSSchedulableObject.h>
+// Networking headers
+#import <POSRx/POSHTTPGateway.h>
+#import <POSRx/POSHTTPUploadRequest.h>
+#import <POSRx/POSHTTPBackgroundUploadRequest.h>
+#import <POSRx/POSHTTPResponse.h>
+#import <POSRx/POSHTTPTaskProgress.h>
+
+// Scheduling headers
 #import <POSRx/POSTask.h>
+#import <POSRx/POSSchedulableObject.h>
