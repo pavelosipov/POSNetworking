@@ -38,6 +38,30 @@ static NSString * const kHTTPTaskDownloadCompletedEvent = @"DCE";
 
 #pragma mark -
 
+@interface NSError (POSRx)
+@end
+
+@implementation NSError (POSRx)
+
+- (NSError *)errorWithURL:(NSURL *)URL {
+    if (self.userInfo[NSURLErrorKey]) {
+        return self;
+    }
+    NSMutableDictionary *userInfo = [self.userInfo mutableCopy];
+    if (!userInfo) {
+        userInfo = [NSMutableDictionary new];
+    }
+    userInfo[NSURLErrorKey] = [URL copy];
+    NSError *error = [NSError errorWithDomain:self.domain
+                                         code:self.code
+                                     userInfo:userInfo];
+    return error;
+}
+
+@end
+
+#pragma mark -
+
 @interface POSHTTPTaskDescription : NSObject <NSCoding>
 
 @property (nonatomic) id<POSHTTPBackgroundUploadRequest> request;
@@ -235,7 +259,8 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
                            options:(POSHTTPRequestSimulationOptions *)options
                        taskBuilder:(id<POSURLTask>(^)(POSTaskContext *context))taskBuilder {
     return [POSHTTPTask createTask:^RACSignal *(POSTaskContext *context) {
-        POSHTTPResponse *simulatedResponse = [options probeSimulationWithURL:request.URL];
+        NSURL *requestURL = request.URL;
+        POSHTTPResponse *simulatedResponse = [options probeSimulationWithURL:requestURL];
         if (simulatedResponse) {
             return [RACSignal return:simulatedResponse];
         }
@@ -252,7 +277,7 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
                     [subscriber sendNext:response];
                     [subscriber sendCompleted];
                 } else {
-                    [subscriber sendError:error];
+                    [subscriber sendError:[error errorWithURL:requestURL]];
                 }
             };
             task.posrx_dataHandler = ^(NSData *data) {
