@@ -7,6 +7,7 @@
 //
 
 #import "POSTask.h"
+#import "NSException+POSRx.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
 #pragma mark - POSTaskContext
@@ -54,19 +55,12 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)init {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-            reason:[NSString stringWithFormat:@"Unexpected deadly init invokation '%@', use %@ instead.",
-                    NSStringFromSelector(_cmd),
-                    NSStringFromSelector(@selector(initWithTask:scheduler:executor:))]
-            userInfo:nil];
-}
+POSRX_DEADLY_INITIALIZER(init)
 
 - (instancetype)initWithTask:(RACSignal *(^)(POSTaskContext *context))executionBlock
                    scheduler:(RACScheduler *)scheduler
                     executor:(id<POSTaskExecutor>)executor {
-    NSParameterAssert(executionBlock);
+    POSRX_CHECK(executionBlock);
     if (self = [super initWithScheduler:scheduler]) {
         _executionBlock = [executionBlock copy];
         _executor = executor;
@@ -122,6 +116,10 @@
     return [_context subjectForEvent:eventKey];
 }
 
+- (BOOL)isExecuting {
+    return _sourceSignal != nil;
+}
+
 - (void)execute {
     if (_executor) {
         [_executor pushTask:self];
@@ -131,7 +129,7 @@
 }
 
 - (void)cancel {
-    if (_sourceSignalDisposable) {
+    if ([self isExecuting]) {
         [_sourceSignalDisposable dispose];
         self.sourceSignalDisposable = nil;
         self.sourceSignal = nil;
@@ -146,8 +144,8 @@
 #pragma mark - Private
 
 - (void)p_executeNow {
-    NSParameterAssert(_sourceSignal == nil);
-    if (_sourceSignal != nil) {
+    NSParameterAssert(![self isExecuting]);
+    if ([self isExecuting]) {
         return;
     }
     RACSignal *signal = self.executionBlock(_context);

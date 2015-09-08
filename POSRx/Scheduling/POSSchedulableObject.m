@@ -7,6 +7,7 @@
 //
 
 #import "POSSchedulableObject.h"
+#import "NSException+POSRx.h"
 #import <Aspects/Aspects.h>
 #import <objc/runtime.h>
 
@@ -47,17 +48,10 @@
 
 @implementation POSSchedulableObject
 
-- (instancetype)init {
-    @throw [NSException
-            exceptionWithName:NSInternalInconsistencyException
-            reason:[NSString stringWithFormat:@"Unexpected deadly init invokation '%@', use %@ instead.",
-                    NSStringFromSelector(_cmd),
-                    NSStringFromSelector(@selector(initWithScheduler:))]
-            userInfo:nil];
-}
+POSRX_DEADLY_INITIALIZER(init)
 
 - (instancetype)initWithScheduler:(RACScheduler *)scheduler {
-    NSParameterAssert(scheduler);
+    POSRX_CHECK(scheduler);
     if (self = [super init]) {
         NSParameterAssert([self.class
                            protect:self
@@ -71,7 +65,7 @@
 }
 
 - (instancetype)initWithScheduler:(RACScheduler *)scheduler options:(POSScheduleProtectionOptions *)options {
-    NSParameterAssert(scheduler);
+    POSRX_CHECK(scheduler);
     if (self = [super init]) {
         NSParameterAssert([self.class protect:self forScheduler:scheduler options:options]);
         _scheduler = scheduler;

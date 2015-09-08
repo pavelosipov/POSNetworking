@@ -26,6 +26,9 @@
 /// Additional task signals.
  - (RACSignal *)signalForEvent:(id)eventKey;
 
+/// @return YES if task is executing right now.
+- (BOOL)isExecuting;
+
 /// Launches task directly or schedules it within specified executor.
 - (void)execute;
 
