@@ -13,6 +13,7 @@
 @protocol POSURLTask <NSObject>
 
 @property (nonatomic, setter=posrx_setResponse:) NSHTTPURLResponse *posrx_response;
+@property (nonatomic, setter=posrx_setAllowUntrustedSSLCertificates:) NSNumber *posrx_allowUntrustedSSLCertificates;
 
 @property (nonatomic, copy, setter=posrx_setUploadProgressHandler:) void (^posrx_uploadProgressHandler)(POSHTTPTaskProgress *progress);
 @property (nonatomic, copy, setter=posrx_setCompletionHandler:) void (^posrx_completionHandler)(NSError *error);

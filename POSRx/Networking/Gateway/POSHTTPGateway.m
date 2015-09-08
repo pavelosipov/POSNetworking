@@ -11,6 +11,7 @@
 #import "POSHTTPBackgroundUploadRequest.h"
 #import "POSHTTPRequestExecutionOptions.h"
 #import "POSHTTPRequestSimulationOptions.h"
+#import "POSHTTPRequestOptions.h"
 #import "POSHTTPResponse.h"
 #import "POSHTTPTaskProgress.h"
 #import "NSObject+POSRx.h"
@@ -150,7 +151,7 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
     POSRX_CHECK(request);
     POSRX_CHECK(hostURL);
     NSURLRequest *URLRequest = [request requestWithURL:hostURL options:options.HTTP];
-    return [self p_taskWithRequest:URLRequest options:options.simulation taskBuilder:^id<POSURLTask>(POSTaskContext *context) {
+    return [self p_taskWithRequest:URLRequest options:options taskBuilder:^id<POSURLTask>(POSTaskContext *context) {
         return [self.foregroundSession dataTaskWithRequest:URLRequest];
     }];
 }
@@ -161,7 +162,7 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
     POSRX_CHECK(request);
     POSRX_CHECK(hostURL);
     NSURLRequest *URLRequest = [request requestWithURL:hostURL options:options.HTTP];
-    return [self p_taskWithRequest:URLRequest options:options.simulation taskBuilder:^id<POSURLTask>(POSTaskContext *context) {
+    return [self p_taskWithRequest:URLRequest options:options taskBuilder:^id<POSURLTask>(POSTaskContext *context) {
         id<POSURLTask> task = [self.foregroundSession downloadTaskWithRequest:URLRequest];
         task.posrx_downloadProgressHandler = ^(POSHTTPTaskProgress *progress) {
             [[context subjectForEvent:kHTTPTaskDownloadProgressEvent] sendNext:progress];
@@ -179,7 +180,7 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
     POSRX_CHECK(request);
     POSRX_CHECK(hostURL);
     NSURLRequest *URLRequest = [request requestWithURL:hostURL options:options.HTTP];
-    return [self p_uploadTaskWithRequest:URLRequest options:options.simulation taskBuilder:^id<POSURLTask>(POSTaskContext *context) {
+    return [self p_uploadTaskWithRequest:URLRequest options:options taskBuilder:^id<POSURLTask>(POSTaskContext *context) {
         id<POSURLTask> task;
         if ([UIDevice posrx_isFirmwareOutdated]) {
             task = [[NSURLConnection alloc] initWithRequest:URLRequest
@@ -199,7 +200,7 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
     POSRX_CHECK(request);
     POSRX_CHECK(hostURL);
     NSURLRequest *URLRequest = [request requestWithURL:hostURL options:options.HTTP];
-    POSHTTPTask *task = [self p_uploadTaskWithRequest:URLRequest options:options.simulation taskBuilder:^id<POSURLTask>(POSTaskContext *context) {
+    POSHTTPTask *task = [self p_uploadTaskWithRequest:URLRequest options:options taskBuilder:^id<POSURLTask>(POSTaskContext *context) {
         NSURLSessionUploadTask *task = [self.backgroundSession uploadTaskWithRequest:URLRequest fromFile:request.fileLocation];
         task.taskDescription = MRCBuildHTTPTaskDescription(request, hostURL, options, userInfo);
         return task;
@@ -237,14 +238,14 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
                          p_uploadTaskWithRequest:[description.request
                                                   requestWithURL:description.hostURL
                                                   options:description.options.HTTP]
-                         options:description.options.simulation
+                         options:description.options
                          taskBuilder:^id<POSURLTask>(POSTaskContext *context) { return sessionTask; }];
     task.userInfo = description.userInfo;
     return task;
 }
 
 - (POSHTTPTask *)p_uploadTaskWithRequest:(NSURLRequest *)request
-                                 options:(POSHTTPRequestSimulationOptions *)options
+                                 options:(POSHTTPRequestExecutionOptions *)options
                              taskBuilder:(id<POSURLTask>(^)(POSTaskContext *context))taskBuilder {
     return [self p_taskWithRequest:request options:options taskBuilder:^id<POSURLTask>(POSTaskContext *context) {
         id<POSURLTask> task = taskBuilder(context);
@@ -256,11 +257,11 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
 }
 
 - (POSHTTPTask *)p_taskWithRequest:(NSURLRequest *)request
-                           options:(POSHTTPRequestSimulationOptions *)options
+                           options:(POSHTTPRequestExecutionOptions *)options
                        taskBuilder:(id<POSURLTask>(^)(POSTaskContext *context))taskBuilder {
     return [POSHTTPTask createTask:^RACSignal *(POSTaskContext *context) {
         NSURL *requestURL = request.URL;
-        POSHTTPResponse *simulatedResponse = [options probeSimulationWithURL:requestURL];
+        POSHTTPResponse *simulatedResponse = [options.simulation probeSimulationWithURL:requestURL];
         if (simulatedResponse) {
             return [RACSignal return:simulatedResponse];
         }
@@ -268,6 +269,9 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
             id<POSURLTask> task = taskBuilder(context);
             NSMutableData *responseData = [NSMutableData new];
             @weakify(task);
+            if (options.HTTP.allowUntrustedSSLCertificates) {
+                task.posrx_allowUntrustedSSLCertificates = options.HTTP.allowUntrustedSSLCertificates;
+            }
             task.posrx_completionHandler = ^(NSError *error) {
                 @strongify(task);
                 if (!error) {
@@ -367,7 +371,13 @@ didReceiveResponse:(NSURLResponse *)response
 didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
  completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
 {
-    completionHandler(NSURLSessionAuthChallengeUseCredential, [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]);
+    if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust] &&
+        [task.posrx_allowUntrustedSSLCertificates boolValue]) {
+        completionHandler(NSURLSessionAuthChallengeUseCredential,
+                          [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]);
+        return;
+    }
+    completionHandler(NSURLSessionAuthChallengePerformDefaultHandling, nil);
 }
 
 #pragma mark NSURLSessionDownloadDelegate
@@ -437,9 +447,9 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     return nil;
 }
 
-#if defined(DEV)
 - (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
-    return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
+    return ([protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust] &&
+            [connection.posrx_allowUntrustedSSLCertificates boolValue]);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
@@ -449,7 +459,6 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     }
     [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
 }
-#endif
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse {
     return nil;

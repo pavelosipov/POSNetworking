@@ -18,6 +18,7 @@ static char kResponseHandlerKey;
 static char kBodyStreamBuilderKey;
 static char kDownloadCompletionHandlerKey;
 static char kResponse;
+static char kAllowUntrustedSSLCertificates;
 
 @implementation NSObject (POSRx)
 
@@ -64,6 +65,14 @@ static char kResponse;
 #pragma clang diagnostic pop
         objc_setAssociatedObject(self, &kResponse, response, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
+}
+
+- (NSNumber *)posrx_allowUntrustedSSLCertificates {
+    return objc_getAssociatedObject(self, &kAllowUntrustedSSLCertificates);
+}
+
+- (void)posrx_setAllowUntrustedSSLCertificates:(NSNumber *)allowUntrustedSSLCertificates {
+    objc_setAssociatedObject(self, &kAllowUntrustedSSLCertificates, allowUntrustedSSLCertificates, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void (^)(POSHTTPTaskProgress *))posrx_uploadProgressHandler {
