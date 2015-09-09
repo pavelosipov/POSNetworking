@@ -328,10 +328,11 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
 - (void)pushTask:(POSTask *)task {
     [_actualTasks addObject:task];
     [_taskExecutor pushTask:task];
-    [[task executing] subscribeNext:^(NSNumber *executing) {
-        if (!executing.boolValue) {
-            [_actualTasks removeObject:task];
-        }
+    POSRX_CHECK([task isExecuting]);
+    [[[task executing] takeUntilBlock:^BOOL(NSNumber *executing) {
+        return executing.boolValue;
+    }] subscribeCompleted:^{
+        [_actualTasks removeObject:task];
     }];
 }
 
