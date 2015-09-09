@@ -24,6 +24,8 @@
 		211A33B71B9EC65300D92A27 /* POSHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33A41B9EC65300D92A27 /* POSHTTPResponse.m */; };
 		211A33B81B9EC65300D92A27 /* POSSchedulableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33A81B9EC65300D92A27 /* POSSchedulableObject.m */; };
 		211A33B91B9EC65300D92A27 /* POSTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33AA1B9EC65300D92A27 /* POSTask.m */; };
+		211A33D41BA0267700D92A27 /* POSHTTPGatewayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33D31BA0267700D92A27 /* POSHTTPGatewayTests.m */; };
+		211A33D61BA0862100D92A27 /* POSTaskSchedulingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33D51BA0862100D92A27 /* POSTaskSchedulingTests.m */; };
 		212B41E71B85BC1D00B59E48 /* POSSchedulableObjectMocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 212B41E31B85BC1D00B59E48 /* POSSchedulableObjectMocks.m */; };
 		212B41E81B85BC1D00B59E48 /* POSSchedulableObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 212B41E41B85BC1D00B59E48 /* POSSchedulableObjectTests.m */; };
 /* End PBXBuildFile section */
@@ -83,6 +85,8 @@
 		211A33A81B9EC65300D92A27 /* POSSchedulableObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSSchedulableObject.m; sourceTree = "<group>"; };
 		211A33A91B9EC65300D92A27 /* POSTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSTask.h; sourceTree = "<group>"; };
 		211A33AA1B9EC65300D92A27 /* POSTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTask.m; sourceTree = "<group>"; };
+		211A33D31BA0267700D92A27 /* POSHTTPGatewayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayTests.m; sourceTree = "<group>"; };
+		211A33D51BA0862100D92A27 /* POSTaskSchedulingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTaskSchedulingTests.m; sourceTree = "<group>"; };
 		212B41BA1B85B89300B59E48 /* libPOSRx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPOSRx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		212B41C51B85B89300B59E48 /* POSRxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = POSRxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		212B41CB1B85B89300B59E48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -198,6 +202,14 @@
 			path = Scheduling;
 			sourceTree = "<group>";
 		};
+		211A33D21BA0241300D92A27 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				211A33D31BA0267700D92A27 /* POSHTTPGatewayTests.m */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
 		212B41B11B85B89300B59E48 = {
 			isa = PBXGroup;
 			children = (
@@ -221,6 +233,7 @@
 		212B41C91B85B89300B59E48 /* POSRxTests */ = {
 			isa = PBXGroup;
 			children = (
+				211A33D21BA0241300D92A27 /* Networking */,
 				212B41E11B85BC1D00B59E48 /* Scheduling */,
 				212B41CA1B85B89300B59E48 /* Supporting Files */,
 			);
@@ -253,6 +266,7 @@
 				212B41E31B85BC1D00B59E48 /* POSSchedulableObjectMocks.m */,
 				212B41E41B85BC1D00B59E48 /* POSSchedulableObjectTests.m */,
 				211A33461B9D726800D92A27 /* POSTaskTests.m */,
+				211A33D51BA0862100D92A27 /* POSTaskSchedulingTests.m */,
 			);
 			path = Scheduling;
 			sourceTree = "<group>";
@@ -420,8 +434,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				212B41E81B85BC1D00B59E48 /* POSSchedulableObjectTests.m in Sources */,
+				211A33D61BA0862100D92A27 /* POSTaskSchedulingTests.m in Sources */,
 				212B41E71B85BC1D00B59E48 /* POSSchedulableObjectMocks.m in Sources */,
 				211A33471B9D726800D92A27 /* POSTaskTests.m in Sources */,
+				211A33D41BA0267700D92A27 /* POSHTTPGatewayTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

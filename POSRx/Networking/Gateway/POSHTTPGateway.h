@@ -75,6 +75,10 @@
 /// @brief Recovers all background upload tasks as array of id<MRCHTTPUploadTask>.
 - (void)recoverBackgroundUploadTasksUsingBlock:(void(^)(NSArray *uploadTasks))block;
 
+/// @brief Performs cleanup logic, which is required to free memory allocated by HTTPGateway.
+/// @param cancelPendingTasks YES if you want to free all allocated resources immediatelly.
+- (void)invalidateCancelingTasks:(BOOL)cancelPendingTasks;
+
 @end
 
 @interface POSHTTPGateway : POSSchedulableObject <POSHTTPGateway>

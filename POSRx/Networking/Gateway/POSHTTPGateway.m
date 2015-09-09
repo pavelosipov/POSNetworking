@@ -103,6 +103,18 @@ static NSString *MRCBuildHTTPTaskDescription(
 
 @end
 
+@interface NSURLCache (POSRx)
+@end
+
+@implementation NSURLCache (POSRx)
+
++ (NSURLCache *)posrx_leaksFreeCache {
+    // Preventing memory leaks as described at http://ubm.io/1mObM8d
+    return [[NSURLCache alloc] initWithMemoryCapacity:0 diskCapacity:0 diskPath:nil];
+}
+
+@end
+
 #pragma mark - 
 
 @interface POSHTTPGateway () <NSURLSessionDataDelegate, NSURLSessionDownloadDelegate, NSURLConnectionDelegate, POSTaskExecutor>
@@ -121,6 +133,8 @@ static NSString *MRCBuildHTTPTaskDescription(
     if (self = [super initWithScheduler:scheduler]) {
         _actualTasks = [NSMutableSet new];
         _taskExecutor = [POSDirectTaskExecutor new];
+        NSURLSessionConfiguration *foregroundSessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        foregroundSessionConfiguration.URLCache = [NSURLCache posrx_leaksFreeCache];
         _foregroundSession = [NSURLSession
                               sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
                               delegate:self
@@ -132,12 +146,23 @@ static NSString *MRCBuildHTTPTaskDescription(
             [NSURLSessionConfiguration backgroundSessionConfiguration:ID] :
 #pragma clang diagnostic pop
             [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:ID];
+        backgroundSessionConfiguration.URLCache = [NSURLCache posrx_leaksFreeCache];
         _backgroundSession = [NSURLSession
                               sessionWithConfiguration:backgroundSessionConfiguration
                               delegate:self
                               delegateQueue:[NSOperationQueue mainQueue]];
     }
     return self;
+}
+
+- (void)invalidateCancelingTasks:(BOOL)cancelPendingTasks {
+    if (cancelPendingTasks) {
+        [_foregroundSession invalidateAndCancel];
+        [_backgroundSession invalidateAndCancel];
+    } else {
+        [_foregroundSession finishTasksAndInvalidate];
+        [_backgroundSession finishTasksAndInvalidate];
+    }
 }
 
 POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler)
