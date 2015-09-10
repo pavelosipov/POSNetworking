@@ -8,6 +8,7 @@
 
 #import <POSRx/POSRx.h>
 #import <POSAllocationTracker/POSAllocationTracker.h>
+#import <OHHTTPStubs/OHHTTPStubs.h>
 #import <XCTest/XCTest.h>
 
 @interface POSHTTPGatewayTests : XCTestCase
@@ -26,6 +27,7 @@
 - (void)tearDown {
     XCTAssert([POSAllocationTracker instanceCountForClass:POSTask.class] == 0);
     XCTAssert([POSAllocationTracker instanceCountForClass:RACDisposable.class] == 0);
+    [OHHTTPStubs removeAllStubs];
     [super tearDown];
 }
 
@@ -48,7 +50,53 @@
         [expectation fulfill];
     }];
     [task execute];
-    [self waitForExpectationsWithTimeout:2 handler:nil];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
+- (void)testStubbedResponse {
+    const uint8_t bytes[] = { 0xb7, 0xe2, 0x02 };
+    NSData *responseData = [NSData dataWithBytes:bytes length:sizeof(bytes)];
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+        return YES;
+    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
+        return [OHHTTPStubsResponse responseWithData:[responseData copy] statusCode:201 headers:nil];
+    }];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
+    NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
+    id<POSHTTPTask> task = [_gateway dataTaskWithRequest:[POSHTTPRequest new]
+                                                  toHost:hostURL
+                                                 options:nil];
+    [task.values subscribeNext:^(POSHTTPResponse *response) {
+        XCTAssertTrue(response.metadata.statusCode == 201);
+        XCTAssertEqualObjects(response.metadata.URL, hostURL);
+        XCTAssertEqualObjects(response.data, responseData);
+        [expectation fulfill];
+    }];
+    [task execute];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
+- (void)testStubbedError {
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+        return YES;
+    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
+        NSError* error = [NSError
+                          errorWithDomain:NSURLErrorDomain
+                          code:kCFURLErrorNotConnectedToInternet
+                          userInfo:nil];
+        return [OHHTTPStubsResponse responseWithError:error];
+    }];
+    XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
+    NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
+    id<POSHTTPTask> task = [_gateway dataTaskWithRequest:[POSHTTPRequest new]
+                                                  toHost:[hostURL copy]
+                                                 options:nil];
+    [task.errors subscribeNext:^(NSError *error) {
+        XCTAssertEqualObjects(error.userInfo[NSURLErrorKey], hostURL);
+        [expectation fulfill];
+    }];
+    [task execute];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
 @end

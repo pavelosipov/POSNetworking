@@ -9,4 +9,5 @@ end
 target "POSRxTests" do
     pod 'POSRx', :path => '.'
     pod 'POSAllocationTracker'
+    pod 'OHHTTPStubs'
 end
