@@ -145,4 +145,32 @@
     XCTAssertNotNil([task signalForEvent:@"new_event"]);
 }
 
+- (void)testTaskSuccessfulExecutionSignal {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"completion emitted"];
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+        return [RACSignal return:@1];
+    }];
+    __block NSNumber *receivedValue;
+    [[task execute] subscribeNext:^(NSNumber *value) {
+        receivedValue = value;
+    } completed:^{
+        XCTAssertEqualObjects(@1, receivedValue);
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
+- (void)testTaskFailedExecutionSignal {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"error emitted"];
+    NSError *emittingError = [NSError errorWithDomain:@"com.github.pavelosipov.POSRx.Test" code:0 userInfo:nil];
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+        return [RACSignal error:emittingError];
+    }];
+    [[task execute] subscribeError:^(NSError *error) {
+        XCTAssertEqualObjects(error, emittingError);
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
 @end

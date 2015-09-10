@@ -30,7 +30,7 @@
 - (BOOL)isExecuting;
 
 /// Launches task directly or schedules it within specified executor.
-- (void)execute;
+- (RACSignal *)execute;
 
 /// Interrupts task without emitting errors.
 - (void)cancel;

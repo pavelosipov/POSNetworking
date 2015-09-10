@@ -43,6 +43,7 @@
 @property (nonatomic, copy, readonly) RACSignal *(^executionBlock)(POSTaskContext *context);
 @property (nonatomic, weak) id<POSTaskExecutor> executor;
 @property (nonatomic) RACSignal *executing;
+@property (nonatomic) RACSignal *sourceSignals;
 @property (nonatomic) RACSignal *sourceSignal;
 @property (nonatomic) RACDisposable *sourceSignalDisposable;
 @property (nonatomic) RACSignal *errors;
@@ -66,18 +67,18 @@ POSRX_DEADLY_INITIALIZER(init)
         _executor = executor;
         _context = POSTaskContext.new;
         
-        RACSignal *sourceSignals = RACObserve(self, sourceSignal);
+        _sourceSignals = RACObserve(self, sourceSignal);
 
-        _executing = [[[sourceSignals map:^(RACSignal *signal) {
+        _executing = [[[_sourceSignals map:^(RACSignal *signal) {
             return @(signal != nil);
         }] distinctUntilChanged] replayLast];
         
-        _values = [[[sourceSignals map:^id(RACSignal *signal) {
+        _values = [[[_sourceSignals map:^id(RACSignal *signal) {
             return [signal catchTo:[RACSignal empty]];
         }] replayLast] switchToLatest];
 
         _extraErrors = [RACSubject subject];
-        RACSignal *executionErrors = [[[sourceSignals map:^id(RACSignal *signal) {
+        RACSignal *executionErrors = [[[_sourceSignals map:^id(RACSignal *signal) {
             return [[signal ignoreValues] catch:^(NSError *error) {
                 return [RACSignal return:error];
             }];
@@ -120,12 +121,20 @@ POSRX_DEADLY_INITIALIZER(init)
     return _sourceSignal != nil;
 }
 
-- (void)execute {
+- (RACSignal *)execute {
+    RACSignal *executionSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        return [[[_sourceSignals filter:^BOOL(RACSignal *signal) {
+            return signal != nil;
+        }] take:1] subscribeNext:^(RACSignal *signal) {
+            [signal subscribe:subscriber];
+        }];
+    }];
     if (_executor) {
         [_executor pushTask:self];
     } else {
         [self p_executeNow];
     }
+    return executionSignal;
 }
 
 - (void)cancel {
