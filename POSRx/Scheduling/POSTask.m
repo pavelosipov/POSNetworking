@@ -122,19 +122,11 @@ POSRX_DEADLY_INITIALIZER(init)
 }
 
 - (RACSignal *)execute {
-    RACSignal *executionSignal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        return [[[_sourceSignals filter:^BOOL(RACSignal *signal) {
-            return signal != nil;
-        }] take:1] subscribeNext:^(RACSignal *signal) {
-            [signal subscribe:subscriber];
-        }];
-    }];
     if (_executor) {
-        [_executor pushTask:self];
+        return [_executor pushTask:self];
     } else {
-        [self p_executeNow];
+        return [self p_executeNow];
     }
-    return executionSignal;
 }
 
 - (void)cancel {
@@ -152,15 +144,13 @@ POSRX_DEADLY_INITIALIZER(init)
 
 #pragma mark - Private
 
-- (void)p_executeNow {
+- (RACSignal *)p_executeNow {
     NSParameterAssert(![self isExecuting]);
     if ([self isExecuting]) {
-        return;
+        return _sourceSignal;
     }
     RACSignal *signal = self.executionBlock(_context);
-    if (!signal) {
-        return;
-    }
+    POSRX_CHECK(signal);
     RACMulticastConnection *connection = [[signal
         subscribeOn:self.scheduler]
         multicast:RACReplaySubject.subject];
@@ -174,6 +164,7 @@ POSRX_DEADLY_INITIALIZER(init)
         self.sourceSignal = nil;
     }];
     self.sourceSignalDisposable = [connection connect];
+    return _sourceSignal;
 }
 
 @end
@@ -182,8 +173,8 @@ POSRX_DEADLY_INITIALIZER(init)
 
 @implementation POSDirectTaskExecutor
 
-- (void)pushTask:(POSTask *)task {
-    [task p_executeNow];
+- (RACSignal *)pushTask:(POSTask *)task {
+    return [task p_executeNow];
 }
 
 @end

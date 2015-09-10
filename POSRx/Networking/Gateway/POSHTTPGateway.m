@@ -327,15 +327,14 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
 
 #pragma mark POSTaskExecutor
 
-- (void)pushTask:(POSTask *)task {
+- (RACSignal *)pushTask:(POSTask *)task {
     [_actualTasks addObject:task];
-    [_taskExecutor pushTask:task];
-    POSRX_CHECK([task isExecuting]);
     [[[task executing] takeUntilBlock:^BOOL(NSNumber *executing) {
         return executing.boolValue;
     }] subscribeCompleted:^{
         [_actualTasks removeObject:task];
     }];
+    return [_taskExecutor pushTask:task];
 }
 
 #pragma mark NSURLSessionDelegate

@@ -67,7 +67,8 @@
 /// Specifies protocol which should be impleme
 @protocol POSTaskExecutor <NSObject>
 
-- (void)pushTask:(POSTask *)task;
+/// @return Signal which will emit emits values about task execution.
+- (RACSignal *)pushTask:(POSTask *)task;
 
 @end
 
