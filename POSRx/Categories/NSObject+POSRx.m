@@ -9,6 +9,7 @@
 #import "NSObject+POSRx.h"
 #import "NSException+POSRx.h"
 #import <objc/runtime.h>
+#import <ReactiveCocoa/ReactiveCocoa.h>
 
 static char kDownloadProgressHandlerKey;
 static char kUploadProgressHandlerKey;
@@ -19,8 +20,24 @@ static char kBodyStreamBuilderKey;
 static char kDownloadCompletionHandlerKey;
 static char kResponse;
 static char kAllowUntrustedSSLCertificates;
+static char kURLSessionInvalidateSubject;
 
-@implementation NSObject (POSRx)
+@implementation NSObject (POSURLSession)
+
+- (RACSubject *)posrx_invalidateSubject {
+    RACSubject *subject = objc_getAssociatedObject(self, &kURLSessionInvalidateSubject);
+    if (!subject) {
+        subject = [RACSubject subject];
+        objc_setAssociatedObject(self, &kURLSessionInvalidateSubject, subject, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return subject;
+}
+
+@end
+
+#pragma mark -
+
+@implementation NSObject (POSURLSessionTask)
 
 - (void)posrx_start {
     if ([self isKindOfClass:NSURLConnection.class]) {

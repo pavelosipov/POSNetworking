@@ -31,7 +31,7 @@
     [super tearDown];
 }
 
-- (void)testResponseSimulation {
+- (void)testHTTPGatewayResponseSimulation {
     XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
     const uint8_t bytes[] = { 0xb7, 0xe2, 0x02 };
@@ -53,7 +53,7 @@
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
-- (void)testStubbedResponse {
+- (void)testHTTPGatewayStubbedResponse {
     const uint8_t bytes[] = { 0xb7, 0xe2, 0x02 };
     NSData *responseData = [NSData dataWithBytes:bytes length:sizeof(bytes)];
     [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
@@ -76,7 +76,7 @@
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
-- (void)testStubbedError {
+- (void)testHTTPGatewayStubbedError {
     [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
         return YES;
     } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {

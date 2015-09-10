@@ -28,6 +28,7 @@
 		211A33D61BA0862100D92A27 /* POSTaskSchedulingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33D51BA0862100D92A27 /* POSTaskSchedulingTests.m */; };
 		212B41E71B85BC1D00B59E48 /* POSSchedulableObjectMocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 212B41E31B85BC1D00B59E48 /* POSSchedulableObjectMocks.m */; };
 		212B41E81B85BC1D00B59E48 /* POSSchedulableObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 212B41E41B85BC1D00B59E48 /* POSSchedulableObjectTests.m */; };
+		21B23CF41BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B23CF31BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 		212B41E21B85BC1D00B59E48 /* POSSchedulableObjectMocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSSchedulableObjectMocks.h; sourceTree = "<group>"; };
 		212B41E31B85BC1D00B59E48 /* POSSchedulableObjectMocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSSchedulableObjectMocks.m; sourceTree = "<group>"; };
 		212B41E41B85BC1D00B59E48 /* POSSchedulableObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSSchedulableObjectTests.m; sourceTree = "<group>"; };
+		21B23CF31BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayLeakTests.m; sourceTree = "<group>"; };
 		6DBCEF70C626019ADB0DC3AA /* Pods-POSRxTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRxTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8088C90EC5168CEB712A8776 /* Pods-POSRxTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRxTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests.release.xcconfig"; sourceTree = "<group>"; };
 		D4F690DF728689B5020A334E /* libPods-POSRxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-POSRxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				211A33D31BA0267700D92A27 /* POSHTTPGatewayTests.m */,
+				21B23CF31BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				211A33D61BA0862100D92A27 /* POSTaskSchedulingTests.m in Sources */,
 				212B41E71B85BC1D00B59E48 /* POSSchedulableObjectMocks.m in Sources */,
 				211A33471B9D726800D92A27 /* POSTaskTests.m in Sources */,
+				21B23CF41BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m in Sources */,
 				211A33D41BA0267700D92A27 /* POSHTTPGatewayTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

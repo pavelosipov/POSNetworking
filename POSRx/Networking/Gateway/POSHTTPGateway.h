@@ -77,7 +77,7 @@
 
 /// @brief Performs cleanup logic, which is required to free memory allocated by HTTPGateway.
 /// @param cancelPendingTasks YES if you want to free all allocated resources immediatelly.
-- (void)invalidateCancelingTasks:(BOOL)cancelPendingTasks;
+- (RACSignal *)invalidateCancelingTasks:(BOOL)cancelPendingTasks;
 
 @end
 

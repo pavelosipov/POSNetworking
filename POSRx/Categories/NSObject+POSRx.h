@@ -8,9 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@class RACSubject;
 @class POSHTTPTaskProgress;
 
-@protocol POSURLTask <NSObject>
+@protocol POSURLSession <NSObject>
+@property (nonatomic, readonly) RACSubject *posrx_invalidateSubject;
+@end
+
+@protocol POSURLSessionTask <NSObject>
 
 @property (nonatomic, setter=posrx_setResponse:) NSHTTPURLResponse *posrx_response;
 @property (nonatomic, setter=posrx_setAllowUntrustedSSLCertificates:) NSNumber *posrx_allowUntrustedSSLCertificates;
@@ -28,5 +33,8 @@
 
 @end
 
-@interface NSObject (POSRx) <POSURLTask>
+@interface NSObject (POSURLSession) <POSURLSession>
+@end
+
+@interface NSObject (POSURLSessionTask) <POSURLSessionTask>
 @end
