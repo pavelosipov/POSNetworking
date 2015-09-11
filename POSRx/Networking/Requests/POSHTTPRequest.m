@@ -8,8 +8,10 @@
 
 #import "POSHTTPRequest.h"
 #import "POSHTTPRequestOptions.h"
+#import "POSHTTPGateway.h"
 #import "NSException+POSRx.h"
 #import "NSURL+POSRx.h"
+#import "NSObject+POSRx.h"
 
 NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
     switch (type) {
@@ -79,7 +81,14 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
     return self;
 }
 
-#pragma mark Public
+#pragma mark Hidden
+
+- (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
+                          forGateway:(id<POSHTTPGateway>)gateway
+                             options:(POSHTTPRequestOptions *)options {
+    NSURLRequest *request = [self requestWithURL:hostURL options:options];
+    return [gateway.foregroundSession dataTaskWithRequest:request];
+}
 
 - (NSMutableURLRequest *)requestWithURL:(NSURL *)hostURL options:(POSHTTPRequestOptions *)options {
     POSRX_CHECK(hostURL);

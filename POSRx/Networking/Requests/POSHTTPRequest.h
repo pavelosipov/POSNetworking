@@ -33,15 +33,6 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 /// Request's headers, which will be appedned to or override default host headers. May be nil.
 @property (nonatomic, readonly) NSDictionary *headerFields;
 
-/// @brief Builds network request using specified parameters.
-/// @discussion Method combines hostURL with endpointMethod to build full URL
-///             and adds headers from options to its own headers to build
-///             complete set of headers. For example if hostURL is "https://example.com"
-///             and endpoint method is "users/?sort=ASC" then full URL is
-///             "https://example.com/users/?sort=ASC"
-/// @remarks Headers in options will override same headers in request.
-- (NSMutableURLRequest *)requestWithURL:(NSURL *)hostURL options:(POSHTTPRequestOptions *)options;
-
 @end
 
 #pragma mark -
@@ -64,8 +55,17 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 
 /// Mutable version of POSHTTPRequest.
 @interface POSMutableHTTPRequest : POSHTTPRequest
+
+/// Type of HTTP request.
 @property (nonatomic) POSHTTPRequestType type;
+
+/// Method which will be appended to host's base URL (for ex. "users/?sort=ASC"). May be nil.
 @property (nonatomic, copy) NSString *endpointMethod;
+
+/// Request's body. May be nil.
 @property (nonatomic, copy) NSData *body;
+
+/// Request's headers, which will be appedned to or override default host headers. May be nil.
 @property (nonatomic, copy) NSDictionary *headerFields;
+
 @end

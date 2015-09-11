@@ -7,37 +7,21 @@
 //
 
 #import "POSHTTPGateway.h"
-#import "POSHTTPUploadRequest.h"
+#import "POSHTTPUpload.h"
 #import "POSHTTPBackgroundUploadRequest.h"
 #import "POSHTTPRequestExecutionOptions.h"
 #import "POSHTTPRequestSimulationOptions.h"
 #import "POSHTTPRequestOptions.h"
 #import "POSHTTPResponse.h"
 #import "POSHTTPTaskProgress.h"
+#import "POSTask.h"
+#import "POSSystemInfo.h"
 #import "NSObject+POSRx.h"
 #import "NSException+POSRx.h"
-#ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
-#import <UIKit/UIKit.h>
-#endif
 
 static NSString * const kHTTPTaskUploadProgressEvent    = @"UPG";
 static NSString * const kHTTPTaskDownloadProgressEvent  = @"DPE";
 static NSString * const kHTTPTaskDownloadCompletedEvent = @"DCE";
-
-#pragma mark -
-
-@interface UIDevice (POSRx)
-@end
-
-@implementation UIDevice (POSRx)
-
-+ (BOOL)posrx_isFirmwareOutdated {
-    return UIDevice.currentDevice.systemVersion.floatValue < 8.0;
-}
-
-@end
-
-#pragma mark -
 
 @interface NSError (POSRx)
 @end
@@ -140,7 +124,7 @@ static NSString *MRCBuildHTTPTaskDescription(
                               delegate:self
                               delegateQueue:[NSOperationQueue mainQueue]];
         NSURLSessionConfiguration *backgroundSessionConfiguration =
-            [UIDevice posrx_isFirmwareOutdated] ?
+            [POSSystemInfo isOutdatedOS] ?
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
             [NSURLSessionConfiguration backgroundSessionConfiguration:ID] :
@@ -504,58 +488,6 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 @end
 
 #pragma mark -
-
-@implementation POSHTTPTaskDescription
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super init]) {
-        _request = [aDecoder decodeObjectForKey:@"request"];
-        _hostURL = [aDecoder decodeObjectForKey:@"hostURL"];
-        _options = [aDecoder decodeObjectForKey:@"options"];
-        _userInfo = [aDecoder decodeObjectForKey:@"userInfo"];
-    }
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    [aCoder encodeObject:_request forKey:@"request"];
-    [aCoder encodeObject:_hostURL forKey:@"hostURL"];
-    if (_options) {
-        [aCoder encodeObject:_options forKey:@"options"];
-    }
-    if (_userInfo) {
-        [aCoder encodeObject:_userInfo forKey:@"userInfo"];
-    }
-}
-
-+ (instancetype)fromString:(NSString *)description {
-    if (!description) {
-        return nil;
-    }
-    @try {
-        NSData *data = [description dataUsingEncoding:NSUTF8StringEncoding];
-        if (!data) {
-            return nil;
-        }
-        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        return [unarchiver decodeObject];
-    } @catch (NSException *exception) {
-        return nil;
-    }
-}
-
-- (NSString *)asString {
-    NSMutableData *data = [NSMutableData data];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc ] initForWritingWithMutableData:data];
-    [archiver setOutputFormat:NSPropertyListXMLFormat_v1_0];
-    [archiver encodeRootObject:self];
-    [archiver finishEncoding];
-    return [[NSString alloc]
-            initWithData:data
-            encoding:NSUTF8StringEncoding];
-}
-
-@end
 
 NSString *MRCBuildHTTPTaskDescription(
     id<POSHTTPBackgroundUploadRequest> request,
