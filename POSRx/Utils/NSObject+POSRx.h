@@ -17,6 +17,8 @@
 
 @protocol POSURLSessionTask <NSObject>
 
+@property (nonatomic, readonly, copy) NSURLRequest *posrx_originalRequest;
+@property (nonatomic, readonly, copy) NSURLRequest *posrx_currentRequest;
 @property (nonatomic, setter=posrx_setResponse:) NSHTTPURLResponse *posrx_response;
 @property (nonatomic, setter=posrx_setAllowUntrustedSSLCertificates:) NSNumber *posrx_allowUntrustedSSLCertificates;
 

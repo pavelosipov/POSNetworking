@@ -21,6 +21,8 @@
 
 @end
 
+#pragma mark -
+
 /// Request to make foreground uploads using PUT HTTP method with multipart form data.
 @interface POSHTTPUpload : POSHTTPRequest <POSHTTPUpload>
 
@@ -34,7 +36,9 @@
 
 @end
 
-/// Mutable version of POSHTTPUploadRequest.
+#pragma mark -
+
+/// Mutable version of POSHTTPUpload request.
 @interface POSMutableHTTPUpload : POSMutableHTTPRequest <POSHTTPUpload>
 
 /// Stream for the HTTP request's body.

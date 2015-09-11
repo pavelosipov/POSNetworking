@@ -10,7 +10,7 @@
 
 #pragma mark - Gateway
 
-@protocol POSHTTPRequest;
+@class POSHTTPRequest;
 @class POSHTTPRequestExecutionOptions;
 
 /// Performs network requests.
@@ -26,13 +26,16 @@
 /// @param request Request which will be send to host with specified baseURL.
 /// @param hostURL URL, which will be combined with request's endpoint method to construct full URL.
 /// @param options Request options.
-- (RACSignal *)pushRequest:(id<POSHTTPRequest>)request
+- (RACSignal *)pushRequest:(POSHTTPRequest *)request
                     toHost:(NSURL *)hostURL
                    options:(POSHTTPRequestExecutionOptions *)options;
 
+/// @brief Recovers all background upload requests as array of POSRecoveredHTTPBackgroundUpload objects.
+- (void)recoverBackgroundUploadRequestsUsingBlock:(void(^)(NSArray *uploadRequests))block;
+
 /// @brief Invalidates all sessions, which is mandatory requirement to free memory allocated by HTTPGateway.
-/// @param cancelPendingTasks YES if you want to free all allocated resources ASAP or NO to complete active tasks.
-- (RACSignal *)invalidateCancelingTasks:(BOOL)cancelPendingTasks;
+/// @param cancelPendingRequests YES if you want to free all allocated resources ASAP or NO to complete active requests.
+- (RACSignal *)invalidateCancelingRequests:(BOOL)cancelPendingRequests;
 
 @end
 

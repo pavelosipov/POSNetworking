@@ -45,6 +45,29 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
     return self;
 }
 
+- (instancetype)initWithRequest:(id<POSHTTPRequest>)request {
+    if (self = [super init]) {
+        _type = request.type;
+        _endpointMethod = request.endpointMethod;
+        _body = request.body;
+        _headerFields = request.headerFields;
+    }
+    return self;
+}
+
+- (instancetype)initWithType:(POSHTTPRequestType)type
+              endpointMethod:(NSString *)endpointMethod
+                        body:(NSData *)body
+                headerFields:(NSDictionary *)headerFields {
+    if (self = [super init]) {
+        _type = type;
+        _endpointMethod = endpointMethod;
+        _body = body;
+        _headerFields = headerFields;
+    }
+    return self;
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
         _type = [[aDecoder decodeObjectForKey:@"type"] integerValue];
@@ -66,19 +89,6 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
     if (_headerFields) {
         [aCoder encodeObject:_headerFields forKey:@"headerFields"];
     }
-}
-
-- (instancetype)initWithType:(POSHTTPRequestType)type
-              endpointMethod:(NSString *)endpointMethod
-                        body:(NSData *)body
-                headerFields:(NSDictionary *)headerFields {
-    if (self = [super init]) {
-        _type = type;
-        _endpointMethod = endpointMethod;
-        _body = body;
-        _headerFields = headerFields;
-    }
-    return self;
 }
 
 #pragma mark Hidden

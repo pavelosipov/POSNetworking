@@ -24,6 +24,8 @@
 
 @end
 
+#pragma mark -
+
 /// Request to make background uploads using nsurlsessiond deamon.
 @interface POSHTTPBackgroundUpload : POSHTTPRequest <POSHTTPBackgroundUpload>
 
@@ -34,6 +36,8 @@
                           headerFields:(NSDictionary *)headerFields;
 
 @end
+
+#pragma mark -
 
 /// Mutable version of POSHTTPBackgroundUploadRequest.
 @interface POSMutableHTTPBackgroundUpload : POSMutableHTTPRequest <POSHTTPBackgroundUpload>
@@ -51,6 +55,8 @@
 - (instancetype)initFileLocation:(NSURL *)fileLocation;
 
 @end
+
+#pragma mark -
 
 /// Request to make background uploads using nsurlsessiond deamon.
 @interface POSRecoveredHTTPBackgroundUpload : POSHTTPBackgroundUpload

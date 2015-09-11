@@ -68,6 +68,14 @@ static char kURLSessionInvalidateSubject;
     [(id)self cancel];
 }
 
+- (NSURLRequest *)posrx_originalRequest {
+    return [(id)self originalRequest];
+}
+
+- (NSURLRequest *)posrx_currentRequest {
+    return [(id)self currentRequest];
+}
+
 - (NSHTTPURLResponse *)posrx_response {
     if ([self respondsToSelector:@selector(response)]) {
         return (id)[(id)self response];

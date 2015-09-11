@@ -44,11 +44,15 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 /// without any custom values for properties.
 - (instancetype)init;
 
+/// Copying initializer.
+- (instancetype)initWithRequest:(id<POSHTTPRequest>)request;
+
 /// The designated initializer.
 - (instancetype)initWithType:(POSHTTPRequestType)type
               endpointMethod:(NSString *)endpointMethod
                         body:(NSData *)body
                 headerFields:(NSDictionary *)headerFields;
+
 @end
 
 #pragma mark -

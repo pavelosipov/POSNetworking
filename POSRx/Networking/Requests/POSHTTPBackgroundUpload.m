@@ -166,3 +166,37 @@ static char kPOSUserInfoKey;
 
 @end
 
+#pragma mark -
+
+@interface POSRecoveredHTTPBackgroundUpload ()
+@property (nonatomic) NSURLSessionUploadTask *sessionTask;
+@end
+
+@implementation POSRecoveredHTTPBackgroundUpload
+@dynamic progress;
+
+- (instancetype)initWithRecoveredTask:(NSURLSessionUploadTask *)sessionTask {
+    POSRX_CHECK(sessionTask);
+    POSHTTPBackgroundUploadDescription *description = [POSHTTPBackgroundUploadDescription fromString:sessionTask.taskDescription];
+    NSParameterAssert(description);
+    if (!description) {
+        return nil;
+    }
+    if (self = [super initWithRequest:description.request]) {
+        self.fileLocation = description.request.fileLocation;
+        self.userInfo = description.request.userInfo;
+        _sessionTask = sessionTask;
+    }
+    return self;
+}
+
+#pragma mark POSHTTPRequest
+
+- (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
+                          forGateway:(id<POSHTTPGateway>)gateway
+                             options:(POSHTTPRequestOptions *)options {
+    return _sessionTask;
+}
+
+@end
+
