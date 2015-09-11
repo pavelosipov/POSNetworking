@@ -39,18 +39,13 @@
     options.simulation = [POSHTTPRequestSimulationOptions new];
     options.simulation.rate = 1.0f;
     options.simulation.responses = @{[[POSHTTPResponse alloc] initWithData:responseData]: @(1)};
-    id<POSHTTPTask> task = [_gateway dataTaskWithRequest:[POSHTTPRequest new]
-                                                  toHost:hostURL
-                                                 options:options];
-    [task.executing subscribeNext:^(NSNumber *executing) {
-        if (!executing.boolValue) {
-            [[_gateway invalidateCancelingTasks:YES] subscribeCompleted:^{
-                self.gateway = nil;
-                [[RACScheduler mainThreadScheduler] afterDelay:0.01 schedule:^{
-                    [expectation fulfill];
-                }];
+    [[_gateway pushRequest:[POSHTTPRequest new] toHost:hostURL options:options] subscribeCompleted:^{
+        [[_gateway invalidateCancelingRequests:YES] subscribeCompleted:^{
+            self.gateway = nil;
+            [[RACScheduler mainThreadScheduler] afterDelay:0.01 schedule:^{
+                [expectation fulfill];
             }];
-        }
+        }];
     }];
     [self waitForExpectationsWithTimeout:5 handler:nil];
 }

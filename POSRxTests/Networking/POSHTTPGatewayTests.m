@@ -40,16 +40,12 @@
     options.simulation = [POSHTTPRequestSimulationOptions new];
     options.simulation.rate = 1.0f;
     options.simulation.responses = @{[[POSHTTPResponse alloc] initWithData:responseData]: @(1)};
-    id<POSHTTPTask> task = [_gateway dataTaskWithRequest:[POSHTTPRequest new]
-                                                  toHost:hostURL
-                                                 options:options];
-    [task.values subscribeNext:^(POSHTTPResponse *response) {
+    [[_gateway pushRequest:[POSHTTPRequest new] toHost:hostURL options:options] subscribeNext:^(POSHTTPResponse *response) {
         XCTAssertTrue(response.metadata.statusCode == 200);
         XCTAssertEqualObjects(response.metadata.URL, hostURL);
         XCTAssertEqualObjects(response.data, responseData);
         [expectation fulfill];
     }];
-    [task execute];
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
@@ -63,16 +59,12 @@
     }];
     XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
-    id<POSHTTPTask> task = [_gateway dataTaskWithRequest:[POSHTTPRequest new]
-                                                  toHost:hostURL
-                                                 options:nil];
-    [task.values subscribeNext:^(POSHTTPResponse *response) {
+    [[_gateway pushRequest:[POSHTTPRequest new] toHost:hostURL options:nil] subscribeNext:^(POSHTTPResponse *response) {
         XCTAssertTrue(response.metadata.statusCode == 201);
         XCTAssertEqualObjects(response.metadata.URL, hostURL);
         XCTAssertEqualObjects(response.data, responseData);
         [expectation fulfill];
     }];
-    [task execute];
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
@@ -88,14 +80,10 @@
     }];
     XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
-    id<POSHTTPTask> task = [_gateway dataTaskWithRequest:[POSHTTPRequest new]
-                                                  toHost:[hostURL copy]
-                                                 options:nil];
-    [task.errors subscribeNext:^(NSError *error) {
+    [[_gateway pushRequest:[POSHTTPRequest new] toHost:[hostURL copy] options:nil] subscribeError:^(NSError *error) {
         XCTAssertEqualObjects(error.userInfo[NSURLErrorKey], hostURL);
         [expectation fulfill];
     }];
-    [task execute];
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
