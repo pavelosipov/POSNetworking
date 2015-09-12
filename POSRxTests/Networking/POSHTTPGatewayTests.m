@@ -89,4 +89,44 @@
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
+//- (void)testCancel {
+//    XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
+//    RACSignal *signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+//        NSLog(@"activating");
+//        RACDisposable *disposable = [[RACScheduler mainThreadScheduler] afterDelay:1 schedule:^{
+//            NSLog(@"sending");
+//            [subscriber sendNext:@1];
+//            [subscriber sendCompleted];
+//        }];
+//        return [RACDisposable disposableWithBlock:^{
+//            NSLog(@"canceling");
+//            [disposable dispose];
+//        }];
+//    }];
+//    RACMulticastConnection *connection = [signal multicast:RACReplaySubject.subject];
+//    RACDisposable *connectionDisposable = [connection connect];
+//    RACSignal *gatewaySignal = connection.signal;
+//    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+//        [connection.signal subscribe:subscriber];
+//        return connectionDisposable;
+//    }];
+//    RACSignal *endpoiintSignal = [gatewaySignal catchTo:[RACSignal empty]];
+//    RACDisposable *d1 = [endpoiintSignal subscribeNext:^(id x) {
+//        NSLog(@"1: next");
+//    } error:^(NSError *error) {
+//        NSLog(@"1: error");
+//    } completed:^{
+//        NSLog(@"1: completed");
+//    }];
+//    RACDisposable *d2 = [endpoiintSignal subscribeNext:^(id x) {
+//        NSLog(@"2: next");
+//    } error:^(NSError *error) {
+//        NSLog(@"2: error");
+//    } completed:^{
+//        NSLog(@"2: completed");
+//    }];
+//    [d2 dispose];
+//    [self waitForExpectationsWithTimeout:1 handler:nil];
+//}
+
 @end
