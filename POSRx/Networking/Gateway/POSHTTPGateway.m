@@ -12,8 +12,7 @@
 #import "POSHTTPRequestSimulationOptions.h"
 #import "POSHTTPRequestOptions.h"
 #import "POSHTTPResponse.h"
-#import "POSHTTPTaskProgress.h"
-#import "POSTask.h"
+#import "POSHTTPRequestProgress.h"
 #import "POSSystemInfo.h"
 #import "NSObject+POSRx.h"
 #import "NSError+POSRx.h"
@@ -29,10 +28,9 @@
 
 #pragma mark -
 
-@interface POSHTTPGateway () <NSURLSessionDataDelegate, NSURLSessionDownloadDelegate, NSURLConnectionDelegate, POSTaskExecutor>
+@interface POSHTTPGateway () <NSURLSessionDataDelegate, NSURLSessionDownloadDelegate, NSURLConnectionDelegate>
 @property (nonatomic) RACSignal *working;
 @property (nonatomic) NSMutableSet *actualTasks;
-@property (nonatomic) POSDirectTaskExecutor *taskExecutor;
 @property (nonatomic) NSURLSession *foregroundSession;
 @property (nonatomic) NSURLSession *backgroundSession;
 @end
@@ -47,7 +45,6 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
 - (instancetype)initWithScheduler:(RACScheduler *)scheduler backgroundSessionIdentifier:(NSString *)ID {
     if (self = [super initWithScheduler:scheduler]) {
         _actualTasks = [NSMutableSet new];
-        _taskExecutor = [POSDirectTaskExecutor new];
         NSURLSessionConfiguration *foregroundSessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         foregroundSessionConfiguration.URLCache = [NSURLCache posrx_leaksFreeCache];
         _foregroundSession = [NSURLSession
@@ -77,46 +74,51 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
                    options:(POSHTTPRequestExecutionOptions *)options {
     POSRX_CHECK(request);
     POSRX_CHECK(hostURL);
-    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+    RACSignal *signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         id<POSURLSessionTask> sessionTask = [request taskWithURL:hostURL
                                                       forGateway:self
                                                          options:options.HTTP];
         POSRX_CHECK(sessionTask);
         POSHTTPResponse *simulatedResponse = [options.simulation probeSimulationWithURL:sessionTask.posrx_originalRequest.URL];
         if (simulatedResponse) {
-            return [RACSignal return:simulatedResponse];
+            [subscriber sendNext:simulatedResponse];
+            [subscriber sendCompleted];
+            return nil;
         }
-        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-            NSMutableData *responseData = [NSMutableData new];
-            @weakify(sessionTask);
-            if (options.HTTP.allowUntrustedSSLCertificates) {
-                sessionTask.posrx_allowUntrustedSSLCertificates = options.HTTP.allowUntrustedSSLCertificates;
+        NSMutableData *responseData = [NSMutableData new];
+        @weakify(sessionTask);
+        if (options.HTTP.allowUntrustedSSLCertificates) {
+            sessionTask.posrx_allowUntrustedSSLCertificates = options.HTTP.allowUntrustedSSLCertificates;
+        }
+        sessionTask.posrx_completionHandler = ^(NSError *error) {
+            @strongify(sessionTask);
+            if (!error) {
+                POSHTTPResponse *response = [[POSHTTPResponse alloc]
+                                             initWithData:responseData
+                                             metadata:sessionTask.posrx_response];
+                [subscriber sendNext:response];
+                [subscriber sendCompleted];
+            } else {
+                [subscriber sendError:[error errorWithURL:sessionTask.posrx_originalRequest.URL]];
             }
-            sessionTask.posrx_completionHandler = ^(NSError *error) {
-                @strongify(sessionTask);
-                if (!error) {
-                    POSHTTPResponse *response = [[POSHTTPResponse alloc]
-                                                 initWithData:responseData
-                                                 metadata:sessionTask.posrx_response];
-                    [subscriber sendNext:response];
-                    [subscriber sendCompleted];
-                } else {
-                    [subscriber sendError:[error errorWithURL:sessionTask.posrx_originalRequest.URL]];
-                }
-            };
-            sessionTask.posrx_dataHandler = ^(NSData *data) {
-                [responseData appendData:data];
-            };
-            sessionTask.posrx_responseHandler = ^NSURLSessionResponseDisposition(NSURLResponse *URLResponse) {
-                return NSURLSessionResponseAllow;
-            };
-            [sessionTask posrx_start];
-            return [RACDisposable disposableWithBlock:^{
-                [sessionTask posrx_cancel];
-            }];
+        };
+        sessionTask.posrx_dataHandler = ^(NSData *data) {
+            [responseData appendData:data];
+        };
+        sessionTask.posrx_responseHandler = ^NSURLSessionResponseDisposition(NSURLResponse *URLResponse) {
+            return NSURLSessionResponseAllow;
+        };
+        [sessionTask posrx_start];
+        return [RACDisposable disposableWithBlock:^{
+            [sessionTask posrx_cancel];
         }];
-    } scheduler:self.scheduler executor:self];
-    return [task execute];
+    }];
+    RACMulticastConnection *connection = [[[signal
+        subscribeOn:self.scheduler]
+        deliverOn:self.scheduler]
+        multicast:RACReplaySubject.subject];
+    [connection connect];
+    return connection.signal;
 }
 
 - (void)recoverBackgroundUploadRequestsUsingBlock:(void(^)(NSArray *uploadRequests))block {
@@ -148,18 +150,6 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
                               _backgroundSession.posrx_invalidateSubject]];
 }
 
-#pragma mark POSTaskExecutor
-
-- (RACSignal *)pushTask:(POSTask *)task {
-    [_actualTasks addObject:task];
-    [[[task executing] takeUntilBlock:^BOOL(NSNumber *executing) {
-        return executing.boolValue;
-    }] subscribeCompleted:^{
-        [_actualTasks removeObject:task];
-    }];
-    return [_taskExecutor pushTask:task];
-}
-
 #pragma mark NSURLSessionDelegate
 
 - (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error {
@@ -184,7 +174,7 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
     totalBytesSent:(int64_t)totalBytesSent
 totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
     if (task.posrx_uploadProgressHandler) {
-        task.posrx_uploadProgressHandler([[POSHTTPTaskProgress alloc]
+        task.posrx_uploadProgressHandler([[POSHTTPRequestProgress alloc]
                                           initWithReadyUnits:totalBytesSent
                                           totalUnits:totalBytesExpectedToSend]);
     }
@@ -256,7 +246,7 @@ didFinishDownloadingToURL:(NSURL *)location {
  totalBytesWritten:(int64_t)totalBytesWritten
 totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
     if (downloadTask.posrx_downloadProgressHandler) {
-        downloadTask.posrx_downloadProgressHandler([[POSHTTPTaskProgress alloc]
+        downloadTask.posrx_downloadProgressHandler([[POSHTTPRequestProgress alloc]
                                                     initWithReadyUnits:totalBytesWritten
                                                     totalUnits:totalBytesExpectedToWrite]);
     }
@@ -282,7 +272,7 @@ totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
  totalBytesWritten:(NSInteger)totalBytesWritten
 totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     if (connection.posrx_uploadProgressHandler) {
-        connection.posrx_uploadProgressHandler([[POSHTTPTaskProgress alloc]
+        connection.posrx_uploadProgressHandler([[POSHTTPRequestProgress alloc]
                                                 initWithReadyUnits:totalBytesWritten
                                                 totalUnits:totalBytesExpectedToWrite]);
     }

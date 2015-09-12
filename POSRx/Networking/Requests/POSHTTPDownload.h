@@ -8,12 +8,12 @@
 
 #import "POSHTTPRequest.h"
 
-@class POSHTTPTaskProgress;
+@class POSHTTPRequestProgress;
 
 @protocol POSHTTPDownload <POSHTTPRequest>
 
 /// Download progress handler.
-@property (nonatomic, readonly, copy) void (^progress)(POSHTTPTaskProgress *progress);
+@property (nonatomic, readonly, copy) void (^progress)(POSHTTPRequestProgress *progress);
 
 /// Handler of the downloaded file at specified path.
 @property (nonatomic, readonly, copy) void (^destination)(NSURL *location);
@@ -28,7 +28,7 @@
 /// The designated initializer for foreground download.
 - (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
                            destination:(void (^)(NSURL *))destination
-                              progress:(void (^)(POSHTTPTaskProgress *progress))progress
+                              progress:(void (^)(POSHTTPRequestProgress *progress))progress
                           headerFields:(NSDictionary *)headerFields;
 
 @end
@@ -39,7 +39,7 @@
 @interface POSMutableHTTPDownload : POSMutableHTTPRequest <POSHTTPDownload>
 
 /// Download progress handler.
-@property (nonatomic, copy) void (^progress)(POSHTTPTaskProgress *progress);
+@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
 
 /// Handler of the downloaded file at specified path.
 @property (nonatomic, copy) void (^destination)(NSURL *location);

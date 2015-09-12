@@ -1,5 +1,5 @@
 //
-//  POSHTTPTaskProgress.h
+//  POSHTTPRequestProgress.h
 //  POSRx
 //
 //  Created by Pavel Osipov on 18.07.13.
@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-FOUNDATION_EXTERN uint64_t const POSTaskProgressUnknownUnitsCount;
+FOUNDATION_EXTERN uint64_t const POSUnknownUnitsCount;
 
-@interface POSHTTPTaskProgress : NSObject
+@interface POSHTTPRequestProgress : NSObject
 
 @property (nonatomic, readonly) uint64_t readyUnits;
 @property (nonatomic, readonly) uint64_t totalUnits;

@@ -82,7 +82,7 @@ static char kPOSUserInfoKey;
 #pragma mark -
 
 @interface POSHTTPBackgroundUpload ()
-@property (nonatomic, copy) void (^progress)(POSHTTPTaskProgress *progress);
+@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
 @end
 
 @implementation POSHTTPBackgroundUpload
@@ -93,7 +93,7 @@ static char kPOSUserInfoKey;
 
 - (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
                           fileLocation:(NSURL *)fileLocation
-                              progress:(void (^)(POSHTTPTaskProgress *progress))progress
+                              progress:(void (^)(POSHTTPRequestProgress *progress))progress
                           headerFields:(NSDictionary *)headerFields {
     POSRX_CHECK(fileLocation);
     if (self = [super initWithType:POSHTTPRequestTypePUT

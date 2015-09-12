@@ -8,7 +8,7 @@
 
 #import "POSHTTPRequest.h"
 
-@class POSHTTPTaskProgress;
+@class POSHTTPRequestProgress;
 
 /// Protocol for making background upload requests.
 @protocol POSHTTPBackgroundUpload <POSHTTPRequest, NSCoding>
@@ -20,7 +20,7 @@
 @property (nonatomic, readonly) id<NSObject, NSCoding> userInfo;
 
 /// Uploading progress handler.
-@property (nonatomic, readonly, copy) void (^progress)(POSHTTPTaskProgress *progress);
+@property (nonatomic, readonly, copy) void (^progress)(POSHTTPRequestProgress *progress);
 
 @end
 
@@ -32,7 +32,7 @@
 /// The designated initializer.
 - (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
                           fileLocation:(NSURL *)fileLocation
-                              progress:(void (^)(POSHTTPTaskProgress *progress))progress
+                              progress:(void (^)(POSHTTPRequestProgress *progress))progress
                           headerFields:(NSDictionary *)headerFields;
 
 @end
@@ -49,7 +49,7 @@
 @property (nonatomic) id<NSObject, NSCoding> userInfo;
 
 /// Uploading progress handler.
-@property (nonatomic, copy) void (^progress)(POSHTTPTaskProgress *progress);
+@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
 
 /// The designated initializer.
 - (instancetype)initFileLocation:(NSURL *)fileLocation;
@@ -62,7 +62,7 @@
 @interface POSRecoveredHTTPBackgroundUpload : POSHTTPBackgroundUpload
 
 /// Uploading progress handler.
-@property (nonatomic, copy) void (^progress)(POSHTTPTaskProgress *progress);
+@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
 
 /// The designated initializer.
 - (instancetype)initWithRecoveredTask:(NSURLSessionUploadTask *)sessionTask;

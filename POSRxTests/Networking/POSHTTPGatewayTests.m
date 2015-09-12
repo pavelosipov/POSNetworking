@@ -25,7 +25,9 @@
 }
 
 - (void)tearDown {
-    XCTAssert([POSAllocationTracker instanceCountForClass:POSTask.class] == 0);
+    XCTAssert([POSAllocationTracker instanceCountForClass:POSHTTPRequest.class] == 0);
+    XCTAssert([POSAllocationTracker instanceCountForClass:RACMulticastConnection.class] == 0);
+    XCTAssert([POSAllocationTracker instanceCountForClass:RACSignal.class] == 0);
     XCTAssert([POSAllocationTracker instanceCountForClass:RACDisposable.class] == 0);
     [OHHTTPStubs removeAllStubs];
     [super tearDown];

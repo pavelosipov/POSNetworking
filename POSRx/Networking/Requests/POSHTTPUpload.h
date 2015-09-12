@@ -8,7 +8,7 @@
 
 #import "POSHTTPRequest.h"
 
-@class POSHTTPTaskProgress;
+@class POSHTTPRequestProgress;
 
 /// Protocol for making foreground upload requests.
 @protocol POSHTTPUpload <POSHTTPRequest>
@@ -17,7 +17,7 @@
 @property (nonatomic, readonly, copy) NSInputStream *(^bodyStream)();
 
 /// Uploading progress handler.
-@property (nonatomic, readonly, copy) void (^progress)(POSHTTPTaskProgress *progress);
+@property (nonatomic, readonly, copy) void (^progress)(POSHTTPRequestProgress *progress);
 
 @end
 
@@ -29,7 +29,7 @@
 /// The designated initializer for foreground upload.
 - (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
                             bodyStream:(NSInputStream *(^)())bodyStream
-                              progress:(void (^)(POSHTTPTaskProgress *progress))progress
+                              progress:(void (^)(POSHTTPRequestProgress *progress))progress
                           headerFields:(NSDictionary *)headerFields;
 
 /// The designated initializer for foreground upload.
@@ -45,7 +45,7 @@
 @property (nonatomic, copy) NSInputStream *(^bodyStream)();
 
 /// Uploading progress handler.
-@property (nonatomic, copy) void (^progress)(POSHTTPTaskProgress *progress);
+@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
 
 /// Creates HTTP PUT request without HTTPBody or HTTPBodyStream.
 - (instancetype)init;

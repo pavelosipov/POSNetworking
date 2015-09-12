@@ -39,7 +39,7 @@
 
 @interface POSHTTPDownload ()
 @property (nonatomic, copy) void (^destination)(NSURL *location);
-@property (nonatomic, copy) void (^progress)(POSHTTPTaskProgress *progress);
+@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
 @end
 
 @implementation POSHTTPDownload
@@ -48,7 +48,7 @@
 
 - (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
                            destination:(void (^)(NSURL *))destination
-                              progress:(void (^)(POSHTTPTaskProgress *progress))progress
+                              progress:(void (^)(POSHTTPRequestProgress *progress))progress
                           headerFields:(NSDictionary *)headerFields {
     if (self = [super initWithType:POSHTTPRequestTypeGET
                     endpointMethod:endpointMethod

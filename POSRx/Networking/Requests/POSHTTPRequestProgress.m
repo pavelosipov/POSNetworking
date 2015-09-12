@@ -1,14 +1,14 @@
 //
-//  POSHTTPTaskProgress.m
+//  POSHTTPRequestProgress.m
 //  POSRx
 //
 //  Created by Pavel Osipov on 18.07.13.
 //  Copyright (c) 2015 Pavel Osipov. All rights reserved.
 //
 
-#import "POSHTTPTaskProgress.h"
+#import "POSHTTPRequestProgress.h"
 
-@implementation POSHTTPTaskProgress
+@implementation POSHTTPRequestProgress
 
 - (instancetype)initWithReadyUnits:(uint64_t)readyUnits totalUnits:(uint64_t)totalUnits {
     if (self = [super init]) {

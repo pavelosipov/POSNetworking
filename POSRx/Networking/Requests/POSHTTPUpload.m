@@ -50,7 +50,7 @@
 
 @interface POSHTTPUpload ()
 @property (nonatomic, copy) NSInputStream *(^bodyStream)();
-@property (nonatomic, copy) void (^progress)(POSHTTPTaskProgress *progress);
+@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
 @end
 
 @implementation POSHTTPUpload
@@ -62,7 +62,7 @@ POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
 
 - (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
                             bodyStream:(NSInputStream *(^)())bodyStream
-                              progress:(void (^)(POSHTTPTaskProgress *))progress
+                              progress:(void (^)(POSHTTPRequestProgress *))progress
                           headerFields:(NSDictionary *)headerFields {
     POSRX_CHECK(bodyStream);
     if (self = [super initWithType:POSHTTPRequestTypePUT
