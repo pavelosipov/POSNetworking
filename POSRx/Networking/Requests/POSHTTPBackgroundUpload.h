@@ -61,6 +61,12 @@
 /// Request to make background uploads using nsurlsessiond deamon.
 @interface POSRecoveredHTTPBackgroundUpload : POSHTTPBackgroundUpload
 
+/// Target host.
+@property (nonatomic, readonly) NSURL *hostURL;
+
+/// Options which were used to run that request.
+@property (nonatomic, readonly) POSHTTPRequestOptions *options;
+
 /// Uploading progress handler.
 @property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
 

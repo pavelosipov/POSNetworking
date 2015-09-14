@@ -73,7 +73,6 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
                     toHost:(NSURL *)hostURL
                    options:(POSHTTPRequestExecutionOptions *)options {
     POSRX_CHECK(request);
-    POSRX_CHECK(hostURL);
     RACSignal *signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         id<POSURLSessionTask> sessionTask = [request taskWithURL:hostURL
                                                       forGateway:self
@@ -119,12 +118,6 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
         multicast:RACReplaySubject.subject];
     [connection connect];
     return connection.signal;
-
-//  TODO: may be it will be better if any subscriber will be able to cancel signal.
-//  return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-//      [connection.signal subscribe:subscriber];
-//      return connectionDisposable;
-//  }];
 }
 
 - (void)recoverBackgroundUploadRequestsUsingBlock:(void(^)(NSArray *uploadRequests))block {

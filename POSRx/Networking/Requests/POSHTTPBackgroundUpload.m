@@ -183,9 +183,11 @@ static char kPOSUserInfoKey;
         return nil;
     }
     if (self = [super initWithRequest:description.request]) {
+        _sessionTask = sessionTask;
+        _hostURL = description.hostURL;
+        _options = description.options;
         self.fileLocation = description.request.fileLocation;
         self.userInfo = description.request.userInfo;
-        _sessionTask = sessionTask;
     }
     return self;
 }
