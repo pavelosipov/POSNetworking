@@ -71,7 +71,6 @@
 #pragma mark -
 
 @implementation POSMutableHTTPDownload
-@dynamic fileHandler;
 
 #pragma mark Lifecycle
 
