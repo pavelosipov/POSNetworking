@@ -20,7 +20,6 @@
 @end
 
 @implementation POSHTTPRequest (POSHTTPDownload)
-@dynamic progressHandler;
 @dynamic fileHandler;
 
 - (id<POSURLSessionTask>)downloadTaskWithURL:(NSURL *)hostURL
@@ -28,7 +27,6 @@
                                      options:(POSHTTPRequestOptions *)options {
     NSMutableURLRequest *request = [self requestWithURL:hostURL options:options];
     id<POSURLSessionTask> task = [gateway.foregroundSession downloadTaskWithRequest:request];
-    task.posrx_downloadProgressHandler = self.progressHandler;
     task.posrx_downloadCompletionHandler = self.fileHandler;
     return task;
 }
@@ -39,7 +37,6 @@
 
 @interface POSHTTPDownload ()
 @property (nonatomic, copy) void (^fileHandler)(NSURL *location);
-@property (nonatomic, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 @end
 
 @implementation POSHTTPDownload
@@ -53,9 +50,10 @@
     if (self = [super initWithType:POSHTTPRequestTypeGET
                     endpointMethod:endpointMethod
                               body:nil
-                      headerFields:headerFields]) {
+                      headerFields:headerFields
+                  downloadProgress:progress
+                    uploadProgress:nil]) {
         _fileHandler = [destination copy];
-        _progressHandler = [progress copy];
     }
     return self;
 }
@@ -73,7 +71,6 @@
 #pragma mark -
 
 @implementation POSMutableHTTPDownload
-@dynamic progressHandler;
 @dynamic fileHandler;
 
 #pragma mark Lifecycle

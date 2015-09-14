@@ -89,6 +89,12 @@ POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(PO
         if (options.HTTP.allowUntrustedSSLCertificates) {
             sessionTask.posrx_allowUntrustedSSLCertificates = options.HTTP.allowUntrustedSSLCertificates;
         }
+        if (request.downloadProgressHandler) {
+            sessionTask.posrx_downloadProgressHandler = request.downloadProgressHandler;
+        }
+        if (request.uploadProgressHandler) {
+            sessionTask.posrx_uploadProgressHandler = request.uploadProgressHandler;
+        }
         sessionTask.posrx_completionHandler = ^(NSError *error) {
             @strongify(sessionTask);
             if (!error) {

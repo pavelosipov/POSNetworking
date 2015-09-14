@@ -19,9 +19,6 @@
 /// Additional information which will be persisted in request even between app launches.
 @property (nonatomic, readonly) id<NSObject, NSCoding> userInfo;
 
-/// Uploading progress handler.
-@property (nonatomic, readonly, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
-
 @end
 
 #pragma mark -
@@ -48,9 +45,6 @@
 /// Additional information which will be persisted in request even between app launches.
 @property (nonatomic) id<NSObject, NSCoding> userInfo;
 
-/// Uploading progress handler.
-@property (nonatomic, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
-
 /// The designated initializer.
 - (instancetype)initFileLocation:(NSURL *)fileLocation;
 
@@ -66,9 +60,6 @@
 
 /// Options which were used to run that request.
 @property (nonatomic, readonly) POSHTTPRequestOptions *options;
-
-/// Uploading progress handler.
-@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
 
 /// The designated initializer.
 - (instancetype)initWithRecoveredTask:(NSURLSessionUploadTask *)sessionTask;

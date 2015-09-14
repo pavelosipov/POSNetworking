@@ -25,7 +25,6 @@
 
 @implementation POSHTTPRequest (POSHTTPUpload)
 @dynamic bodyStreamBuilder;
-@dynamic progressHandler;
 
 - (id<POSURLSessionTask>)uploadTaskWithURL:(NSURL *)hostURL
                                 forGateway:(id<POSHTTPGateway>)gateway
@@ -40,7 +39,6 @@
     } else {
         task = [gateway.foregroundSession uploadTaskWithStreamedRequest:request];
     }
-    task.posrx_uploadProgressHandler = self.progressHandler;
     return task;
 }
 
@@ -50,15 +48,25 @@
 
 @interface POSHTTPUpload ()
 @property (nonatomic, copy) NSInputStream *(^bodyStreamBuilder)();
-@property (nonatomic, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 @end
 
 @implementation POSHTTPUpload
+
+POSRX_DEADLY_INITIALIZER(init)
+
+POSRX_DEADLY_INITIALIZER(initWithRequest:(id<POSHTTPRequest>)request)
 
 POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
                          endpointMethod:(NSString *)endpointMethod
                          body:(NSData *)body
                          headerFields:(NSDictionary *)headerFields)
+
+POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
+                         endpointMethod:(NSString *)endpointMethod
+                         body:(NSData *)body
+                         headerFields:(NSDictionary *)headerFields
+                         downloadProgress:(void (^)(POSHTTPRequestProgress *))downloadProgress
+                         uploadProgress:(void (^)(POSHTTPRequestProgress *))uploadProgress)
 
 - (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
                             bodyStream:(NSInputStream *(^)())bodyStream
@@ -68,9 +76,10 @@ POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
     if (self = [super initWithType:POSHTTPRequestTypePUT
                     endpointMethod:endpointMethod
                               body:nil
-                      headerFields:headerFields]) {
+                      headerFields:headerFields
+                  downloadProgress:nil
+                    uploadProgress:progress]) {
         _bodyStreamBuilder = [bodyStream copy];
-        _progressHandler = [progress copy];
     }
     return self;
 }

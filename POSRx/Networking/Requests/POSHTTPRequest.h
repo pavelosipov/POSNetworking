@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class POSHTTPRequestOptions;
+@class POSHTTPRequestProgress;
 
 /// Available types of HTTP requests.
 typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
@@ -33,6 +34,12 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 /// Request's headers, which will be appedned to or override default host headers. May be nil.
 @property (nonatomic, readonly) NSDictionary *headerFields;
 
+/// Notifies how many bytes were received from remote host.
+@property (nonatomic, readonly, copy) void (^downloadProgressHandler)(POSHTTPRequestProgress *progress);
+
+/// Notifies how many bytes were sent to remote host.
+@property (nonatomic, readonly, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
+
 @end
 
 #pragma mark -
@@ -53,6 +60,14 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
                         body:(NSData *)body
                 headerFields:(NSDictionary *)headerFields;
 
+/// The designated initializer.
+- (instancetype)initWithType:(POSHTTPRequestType)type
+              endpointMethod:(NSString *)endpointMethod
+                        body:(NSData *)body
+                headerFields:(NSDictionary *)headerFields
+            downloadProgress:(void (^)(POSHTTPRequestProgress *progress))downloadProgress
+              uploadProgress:(void (^)(POSHTTPRequestProgress *progress))uploadProgress;
+
 @end
 
 #pragma mark -
@@ -71,5 +86,11 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 
 /// Request's headers, which will be appedned to or override default host headers. May be nil.
 @property (nonatomic, copy) NSDictionary *headerFields;
+
+/// Notifies how many bytes were received from remote host.
+@property (nonatomic, copy) void (^downloadProgressHandler)(POSHTTPRequestProgress *progress);
+
+/// Notifies how many bytes were sent to remote host.
+@property (nonatomic, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
 
 @end

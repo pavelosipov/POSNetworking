@@ -8,12 +8,7 @@
 
 #import "POSHTTPRequest.h"
 
-@class POSHTTPRequestProgress;
-
 @protocol POSHTTPDownload <POSHTTPRequest>
-
-/// Download progress handler.
-@property (nonatomic, readonly, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 
 /// Handler of the downloaded file at specified path.
 @property (nonatomic, readonly, copy) void (^fileHandler)(NSURL *location);
@@ -37,9 +32,6 @@
 
 /// Mutable version of POSHTTPDownload request.
 @interface POSMutableHTTPDownload : POSMutableHTTPRequest <POSHTTPDownload>
-
-/// Download progress handler.
-@property (nonatomic, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 
 /// Handler of the downloaded file at specified path.
 @property (nonatomic, copy) void (^fileHandler)(NSURL *location);
