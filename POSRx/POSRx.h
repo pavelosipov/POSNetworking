@@ -8,6 +8,7 @@
 
 // Networking headers
 #import <POSRx/POSHTTPGateway.h>
+#import <POSRx/POSHTTPDownload.h>
 #import <POSRx/POSHTTPUpload.h>
 #import <POSRx/POSHTTPBackgroundUpload.h>
 #import <POSRx/POSHTTPRequestExecutionOptions.h>

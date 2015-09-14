@@ -20,7 +20,7 @@
 @property (nonatomic, readonly) id<NSObject, NSCoding> userInfo;
 
 /// Uploading progress handler.
-@property (nonatomic, readonly, copy) void (^progress)(POSHTTPRequestProgress *progress);
+@property (nonatomic, readonly, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 
 @end
 
@@ -49,7 +49,7 @@
 @property (nonatomic) id<NSObject, NSCoding> userInfo;
 
 /// Uploading progress handler.
-@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
+@property (nonatomic, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 
 /// The designated initializer.
 - (instancetype)initFileLocation:(NSURL *)fileLocation;

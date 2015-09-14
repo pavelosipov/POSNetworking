@@ -24,14 +24,14 @@
 @end
 
 @implementation POSHTTPRequest (POSHTTPUpload)
-@dynamic bodyStream;
-@dynamic progress;
+@dynamic bodyStreamBuilder;
+@dynamic progressHandler;
 
 - (id<POSURLSessionTask>)uploadTaskWithURL:(NSURL *)hostURL
                                 forGateway:(id<POSHTTPGateway>)gateway
                                    options:(POSHTTPRequestOptions *)options {
     NSMutableURLRequest *request = [self requestWithURL:hostURL options:options];
-    request.HTTPBodyStream = self.bodyStream();
+    request.HTTPBodyStream = self.bodyStreamBuilder();
     id<POSURLSessionTask> task;
     if ([POSSystemInfo isOutdatedOS]) {
         task = [[NSURLConnection alloc] initWithRequest:request
@@ -40,7 +40,7 @@
     } else {
         task = [gateway.foregroundSession uploadTaskWithStreamedRequest:request];
     }
-    task.posrx_uploadProgressHandler = self.progress;
+    task.posrx_uploadProgressHandler = self.progressHandler;
     return task;
 }
 
@@ -49,8 +49,8 @@
 #pragma mark -
 
 @interface POSHTTPUpload ()
-@property (nonatomic, copy) NSInputStream *(^bodyStream)();
-@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
+@property (nonatomic, copy) NSInputStream *(^bodyStreamBuilder)();
+@property (nonatomic, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 @end
 
 @implementation POSHTTPUpload
@@ -69,8 +69,8 @@ POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
                     endpointMethod:endpointMethod
                               body:nil
                       headerFields:headerFields]) {
-        _bodyStream = [bodyStream copy];
-        _progress = [progress copy];
+        _bodyStreamBuilder = [bodyStream copy];
+        _progressHandler = [progress copy];
     }
     return self;
 }

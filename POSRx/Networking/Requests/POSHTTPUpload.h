@@ -14,10 +14,10 @@
 @protocol POSHTTPUpload <POSHTTPRequest>
 
 /// Stream for the HTTP request's body.
-@property (nonatomic, readonly, copy) NSInputStream *(^bodyStream)();
+@property (nonatomic, readonly, copy) NSInputStream *(^bodyStreamBuilder)();
 
 /// Uploading progress handler.
-@property (nonatomic, readonly, copy) void (^progress)(POSHTTPRequestProgress *progress);
+@property (nonatomic, readonly, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 
 @end
 
@@ -42,10 +42,10 @@
 @interface POSMutableHTTPUpload : POSMutableHTTPRequest <POSHTTPUpload>
 
 /// Stream for the HTTP request's body.
-@property (nonatomic, copy) NSInputStream *(^bodyStream)();
+@property (nonatomic, copy) NSInputStream *(^bodyStreamBuilder)();
 
 /// Uploading progress handler.
-@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
+@property (nonatomic, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 
 /// Creates HTTP PUT request without HTTPBody or HTTPBodyStream.
 - (instancetype)init;

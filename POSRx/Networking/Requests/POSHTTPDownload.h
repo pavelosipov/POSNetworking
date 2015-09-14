@@ -13,10 +13,10 @@
 @protocol POSHTTPDownload <POSHTTPRequest>
 
 /// Download progress handler.
-@property (nonatomic, readonly, copy) void (^progress)(POSHTTPRequestProgress *progress);
+@property (nonatomic, readonly, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 
 /// Handler of the downloaded file at specified path.
-@property (nonatomic, readonly, copy) void (^destination)(NSURL *location);
+@property (nonatomic, readonly, copy) void (^fileHandler)(NSURL *location);
 
 @end
 
@@ -39,10 +39,10 @@
 @interface POSMutableHTTPDownload : POSMutableHTTPRequest <POSHTTPDownload>
 
 /// Download progress handler.
-@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
+@property (nonatomic, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 
 /// Handler of the downloaded file at specified path.
-@property (nonatomic, copy) void (^destination)(NSURL *location);
+@property (nonatomic, copy) void (^fileHandler)(NSURL *location);
 
 /// Creates HTTP GET request.
 - (instancetype)init;

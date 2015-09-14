@@ -30,7 +30,7 @@ static char kPOSUserInfoKey;
 @end
 
 @implementation POSHTTPRequest (POSHTTPBackgroundUpload)
-@dynamic progress;
+@dynamic progressHandler;
 
 - (NSURL *)fileLocation {
     return objc_getAssociatedObject(self, &kPOSFileLocationKey);
@@ -73,7 +73,7 @@ static char kPOSUserInfoKey;
     description.hostURL = hostURL;
     description.options = options;
     task.taskDescription = [description asString];
-    task.posrx_uploadProgressHandler = self.progress;
+    task.posrx_uploadProgressHandler = self.progressHandler;
     return task;
 }
 
@@ -82,7 +82,7 @@ static char kPOSUserInfoKey;
 #pragma mark -
 
 @interface POSHTTPBackgroundUpload ()
-@property (nonatomic, copy) void (^progress)(POSHTTPRequestProgress *progress);
+@property (nonatomic, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 @end
 
 @implementation POSHTTPBackgroundUpload
@@ -101,7 +101,7 @@ static char kPOSUserInfoKey;
                               body:nil
                       headerFields:headerFields]) {
         self.fileLocation = fileLocation;
-        _progress = [progress copy];
+        _progressHandler = [progress copy];
     }
     return self;
 }
