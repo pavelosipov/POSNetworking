@@ -61,6 +61,9 @@
 /// Options which were used to run that request.
 @property (nonatomic, readonly) POSHTTPRequestOptions *options;
 
+/// Notifies how many bytes were sent to remote host.
+@property (nonatomic, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
+
 /// The designated initializer.
 - (instancetype)initWithRecoveredTask:(NSURLSessionUploadTask *)sessionTask;
 

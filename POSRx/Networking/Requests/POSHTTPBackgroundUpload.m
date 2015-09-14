@@ -170,6 +170,7 @@ static char kPOSUserInfoKey;
 @end
 
 @implementation POSRecoveredHTTPBackgroundUpload
+@dynamic uploadProgressHandler;
 
 - (instancetype)initWithRecoveredTask:(NSURLSessionUploadTask *)sessionTask {
     POSRX_CHECK(sessionTask);
