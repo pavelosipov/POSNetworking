@@ -133,9 +133,12 @@ static char kPOSUserInfoKey;
 
 #pragma mark Lifecycle
 
-- (instancetype)initFileLocation:(NSURL *)fileLocation {
+- (instancetype)initWithFileLocation:(NSURL *)fileLocation {
     POSRX_CHECK(fileLocation);
-    if (self = [super init]) {
+    if (self = [super initWithType:POSHTTPRequestTypePUT
+                    endpointMethod:nil
+                              body:nil
+                      headerFields:nil]) {
         self.fileLocation = fileLocation;
     }
     return self;

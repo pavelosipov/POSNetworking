@@ -46,7 +46,7 @@
 @property (nonatomic) id<NSObject, NSCoding> userInfo;
 
 /// The designated initializer.
-- (instancetype)initFileLocation:(NSURL *)fileLocation;
+- (instancetype)initWithFileLocation:(NSURL *)fileLocation;
 
 @end
 
