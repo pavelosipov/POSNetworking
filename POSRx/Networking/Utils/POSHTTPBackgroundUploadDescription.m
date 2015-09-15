@@ -17,7 +17,6 @@
         _request = [aDecoder decodeObjectForKey:@"request"];
         _hostURL = [aDecoder decodeObjectForKey:@"hostURL"];
         _options = [aDecoder decodeObjectForKey:@"options"];
-        _userInfo = [aDecoder decodeObjectForKey:@"userInfo"];
     }
     return self;
 }
@@ -27,9 +26,6 @@
     [aCoder encodeObject:_hostURL forKey:@"hostURL"];
     if (_options) {
         [aCoder encodeObject:_options forKey:@"options"];
-    }
-    if (_userInfo) {
-        [aCoder encodeObject:_userInfo forKey:@"userInfo"];
     }
 }
 
