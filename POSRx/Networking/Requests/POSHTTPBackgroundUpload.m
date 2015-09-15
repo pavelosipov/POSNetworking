@@ -58,7 +58,7 @@ static char kPOSUserInfoKey;
 - (void)posrx_encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.fileLocation forKey:@"fileLocation"];
     if (self.userInfo) {
-        [aCoder encodeObject:self.fileLocation forKey:@"userInfo"];
+        [aCoder encodeObject:self.userInfo forKey:@"userInfo"];
     }
 }
 

@@ -16,7 +16,6 @@
 @property (nonatomic) id<POSHTTPBackgroundUpload> request;
 @property (nonatomic) NSURL *hostURL;
 @property (nonatomic) POSHTTPRequestOptions *options;
-@property (nonatomic) id<NSObject,NSCoding> userInfo;
 
 + (instancetype)fromString:(NSString *)description;
 - (NSString *)asString;
