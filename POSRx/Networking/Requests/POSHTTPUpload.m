@@ -34,7 +34,7 @@
     id<POSURLSessionTask> task;
     if ([POSSystemInfo isOutdatedOS]) {
         task = [[NSURLConnection alloc] initWithRequest:request
-                                               delegate:self
+                                               delegate:gateway
                                        startImmediately:NO];
     } else {
         task = [gateway.foregroundSession uploadTaskWithStreamedRequest:request];
