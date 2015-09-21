@@ -24,7 +24,7 @@
     if (self = [super init]) {
         _data = data;
         _metadata = [[NSHTTPURLResponse alloc]
-                     initWithURL:nil
+                     initWithURL:[[NSURL alloc] initWithString:@"http://unspecified.com"]
                      statusCode:200
                      HTTPVersion:@"1.1"
                      headerFields:[NSDictionary new]];
@@ -36,7 +36,7 @@
     if (self = [super init]) {
         _data = nil;
         _metadata = [[NSHTTPURLResponse alloc]
-                     initWithURL:nil
+                     initWithURL:[[NSURL alloc] initWithString:@"http://unspecified.com"]
                      statusCode:statusCode
                      HTTPVersion:@"1.1"
                      headerFields:[NSDictionary new]];

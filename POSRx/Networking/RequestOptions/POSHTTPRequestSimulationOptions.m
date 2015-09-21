@@ -82,15 +82,12 @@
         targetResponse = simulation.response;
         *stop = (simulation.weight > targetWeight);
     }];
-    if (!targetResponse.metadata.URL) {
-        NSHTTPURLResponse *metadata = [[NSHTTPURLResponse alloc]
-                                       initWithURL:URL
-                                       statusCode:targetResponse.metadata.statusCode
-                                       HTTPVersion:@"1.1"
-                                       headerFields:targetResponse.metadata.allHeaderFields];
-        return [[POSHTTPResponse alloc] initWithData:targetResponse.data metadata:metadata];
-    }
-    return targetResponse;
+    NSHTTPURLResponse *metadata = [[NSHTTPURLResponse alloc]
+                                   initWithURL:URL
+                                   statusCode:targetResponse.metadata.statusCode
+                                   HTTPVersion:@"1.1"
+                                   headerFields:targetResponse.metadata.allHeaderFields];
+    return [[POSHTTPResponse alloc] initWithData:targetResponse.data metadata:metadata];
 }
 
 - (NSDictionary *)responses {
