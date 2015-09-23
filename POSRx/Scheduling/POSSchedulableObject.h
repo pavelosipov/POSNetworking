@@ -7,6 +7,7 @@
 //
 
 #import "POSSchedulable.h"
+#import "NSException+POSRx.h"
 
 @interface POSScheduleProtectionOptions : NSObject
 
@@ -30,3 +31,8 @@
 + (RACSequence *)selectorsForProtocol:(Protocol *)aProtocol;
 
 @end
+
+#define POSRX_DEADLYFY_SCHEDULABLE_INITIALIZERS \
+    POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler) \
+    POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler \
+                                       options:(POSScheduleProtectionOptions *)options)

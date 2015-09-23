@@ -39,8 +39,7 @@
 
 #pragma mark Lifecycle
 
-POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler)
-POSRX_DEADLY_INITIALIZER(initWithScheduler:(RACScheduler *)scheduler options:(POSScheduleProtectionOptions *)options)
+POSRX_DEADLYFY_SCHEDULABLE_INITIALIZERS
 
 - (instancetype)initWithScheduler:(RACScheduler *)scheduler backgroundSessionIdentifier:(NSString *)ID {
     if (self = [super initWithScheduler:scheduler]) {
