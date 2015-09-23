@@ -20,3 +20,6 @@
 // Scheduling headers
 #import <POSRx/POSTask.h>
 #import <POSRx/POSSchedulableObject.h>
+
+// Utils headers
+#import <POSRx/NSException+POSRx.h>
