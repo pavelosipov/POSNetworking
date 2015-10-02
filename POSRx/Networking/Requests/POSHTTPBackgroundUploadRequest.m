@@ -64,9 +64,22 @@ static char kPOSUserInfoKey;
 
 - (id<POSURLSessionTask>)backgroundUploadTaskWithURL:(NSURL *)hostURL
                                           forGateway:(id<POSHTTPGateway>)gateway
-                                             options:(POSHTTPRequestOptions *)options {
+                                             options:(POSHTTPRequestOptions *)options
+                                               error:(NSError **)error {
     NSMutableURLRequest *request = [self requestWithURL:hostURL options:options];
-    NSURLSessionUploadTask *task = [gateway.backgroundSession uploadTaskWithRequest:request fromFile:self.fileLocation];
+    NSURLSessionUploadTask *task = nil;
+    for (NSUInteger attempts = 0; !task && attempts < 3; ++attempts) {
+        task = [gateway.backgroundSession uploadTaskWithRequest:request fromFile:self.fileLocation];
+    }
+    if (!task) {
+        if (error) {
+            *error = [NSError
+                      errorWithDomain:POSRxErrorDomain
+                      code:POSHTTPSystemError
+                      userInfo:@{NSLocalizedDescriptionKey: @"Background session is unable to create NSURLSessionUploadTask."}];
+        }
+        return nil;
+    }
     POSHTTPBackgroundUploadDescription *description = [POSHTTPBackgroundUploadDescription new];
     description.request = self;
     description.hostURL = hostURL;
@@ -119,8 +132,9 @@ static char kPOSUserInfoKey;
 
 - (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
                           forGateway:(id<POSHTTPGateway>)gateway
-                             options:(POSHTTPRequestOptions *)options {
-    return [self backgroundUploadTaskWithURL:hostURL forGateway:gateway options:options];
+                             options:(POSHTTPRequestOptions *)options
+                               error:(NSError **)error {
+    return [self backgroundUploadTaskWithURL:hostURL forGateway:gateway options:options error:error];
 }
 
 @end
@@ -160,8 +174,9 @@ static char kPOSUserInfoKey;
 
 - (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
                           forGateway:(id<POSHTTPGateway>)gateway
-                             options:(POSHTTPRequestOptions *)options {
-    return [self backgroundUploadTaskWithURL:hostURL forGateway:gateway options:options];
+                             options:(POSHTTPRequestOptions *)options
+                               error:(NSError **)error {
+    return [self backgroundUploadTaskWithURL:hostURL forGateway:gateway options:options error:error];
 }
 
 @end
@@ -196,7 +211,8 @@ static char kPOSUserInfoKey;
 
 - (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
                           forGateway:(id<POSHTTPGateway>)gateway
-                             options:(POSHTTPRequestOptions *)options {
+                             options:(POSHTTPRequestOptions *)options
+                               error:(NSError **)error {
     return _sessionTask;
 }
 

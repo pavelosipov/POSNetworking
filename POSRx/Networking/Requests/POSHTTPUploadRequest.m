@@ -86,7 +86,8 @@ POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
 
 - (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
                           forGateway:(id<POSHTTPGateway>)gateway
-                             options:(POSHTTPRequestOptions *)options {
+                             options:(POSHTTPRequestOptions *)options
+                               error:(NSError **)error {
     return [self uploadTaskWithURL:hostURL forGateway:gateway options:options];
 }
 
@@ -105,7 +106,8 @@ POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
 
 - (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
                           forGateway:(id<POSHTTPGateway>)gateway
-                             options:(POSHTTPRequestOptions *)options {
+                             options:(POSHTTPRequestOptions *)options
+                               error:(NSError **)error {
     return [self uploadTaskWithURL:hostURL forGateway:gateway options:options];
 }
 

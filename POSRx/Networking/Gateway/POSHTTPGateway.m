@@ -19,11 +19,16 @@
 #import "NSException+POSRx.h"
 #import "NSURLCache+POSRx.h"
 
+NSString * const POSRxErrorDomain = @"com.github.pavelosipov.POSRxErrorDomain";
+
+NSInteger const POSHTTPSystemError = 101;
+
 /// Exposing some private API of POSHTTPRequest.
 @interface POSHTTPRequest (Hidden)
 - (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
                           forGateway:(id<POSHTTPGateway>)gateway
-                             options:(POSHTTPRequestOptions *)options;
+                             options:(POSHTTPRequestOptions *)options
+                               error:(NSError **)error;
 @end
 
 #pragma mark -
@@ -73,9 +78,16 @@ POSRX_DEADLYFY_SCHEDULABLE_INITIALIZERS
                    options:(POSHTTPRequestExecutionOptions *)options {
     POSRX_CHECK(request);
     RACSignal *signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        NSError *error = nil;
         id<POSURLSessionTask> sessionTask = [request taskWithURL:hostURL
                                                       forGateway:self
-                                                         options:options.HTTP];
+                                                         options:options.HTTP
+                                                           error:&error];
+        if (!sessionTask) {
+            [subscriber sendError:error];
+            [subscriber sendCompleted];
+            return nil;
+        }
         POSRX_CHECK(sessionTask);
         POSHTTPResponse *simulatedResponse = [options.simulation probeSimulationWithURL:sessionTask.posrx_originalRequest.URL];
         if (simulatedResponse) {

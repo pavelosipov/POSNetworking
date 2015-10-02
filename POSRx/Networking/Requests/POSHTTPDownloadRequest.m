@@ -62,7 +62,8 @@
 
 - (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
                           forGateway:(id<POSHTTPGateway>)gateway
-                             options:(POSHTTPRequestOptions *)options {
+                             options:(POSHTTPRequestOptions *)options
+                               error:(NSError **)error {
     return [self downloadTaskWithURL:hostURL forGateway:gateway options:options];
 }
 
@@ -85,7 +86,8 @@
 
 - (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
                           forGateway:(id<POSHTTPGateway>)gateway
-                             options:(POSHTTPRequestOptions *)options {
+                             options:(POSHTTPRequestOptions *)options
+                               error:(NSError **)error {
     return [self downloadTaskWithURL:hostURL forGateway:gateway options:options];
 }
 

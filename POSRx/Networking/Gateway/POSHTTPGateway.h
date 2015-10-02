@@ -8,6 +8,9 @@
 
 #import "POSSchedulableObject.h"
 
+FOUNDATION_EXTERN NSString * const POSRxErrorDomain;
+FOUNDATION_EXTERN NSInteger const POSHTTPSystemError;
+
 #pragma mark - Gateway
 
 @class POSHTTPRequest;

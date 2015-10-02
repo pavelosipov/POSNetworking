@@ -114,7 +114,8 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 
 - (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
                           forGateway:(id<POSHTTPGateway>)gateway
-                             options:(POSHTTPRequestOptions *)options {
+                             options:(POSHTTPRequestOptions *)options
+                               error:(NSError **)error {
     NSURLRequest *request = [self requestWithURL:hostURL options:options];
     return [gateway.foregroundSession dataTaskWithRequest:request];
 }
