@@ -115,7 +115,8 @@ POSRX_DEADLYFY_SCHEDULABLE_INITIALIZERS
                 [subscriber sendNext:response];
                 [subscriber sendCompleted];
             } else {
-                [subscriber sendError:[error errorWithURL:sessionTask.posrx_originalRequest.URL]];
+                NSURL *issuedURL = sessionTask.posrx_originalRequest.URL ?: hostURL;
+                [subscriber sendError:[error errorWithURL:issuedURL]];
             }
         };
         sessionTask.posrx_dataHandler = ^(NSData *data) {
