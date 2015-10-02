@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol POSHTTPBackgroundUpload;
+@protocol POSHTTPBackgroundUploadRequest;
 @class POSHTTPRequestOptions;
 
 @interface POSHTTPBackgroundUploadDescription : NSObject <NSCoding>
 
-@property (nonatomic) id<POSHTTPBackgroundUpload> request;
+@property (nonatomic) id<POSHTTPBackgroundUploadRequest> request;
 @property (nonatomic) NSURL *hostURL;
 @property (nonatomic) POSHTTPRequestOptions *options;
 

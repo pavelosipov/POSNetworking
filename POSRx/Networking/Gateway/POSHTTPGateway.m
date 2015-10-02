@@ -7,7 +7,7 @@
 //
 
 #import "POSHTTPGateway.h"
-#import "POSHTTPBackgroundUpload.h"
+#import "POSHTTPBackgroundUploadRequest.h"
 #import "POSHTTPRequestExecutionOptions.h"
 #import "POSHTTPRequestSimulationOptions.h"
 #import "POSHTTPRequestOptions.h"
@@ -130,7 +130,7 @@ POSRX_DEADLYFY_SCHEDULABLE_INITIALIZERS
     [_backgroundSession getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
         NSMutableArray *requests = [NSMutableArray new];
         for (NSURLSessionUploadTask *task in uploadTasks) {
-            POSRecoveredHTTPBackgroundUpload *request = [[POSRecoveredHTTPBackgroundUpload alloc]
+            POSRecoveredHTTPBackgroundUploadRequest *request = [[POSRecoveredHTTPBackgroundUploadRequest alloc]
                                                          initWithRecoveredTask:task];
             if (request) {
                 [requests addObject:request];

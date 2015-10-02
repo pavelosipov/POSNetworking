@@ -1,5 +1,5 @@
 //
-//  POSHTTPDownload.h
+//  POSHTTPDownloadRequest.h
 //  POSRx
 //
 //  Created by Pavel Osipov on 11.09.15.
@@ -8,7 +8,7 @@
 
 #import "POSHTTPRequest.h"
 
-@protocol POSHTTPDownload <POSHTTPRequest>
+@protocol POSHTTPDownloadRequest <POSHTTPRequest>
 
 /// Handler of the downloaded file at specified path.
 @property (nonatomic, readonly, copy) void (^fileHandler)(NSURL *location);
@@ -18,7 +18,7 @@
 #pragma mark -
 
 /// Request to make foreground downloads using GET HTTP method.
-@interface POSHTTPDownload : POSHTTPRequest <POSHTTPDownload>
+@interface POSHTTPDownloadRequest : POSHTTPRequest <POSHTTPDownloadRequest>
 
 /// The designated initializer for foreground download.
 - (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
@@ -31,7 +31,7 @@
 #pragma mark -
 
 /// Mutable version of POSHTTPDownload request.
-@interface POSMutableHTTPDownload : POSMutableHTTPRequest <POSHTTPDownload>
+@interface POSMutableHTTPDownloadRequest : POSMutableHTTPRequest <POSHTTPDownloadRequest>
 
 /// Handler of the downloaded file at specified path.
 @property (nonatomic, copy) void (^fileHandler)(NSURL *location);

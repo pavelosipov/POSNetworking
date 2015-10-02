@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Pavel Osipov. All rights reserved.
 //
 
-#import "POSHTTPUpload.h"
+#import "POSHTTPUploadRequest.h"
 #import "POSHTTPGateway.h"
 #import "NSException+POSRx.h"
 #import "NSObject+POSRx.h"
@@ -20,7 +20,7 @@
 
 #pragma mark -
 
-@interface POSHTTPRequest (POSHTTPUpload) <POSHTTPUpload>
+@interface POSHTTPRequest (POSHTTPUpload) <POSHTTPUploadRequest>
 @end
 
 @implementation POSHTTPRequest (POSHTTPUpload)
@@ -46,11 +46,11 @@
 
 #pragma mark -
 
-@interface POSHTTPUpload ()
+@interface POSHTTPUploadRequest ()
 @property (nonatomic, copy) NSInputStream *(^bodyStreamBuilder)();
 @end
 
-@implementation POSHTTPUpload
+@implementation POSHTTPUploadRequest
 
 POSRX_DEADLY_INITIALIZER(init)
 
@@ -94,7 +94,7 @@ POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
 
 #pragma mark -
 
-@implementation POSMutableHTTPUpload
+@implementation POSMutableHTTPUploadRequest
 
 - (instancetype)init {
     return [super initWithType:POSHTTPRequestTypePUT

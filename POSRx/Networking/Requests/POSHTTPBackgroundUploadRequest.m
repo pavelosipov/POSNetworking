@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Pavel Osipov. All rights reserved.
 //
 
-#import "POSHTTPBackgroundUpload.h"
+#import "POSHTTPBackgroundUploadRequest.h"
 #import "POSHTTPBackgroundUploadDescription.h"
 #import "POSHTTPGateway.h"
 #import "NSException+POSRx.h"
@@ -24,7 +24,7 @@ static char kPOSUserInfoKey;
 
 #pragma mark -
 
-@interface POSHTTPRequest (POSHTTPBackgroundUpload) <POSHTTPBackgroundUpload>
+@interface POSHTTPRequest (POSHTTPBackgroundUpload) <POSHTTPBackgroundUploadRequest>
 @property (nonatomic, copy) NSURL *fileLocation;
 @property (nonatomic) id<NSObject, NSCoding> userInfo;
 @end
@@ -79,11 +79,11 @@ static char kPOSUserInfoKey;
 
 #pragma mark -
 
-@interface POSHTTPBackgroundUpload ()
+@interface POSHTTPBackgroundUploadRequest ()
 @property (nonatomic, copy) void (^progressHandler)(POSHTTPRequestProgress *progress);
 @end
 
-@implementation POSHTTPBackgroundUpload
+@implementation POSHTTPBackgroundUploadRequest
 @dynamic fileLocation;
 @dynamic userInfo;
 
@@ -127,7 +127,7 @@ static char kPOSUserInfoKey;
 
 #pragma mark -
 
-@implementation POSMutableHTTPBackgroundUpload
+@implementation POSMutableHTTPBackgroundUploadRequest
 @dynamic fileLocation;
 @dynamic userInfo;
 
@@ -168,11 +168,11 @@ static char kPOSUserInfoKey;
 
 #pragma mark -
 
-@interface POSRecoveredHTTPBackgroundUpload ()
+@interface POSRecoveredHTTPBackgroundUploadRequest ()
 @property (nonatomic) NSURLSessionUploadTask *sessionTask;
 @end
 
-@implementation POSRecoveredHTTPBackgroundUpload
+@implementation POSRecoveredHTTPBackgroundUploadRequest
 @dynamic uploadProgressHandler;
 
 - (instancetype)initWithRecoveredTask:(NSURLSessionUploadTask *)sessionTask {

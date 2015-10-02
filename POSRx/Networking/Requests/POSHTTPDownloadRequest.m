@@ -1,12 +1,12 @@
 //
-//  POSHTTPDownload.m
+//  POSHTTPDownloadRequest.m
 //  POSRx
 //
 //  Created by Pavel Osipov on 11.09.15.
 //  Copyright (c) 2015 Pavel Osipov. All rights reserved.
 //
 
-#import "POSHTTPDownload.h"
+#import "POSHTTPDownloadRequest.h"
 #import "POSHTTPGateway.h"
 #import "NSObject+POSRx.h"
 
@@ -16,7 +16,7 @@
 
 #pragma mark -
 
-@interface POSHTTPRequest (POSHTTPDownload) <POSHTTPDownload>
+@interface POSHTTPRequest (POSHTTPDownload) <POSHTTPDownloadRequest>
 @end
 
 @implementation POSHTTPRequest (POSHTTPDownload)
@@ -35,11 +35,11 @@
 
 #pragma mark -
 
-@interface POSHTTPDownload ()
+@interface POSHTTPDownloadRequest ()
 @property (nonatomic, copy) void (^fileHandler)(NSURL *location);
 @end
 
-@implementation POSHTTPDownload
+@implementation POSHTTPDownloadRequest
 
 #pragma mark Lifecycle
 
@@ -70,7 +70,7 @@
 
 #pragma mark -
 
-@implementation POSMutableHTTPDownload
+@implementation POSMutableHTTPDownloadRequest
 
 #pragma mark Lifecycle
 

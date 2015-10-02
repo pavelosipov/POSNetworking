@@ -8,10 +8,9 @@
 
 // Networking headers
 #import <POSRx/POSHTTPGateway.h>
-#import <POSRx/POSHTTPGET.h>
-#import <POSRx/POSHTTPDownload.h>
-#import <POSRx/POSHTTPUpload.h>
-#import <POSRx/POSHTTPBackgroundUpload.h>
+#import <POSRx/POSHTTPDownloadRequest.h>
+#import <POSRx/POSHTTPUploadRequest.h>
+#import <POSRx/POSHTTPBackgroundUploadRequest.h>
 #import <POSRx/POSHTTPRequestExecutionOptions.h>
 #import <POSRx/POSHTTPRequestSimulationOptions.h>
 #import <POSRx/POSHTTPRequestOptions.h>
@@ -23,4 +22,6 @@
 #import <POSRx/POSSchedulableObject.h>
 
 // Utils headers
+#import <POSRx/NSDictionary+POSRx.h>
 #import <POSRx/NSException+POSRx.h>
+#import <POSRx/NSURL+POSRx.h>

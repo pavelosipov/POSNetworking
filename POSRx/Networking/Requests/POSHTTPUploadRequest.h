@@ -9,7 +9,7 @@
 #import "POSHTTPRequest.h"
 
 /// Protocol for making foreground upload requests.
-@protocol POSHTTPUpload <POSHTTPRequest>
+@protocol POSHTTPUploadRequest <POSHTTPRequest>
 
 /// Stream for the HTTP request's body.
 @property (nonatomic, readonly, copy) NSInputStream *(^bodyStreamBuilder)();
@@ -19,7 +19,7 @@
 #pragma mark -
 
 /// Request to make foreground uploads using PUT HTTP method with multipart form data.
-@interface POSHTTPUpload : POSHTTPRequest <POSHTTPUpload>
+@interface POSHTTPUploadRequest : POSHTTPRequest <POSHTTPUploadRequest>
 
 /// The designated initializer for foreground upload.
 - (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
@@ -34,7 +34,7 @@
 #pragma mark -
 
 /// Mutable version of POSHTTPUpload request.
-@interface POSMutableHTTPUpload : POSMutableHTTPRequest <POSHTTPUpload>
+@interface POSMutableHTTPUploadRequest : POSMutableHTTPRequest <POSHTTPUploadRequest>
 
 /// Stream for the HTTP request's body.
 @property (nonatomic, copy) NSInputStream *(^bodyStreamBuilder)();

@@ -8,7 +8,7 @@
 
 #import "POSHTTPBackgroundUploadDescription.h"
 #import "POSHTTPRequestExecutionOptions.h"
-#import "POSHTTPBackgroundUpload.h"
+#import "POSHTTPBackgroundUploadRequest.h"
 
 @implementation POSHTTPBackgroundUploadDescription
 

@@ -11,7 +11,7 @@
 @class POSHTTPRequestProgress;
 
 /// Protocol for making background upload requests.
-@protocol POSHTTPBackgroundUpload <POSHTTPRequest, NSCoding>
+@protocol POSHTTPBackgroundUploadRequest <POSHTTPRequest, NSCoding>
 
 /// Location of uploading file in the application sandbox.
 @property (nonatomic, readonly, copy) NSURL *fileLocation;
@@ -24,7 +24,7 @@
 #pragma mark -
 
 /// Request to make background uploads using nsurlsessiond deamon.
-@interface POSHTTPBackgroundUpload : POSHTTPRequest <POSHTTPBackgroundUpload>
+@interface POSHTTPBackgroundUploadRequest : POSHTTPRequest <POSHTTPBackgroundUploadRequest>
 
 /// The designated initializer.
 - (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
@@ -37,7 +37,7 @@
 #pragma mark -
 
 /// Mutable version of POSHTTPBackgroundUploadRequest.
-@interface POSMutableHTTPBackgroundUpload : POSMutableHTTPRequest <POSHTTPBackgroundUpload>
+@interface POSMutableHTTPBackgroundUploadRequest : POSMutableHTTPRequest <POSHTTPBackgroundUploadRequest>
 
 /// Location of uploading file in the application sandbox.
 @property (nonatomic, copy) NSURL *fileLocation;
@@ -53,7 +53,7 @@
 #pragma mark -
 
 /// Request to make background uploads using nsurlsessiond deamon.
-@interface POSRecoveredHTTPBackgroundUpload : POSHTTPBackgroundUpload
+@interface POSRecoveredHTTPBackgroundUploadRequest : POSHTTPBackgroundUploadRequest
 
 /// Target host.
 @property (nonatomic, readonly) NSURL *hostURL;
