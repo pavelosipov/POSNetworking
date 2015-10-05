@@ -89,6 +89,23 @@
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
+- (void)testHTTPGatewayPushesRequestWithoutSubscribers {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
+    const uint8_t bytes[] = { 0xb7, 0xe2, 0x02 };
+    NSData *responseData = [NSData dataWithBytes:bytes length:sizeof(bytes)];
+    [OHHTTPStubs stubRequestsPassingTest:^BOOL(NSURLRequest *request) {
+        return YES;
+    } withStubResponse:^OHHTTPStubsResponse*(NSURLRequest *request) {
+        [[RACScheduler mainThreadScheduler] afterDelay:0.01 schedule:^{
+            [expectation fulfill];
+        }];
+        return [OHHTTPStubsResponse responseWithData:[responseData copy] statusCode:201 headers:nil];
+    }];
+    NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
+    [_gateway pushRequest:[POSHTTPRequest new] toHost:hostURL options:nil];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
 //- (void)testCancel {
 //    XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
 //    RACSignal *signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
