@@ -55,10 +55,6 @@
     return method;
 }
 
-- (POSHTTPRequestMethod *)concat:(POSHTTPRequestMethod *)method {
-    return method;
-}
-
 - (NSURL *)appendTo:(NSURL *)URL {
     NSURL *fullURL = URL;
     if (_path) {

@@ -27,9 +27,6 @@
 /// Creates method which contains only query.
 + (instancetype)query:(NSDictionary *)query;
 
-/// Creates new method with concatenated path and query components.
-- (POSHTTPRequestMethod *)concat:(POSHTTPRequestMethod *)method;
-
 /// Creates URL, where method components are appended to specified URL.
 - (NSURL *)appendTo:(NSURL *)URL;
 
