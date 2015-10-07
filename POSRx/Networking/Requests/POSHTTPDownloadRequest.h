@@ -21,10 +21,10 @@
 @interface POSHTTPDownloadRequest : POSHTTPRequest <POSHTTPDownloadRequest>
 
 /// The designated initializer for foreground download.
-- (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
-                           destination:(void (^)(NSURL *))destination
-                              progress:(void (^)(POSHTTPRequestProgress *progress))progress
-                          headerFields:(NSDictionary *)headerFields;
+- (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
+                   destination:(void (^)(NSURL *))destination
+                      progress:(void (^)(POSHTTPRequestProgress *progress))progress
+                  headerFields:(NSDictionary *)headerFields;
 
 @end
 

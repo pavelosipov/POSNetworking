@@ -57,24 +57,24 @@ POSRX_DEADLY_INITIALIZER(init)
 POSRX_DEADLY_INITIALIZER(initWithRequest:(id<POSHTTPRequest>)request)
 
 POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
-                         endpointMethod:(NSString *)endpointMethod
+                         method:(NSString *)endpointMethod
                          body:(NSData *)body
                          headerFields:(NSDictionary *)headerFields)
 
 POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
-                         endpointMethod:(NSString *)endpointMethod
+                         method:(NSString *)endpointMethod
                          body:(NSData *)body
                          headerFields:(NSDictionary *)headerFields
                          downloadProgress:(void (^)(POSHTTPRequestProgress *))downloadProgress
                          uploadProgress:(void (^)(POSHTTPRequestProgress *))uploadProgress)
 
-- (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
-                            bodyStream:(NSInputStream *(^)())bodyStream
-                              progress:(void (^)(POSHTTPRequestProgress *))progress
-                          headerFields:(NSDictionary *)headerFields {
+- (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
+                    bodyStream:(NSInputStream *(^)())bodyStream
+                      progress:(void (^)(POSHTTPRequestProgress *))progress
+                  headerFields:(NSDictionary *)headerFields {
     POSRX_CHECK(bodyStream);
     if (self = [super initWithType:POSHTTPRequestTypePUT
-                    endpointMethod:endpointMethod
+                            method:method
                               body:nil
                       headerFields:headerFields
                   downloadProgress:nil
@@ -99,7 +99,7 @@ POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
 
 - (instancetype)init {
     return [super initWithType:POSHTTPRequestTypePUT
-                endpointMethod:nil
+                        method:nil
                           body:nil
                   headerFields:nil];
 }

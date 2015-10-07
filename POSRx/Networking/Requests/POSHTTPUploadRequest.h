@@ -22,10 +22,10 @@
 @interface POSHTTPUploadRequest : POSHTTPRequest <POSHTTPUploadRequest>
 
 /// The designated initializer for foreground upload.
-- (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
-                            bodyStream:(NSInputStream *(^)())bodyStream
-                              progress:(void (^)(POSHTTPRequestProgress *progress))progress
-                          headerFields:(NSDictionary *)headerFields;
+- (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
+                    bodyStream:(NSInputStream *(^)())bodyStream
+                      progress:(void (^)(POSHTTPRequestProgress *progress))progress
+                  headerFields:(NSDictionary *)headerFields;
 
 /// The designated initializer for foreground upload.
 

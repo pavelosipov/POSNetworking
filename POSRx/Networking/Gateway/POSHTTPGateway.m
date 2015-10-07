@@ -20,16 +20,7 @@
 #import "NSURLCache+POSRx.h"
 
 NSString * const POSRxErrorDomain = @"com.github.pavelosipov.POSRxErrorDomain";
-
 NSInteger const POSHTTPSystemError = 101;
-
-/// Exposing some private API of POSHTTPRequest.
-@interface POSHTTPRequest (Hidden)
-- (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
-                          forGateway:(id<POSHTTPGateway>)gateway
-                             options:(POSHTTPRequestOptions *)options
-                               error:(NSError **)error;
-@end
 
 #pragma mark -
 
@@ -73,7 +64,7 @@ POSRX_DEADLYFY_SCHEDULABLE_INITIALIZERS
 
 #pragma mark MRCHTTPGateway
 
-- (RACSignal *)pushRequest:(POSHTTPRequest *)request
+- (RACSignal *)pushRequest:(id<POSHTTPRequest>)request
                     toHost:(NSURL *)hostURL
                    options:(POSHTTPRequestExecutionOptions *)options {
     POSRX_CHECK(request);

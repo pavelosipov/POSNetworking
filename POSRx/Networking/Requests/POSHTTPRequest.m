@@ -7,6 +7,7 @@
 //
 
 #import "POSHTTPRequest.h"
+#import "POSHTTPRequestMethod.h"
 #import "POSHTTPRequestOptions.h"
 #import "POSHTTPGateway.h"
 #import "NSException+POSRx.h"
@@ -26,7 +27,7 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 
 @interface POSHTTPRequest ()
 @property (nonatomic) POSHTTPRequestType type;
-@property (nonatomic) NSString *endpointMethod;
+@property (nonatomic) POSHTTPRequestMethod *method;
 @property (nonatomic) NSData *body;
 @property (nonatomic) NSDictionary *headerFields;
 @property (nonatomic, copy) void (^downloadProgressHandler)(POSHTTPRequestProgress *progress);
@@ -40,9 +41,6 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 - (instancetype)init {
     if (self = [super init]) {
         _type = POSHTTPRequestTypeGET;
-        _endpointMethod = nil;
-        _body = nil;
-        _headerFields = nil;
     }
     return self;
 }
@@ -50,7 +48,7 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 - (instancetype)initWithRequest:(id<POSHTTPRequest>)request {
     if (self = [super init]) {
         _type = request.type;
-        _endpointMethod = request.endpointMethod;
+        _method = request.method;
         _body = request.body;
         _headerFields = request.headerFields;
     }
@@ -58,12 +56,12 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 }
 
 - (instancetype)initWithType:(POSHTTPRequestType)type
-              endpointMethod:(NSString *)endpointMethod
+                      method:(POSHTTPRequestMethod *)method
                         body:(NSData *)body
                 headerFields:(NSDictionary *)headerFields {
     if (self = [super init]) {
         _type = type;
-        _endpointMethod = endpointMethod;
+        _method = method;
         _body = body;
         _headerFields = headerFields;
     }
@@ -71,14 +69,14 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 }
 
 - (instancetype)initWithType:(POSHTTPRequestType)type
-              endpointMethod:(NSString *)endpointMethod
+                      method:(POSHTTPRequestMethod *)method
                         body:(NSData *)body
                 headerFields:(NSDictionary *)headerFields
             downloadProgress:(void (^)(POSHTTPRequestProgress *))downloadProgress
               uploadProgress:(void (^)(POSHTTPRequestProgress *))uploadProgress {
     if (self = [super init]) {
         _type = type;
-        _endpointMethod = endpointMethod;
+        _method = method;
         _body = body;
         _headerFields = headerFields;
         _downloadProgressHandler = [downloadProgress copy];
@@ -90,7 +88,7 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
         _type = [[aDecoder decodeObjectForKey:@"type"] integerValue];
-        _endpointMethod = [aDecoder decodeObjectForKey:@"endpointMethod"];
+        _method = [aDecoder decodeObjectForKey:@"method"];
         _body = [aDecoder decodeObjectForKey:@"body"];
         _headerFields = [aDecoder decodeObjectForKey:@"headerFields"];
     }
@@ -99,8 +97,8 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:@(_type) forKey:@"type"];
-    if (_endpointMethod) {
-        [aCoder encodeObject:_endpointMethod forKey:@"endpointMethod"];
+    if (_method) {
+        [aCoder encodeObject:_method forKey:@"method"];
     }
     if (_body) {
         [aCoder encodeObject:_body forKey:@"body"];
@@ -122,7 +120,7 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 
 - (NSMutableURLRequest *)requestWithURL:(NSURL *)hostURL options:(POSHTTPRequestOptions *)options {
     POSRX_CHECK(hostURL);
-    NSURL *fullURL = [hostURL posrx_URLByAppendingEscapedPathComponent:_endpointMethod];
+    NSURL *fullURL = _method ? [_method appendTo:hostURL] : hostURL;
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:fullURL
                                                                 cachePolicy:NSURLRequestReloadIgnoringCacheData
                                                             timeoutInterval:15.0];
@@ -150,7 +148,7 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 
 @implementation POSMutableHTTPRequest
 @dynamic type;
-@dynamic endpointMethod;
+@dynamic method;
 @dynamic body;
 @dynamic headerFields;
 @dynamic downloadProgressHandler;

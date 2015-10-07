@@ -102,13 +102,13 @@ static char kPOSUserInfoKey;
 
 #pragma mark Lifecycle
 
-- (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
-                          fileLocation:(NSURL *)fileLocation
-                              progress:(void (^)(POSHTTPRequestProgress *progress))progress
-                          headerFields:(NSDictionary *)headerFields {
+- (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
+                  fileLocation:(NSURL *)fileLocation
+                      progress:(void (^)(POSHTTPRequestProgress *))progress
+                  headerFields:(NSDictionary *)headerFields {
     POSRX_CHECK(fileLocation);
     if (self = [super initWithType:POSHTTPRequestTypePUT
-                    endpointMethod:endpointMethod
+                            method:method
                               body:nil
                       headerFields:headerFields]) {
         self.fileLocation = fileLocation;
@@ -150,7 +150,7 @@ static char kPOSUserInfoKey;
 - (instancetype)initWithFileLocation:(NSURL *)fileLocation {
     POSRX_CHECK(fileLocation);
     if (self = [super initWithType:POSHTTPRequestTypePUT
-                    endpointMethod:nil
+                            method:nil
                               body:nil
                       headerFields:nil]) {
         self.fileLocation = fileLocation;

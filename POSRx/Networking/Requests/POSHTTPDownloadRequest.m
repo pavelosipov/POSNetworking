@@ -43,12 +43,12 @@
 
 #pragma mark Lifecycle
 
-- (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
-                           destination:(void (^)(NSURL *))destination
-                              progress:(void (^)(POSHTTPRequestProgress *progress))progress
-                          headerFields:(NSDictionary *)headerFields {
+- (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
+                   destination:(void (^)(NSURL *))destination
+                      progress:(void (^)(POSHTTPRequestProgress *))progress
+                  headerFields:(NSDictionary *)headerFields {
     if (self = [super initWithType:POSHTTPRequestTypeGET
-                    endpointMethod:endpointMethod
+                            method:method
                               body:nil
                       headerFields:headerFields
                   downloadProgress:progress
@@ -77,7 +77,7 @@
 
 - (instancetype)init {
     return [super initWithType:POSHTTPRequestTypeGET
-                endpointMethod:nil
+                        method:nil
                           body:nil
                   headerFields:nil];
 }

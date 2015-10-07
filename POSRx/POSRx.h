@@ -15,6 +15,7 @@
 #import <POSRx/POSHTTPRequestSimulationOptions.h>
 #import <POSRx/POSHTTPRequestOptions.h>
 #import <POSRx/POSHTTPResponse.h>
+#import <POSRx/POSHTTPMethod.h>
 #import <POSRx/POSHTTPRequestProgress.h>
 
 // Scheduling headers

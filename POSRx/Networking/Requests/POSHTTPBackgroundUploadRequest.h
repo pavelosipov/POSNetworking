@@ -27,10 +27,10 @@
 @interface POSHTTPBackgroundUploadRequest : POSHTTPRequest <POSHTTPBackgroundUploadRequest>
 
 /// The designated initializer.
-- (instancetype)initWithEndpointMethod:(NSString *)endpointMethod
-                          fileLocation:(NSURL *)fileLocation
-                              progress:(void (^)(POSHTTPRequestProgress *progress))progress
-                          headerFields:(NSDictionary *)headerFields;
+- (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
+                  fileLocation:(NSURL *)fileLocation
+                      progress:(void (^)(POSHTTPRequestProgress *progress))progress
+                  headerFields:(NSDictionary *)headerFields;
 
 @end
 

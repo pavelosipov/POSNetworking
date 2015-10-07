@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol POSHTTPGateway;
+@protocol POSURLSessionTask;
+
+@class POSHTTPRequestMethod;
 @class POSHTTPRequestOptions;
 @class POSHTTPRequestProgress;
 
@@ -25,8 +29,8 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 /// Type of HTTP request.
 @property (nonatomic, readonly) POSHTTPRequestType type;
 
-/// Method which will be appended to host's base URL (for ex. "users/?sort=ASC"). May be nil.
-@property (nonatomic, readonly) NSString *endpointMethod;
+/// Method which will be appended to host's base URL (for ex. "/users/?sort=ASC"). May be nil.
+@property (nonatomic, readonly) POSHTTPRequestMethod *method;
 
 /// Request's body. May be nil.
 @property (nonatomic, readonly) NSData *body;
@@ -39,6 +43,12 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 
 /// Notifies how many bytes were sent to remote host.
 @property (nonatomic, readonly, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
+
+/// Creates network task using one of NSURLSessions inside POSHTTPGateway.
+- (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
+                          forGateway:(id<POSHTTPGateway>)gateway
+                             options:(POSHTTPRequestOptions *)options
+                               error:(NSError **)error;
 
 @end
 
@@ -56,13 +66,13 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 
 /// The designated initializer.
 - (instancetype)initWithType:(POSHTTPRequestType)type
-              endpointMethod:(NSString *)endpointMethod
+                      method:(POSHTTPRequestMethod *)method
                         body:(NSData *)body
                 headerFields:(NSDictionary *)headerFields;
 
 /// The designated initializer.
 - (instancetype)initWithType:(POSHTTPRequestType)type
-              endpointMethod:(NSString *)endpointMethod
+                      method:(POSHTTPRequestMethod *)method
                         body:(NSData *)body
                 headerFields:(NSDictionary *)headerFields
             downloadProgress:(void (^)(POSHTTPRequestProgress *progress))downloadProgress
@@ -78,8 +88,8 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 /// Type of HTTP request.
 @property (nonatomic) POSHTTPRequestType type;
 
-/// Method which will be appended to host's base URL (for ex. "users/?sort=ASC"). May be nil.
-@property (nonatomic, copy) NSString *endpointMethod;
+/// Method which will be appended to host's base URL (for ex. "/users/?sort=ASC"). May be nil.
+@property (nonatomic) POSHTTPRequestMethod *method;
 
 /// Request's body. May be nil.
 @property (nonatomic, copy) NSData *body;

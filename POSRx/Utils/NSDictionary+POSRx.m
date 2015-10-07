@@ -35,7 +35,7 @@ NS_INLINE NSString *POSCreateStringByAddingPercentEscapes(NSString *unescaped, N
 
 - (NSString *)posrx_URLQuery {
     NSMutableString *query = [NSMutableString new];
-    [self enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+    [self enumerateKeysAndObjectsUsingBlock:^(NSString *key, id value, BOOL *stop) {
         NSString *pairFormat = query.length ? @"&%@=%@" : @"%@=%@";
         [query appendString:[NSString stringWithFormat:pairFormat, key, value]];
     }];
