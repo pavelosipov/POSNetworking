@@ -68,4 +68,9 @@
     return fullURL;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@{path='%@', query='%@'}",
+            [super description], _path, [_query posrx_URLQuery]];
+}
+
 @end
