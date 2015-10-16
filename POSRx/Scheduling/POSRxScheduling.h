@@ -6,6 +6,5 @@
 //  Copyright (c) 2015 Pavel Osipov. All rights reserved.
 //
 
-#import <POSRx/POSRxNetworking.h>
-#import <POSRx/POSRxScheduling.h>
-#import <POSRx/POSRxUtils.h>
+#import <POSRx/POSTask.h>
+#import <POSRx/POSSchedulableObject.h>
