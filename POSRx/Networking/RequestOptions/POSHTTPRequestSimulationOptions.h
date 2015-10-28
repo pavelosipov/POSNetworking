@@ -17,7 +17,7 @@
 /// Default value is 0.05f.
 /// @remarks Value 0.0f means that simulation is off.
 /// @remarks Value 1.0f means that all responses will be simulated.
-@property (nonatomic, assign) float rate;
+@property (nonatomic, readonly) float rate;
 
 /// Specifies probability of the each failure codes using absolute values.
 /// Example below shows how to simulate aprox. one 403 response for
@@ -29,11 +29,14 @@
 ///     [[POSHTTPResponse alloc] initWithStatusCode:403]: @(1),
 ///     [[POSHTTPResponse alloc] initWithStatusCode:500]: @(20)
 /// };
-@property (nonatomic, copy) NSDictionary *responses;
+@property (nonatomic, readonly) NSDictionary *responses;
 
 /// @brief Probe simulation.
 /// @return Response if it is time to simulate according to 'rate' parameter
 ///         or nil in other case.
 - (POSHTTPResponse *)probeSimulationWithURL:(NSURL *)URL;
+
+/// The designated initializer
+- (instancetype)initWithRate:(float)rate responses:(NSDictionary *)responses;
 
 @end

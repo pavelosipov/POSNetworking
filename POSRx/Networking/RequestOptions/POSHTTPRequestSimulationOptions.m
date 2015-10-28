@@ -53,6 +53,14 @@
     return self;
 }
 
+- (instancetype)initWithRate:(float)rate responses:(NSDictionary *)responses {
+    if (self = [super init]) {
+        _rate = rate;
+        self.responses = responses ?: [NSDictionary new];
+    }
+    return self;
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
         _simulations = [aDecoder decodeObjectForKey:@"simulations"];

@@ -35,10 +35,12 @@
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
     const uint8_t bytes[] = { 0xb7, 0xe2, 0x02 };
     NSData *responseData = [NSData dataWithBytes:bytes length:sizeof(bytes)];
-    POSHTTPRequestExecutionOptions *options = [POSHTTPRequestExecutionOptions new];
-    options.simulation = [POSHTTPRequestSimulationOptions new];
-    options.simulation.rate = 1.0f;
-    options.simulation.responses = @{[[POSHTTPResponse alloc] initWithData:responseData]: @(1)};
+    POSHTTPRequestExecutionOptions *options =
+    [[POSHTTPRequestExecutionOptions alloc]
+     initWithHTTPOptions:nil
+     simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
+                        initWithRate:1.0f
+                        responses:@{[[POSHTTPResponse alloc] initWithData:responseData]: @(1)}]];
     [[_gateway pushRequest:[POSHTTPRequest new] toHost:hostURL options:options] subscribeCompleted:^{
         [[_gateway invalidateCancelingRequests:YES] subscribeCompleted:^{
             self.gateway = nil;

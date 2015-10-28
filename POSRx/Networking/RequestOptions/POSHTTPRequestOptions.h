@@ -14,10 +14,20 @@
 /// YES value indicates, that HTTP request may be sent to hosts
 /// with untrusted SSL certificates (for ex. self-signed).
 /// May be nil if default value should be used.
-@property (nonatomic, copy) NSNumber *allowUntrustedSSLCertificates;
+@property (nonatomic, readonly) NSNumber *allowUntrustedSSLCertificates;
 
 /// Extra header fields, which will be appended to requests' header fields.
-@property (nonatomic, copy) NSDictionary *headerFields;
+@property (nonatomic, readonly) NSDictionary *headerFields;
+
+/// The convenience initializer.
+- (instancetype)initWithHeaderFields:(NSDictionary *)headerFields;
+
+/// The convenience initializer.
+- (instancetype)initWithAllowUntrustedSSLCertificates:(NSNumber *)allowUntrustedSSLCertificates;
+
+/// The designated initializer.
+- (instancetype)initWithHeaderFields:(NSDictionary *)headerFields
+       allowUntrustedSSLCertificates:(NSNumber *)allowUntrustedSSLCertificates;
 
 /// @return New instance of options where input options override target options.
 ///         Nil options will not override not nil options.

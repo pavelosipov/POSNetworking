@@ -14,6 +14,15 @@
 
 #pragma mark Lifecycle
 
+- (instancetype)initWithHTTPOptions:(POSHTTPRequestOptions *)HTTP
+                  simulationOptions:(POSHTTPRequestSimulationOptions *)simulation {
+    if (self = [super init]) {
+        _HTTP = HTTP;
+        _simulation = simulation;
+    }
+    return self;
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
         _HTTP = [aDecoder decodeObjectForKey:@"HTTP"];
@@ -34,23 +43,34 @@
 #pragma mark Public
 
 - (instancetype)merge:(POSHTTPRequestExecutionOptions *)options {
-    POSHTTPRequestExecutionOptions *mergedOptions = [self copy];
-    if (options.HTTP) {
-        [mergedOptions.HTTP merge:options.HTTP];
-    }
-    if (options.simulation) {
-        mergedOptions.simulation = options.simulation;
-    }
-    return mergedOptions;
+    return [self p_mergeHTTP:options.HTTP simulation:options.simulation];
+}
+
+- (instancetype)mergeHTTPOptions:(POSHTTPRequestOptions *)options {
+    return [self p_mergeHTTP:options simulation:nil];
+}
+
+- (instancetype)mergeSimulationOptions:(POSHTTPRequestSimulationOptions *)options {
+    return [self p_mergeHTTP:nil simulation:options];
 }
 
 #pragma mark NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
-    typeof(self) clone = [[[self class] allocWithZone:zone] init];
-    clone.simulation = [self.simulation copy];
-    clone.HTTP = [self.HTTP copy];
-    return clone;
+    return [[[self class] allocWithZone:zone]
+            initWithHTTPOptions:[_HTTP copy]
+            simulationOptions:[_simulation copy]];
+}
+
+#pragma mark Private
+
+- (instancetype)p_mergeHTTP:(POSHTTPRequestOptions *)HTTP
+                 simulation:(POSHTTPRequestSimulationOptions *)simulation {
+    POSHTTPRequestOptions *mergedHTTP = _HTTP ? [_HTTP merge:HTTP] : [HTTP copy];
+    POSHTTPRequestSimulationOptions *mergedSimulation = simulation ? [simulation copy] : [_simulation copy];
+    return [[POSHTTPRequestExecutionOptions alloc]
+            initWithHTTPOptions:mergedHTTP
+            simulationOptions:mergedSimulation];
 }
 
 @end
