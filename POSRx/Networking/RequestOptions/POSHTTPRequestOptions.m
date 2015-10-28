@@ -55,19 +55,26 @@
     return clone;
 }
 
-- (POSHTTPRequestOptions *)merge:(POSHTTPRequestOptions *)options {
-    if (!options) {
-        return [self copy];
++ (POSHTTPRequestOptions *)merge:(POSHTTPRequestOptions *)source
+                            with:(POSHTTPRequestOptions *)target {
+    if (!target && !source) {
+        return nil;
     }
-    NSNumber *mergedAllowUntrustedSSLCertificates = (options.allowUntrustedSSLCertificates ?:
-                                                     self.allowUntrustedSSLCertificates);
+    if (!source) {
+        return [target copy];
+    }
+    if (!target) {
+        return [source copy];
+    }
+    NSNumber *mergedAllowUntrustedSSLCertificates = (target.allowUntrustedSSLCertificates ?:
+                                                     source.allowUntrustedSSLCertificates);
     NSDictionary *mergedHeaderFields = nil;
-    if (options.headerFields) {
-        NSMutableDictionary *headerFields = [_headerFields mutableCopy];
-        [headerFields addEntriesFromDictionary:options.headerFields];
+    if (source->_headerFields) {
+        NSMutableDictionary *headerFields = [source->_headerFields mutableCopy];
+        [headerFields addEntriesFromDictionary:target.headerFields];
         mergedHeaderFields = headerFields;
     } else {
-        mergedHeaderFields = [_headerFields copy];
+        mergedHeaderFields = [target->_headerFields copy];
     }
     return [[POSHTTPRequestOptions alloc]
             initWithHeaderFields:mergedHeaderFields

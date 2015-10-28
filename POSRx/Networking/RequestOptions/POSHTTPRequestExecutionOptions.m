@@ -42,16 +42,25 @@
 
 #pragma mark Public
 
-- (instancetype)merge:(POSHTTPRequestExecutionOptions *)options {
-    return [self p_mergeHTTP:options.HTTP simulation:options.simulation];
++ (instancetype)merge:(POSHTTPRequestExecutionOptions *)source
+                 with:(POSHTTPRequestExecutionOptions *)target {
+    return [[POSHTTPRequestExecutionOptions alloc]
+            initWithHTTPOptions:[POSHTTPRequestOptions merge:source.HTTP with:target.HTTP]
+            simulationOptions:(target.simulation ?: source.simulation)];
 }
 
-- (instancetype)mergeHTTPOptions:(POSHTTPRequestOptions *)options {
-    return [self p_mergeHTTP:options simulation:nil];
++ (instancetype)merge:(POSHTTPRequestExecutionOptions *)source
+      withHTTPOptions:(POSHTTPRequestOptions *)targetHTTP {
+    return [[POSHTTPRequestExecutionOptions alloc]
+            initWithHTTPOptions:[POSHTTPRequestOptions merge:source.HTTP with:targetHTTP]
+            simulationOptions:source.simulation];
 }
 
-- (instancetype)mergeSimulationOptions:(POSHTTPRequestSimulationOptions *)options {
-    return [self p_mergeHTTP:nil simulation:options];
++ (instancetype)merge:(POSHTTPRequestExecutionOptions *)source
+withSimulationOptions:(POSHTTPRequestSimulationOptions *)targetSimulation {
+    return [[POSHTTPRequestExecutionOptions alloc]
+            initWithHTTPOptions:[source.HTTP copy]
+            simulationOptions:(targetSimulation ?: source.simulation)];
 }
 
 #pragma mark NSCopying
@@ -60,17 +69,6 @@
     return [[[self class] allocWithZone:zone]
             initWithHTTPOptions:[_HTTP copy]
             simulationOptions:[_simulation copy]];
-}
-
-#pragma mark Private
-
-- (instancetype)p_mergeHTTP:(POSHTTPRequestOptions *)HTTP
-                 simulation:(POSHTTPRequestSimulationOptions *)simulation {
-    POSHTTPRequestOptions *mergedHTTP = _HTTP ? [_HTTP merge:HTTP] : [HTTP copy];
-    POSHTTPRequestSimulationOptions *mergedSimulation = simulation ? [simulation copy] : [_simulation copy];
-    return [[POSHTTPRequestExecutionOptions alloc]
-            initWithHTTPOptions:mergedHTTP
-            simulationOptions:mergedSimulation];
 }
 
 @end

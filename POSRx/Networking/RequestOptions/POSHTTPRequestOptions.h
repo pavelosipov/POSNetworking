@@ -29,8 +29,9 @@
 - (instancetype)initWithHeaderFields:(NSDictionary *)headerFields
        allowUntrustedSSLCertificates:(NSNumber *)allowUntrustedSSLCertificates;
 
-/// @return New instance of options where input options override target options.
+/// @return New instance of options where target options override source options.
 ///         Nil options will not override not nil options.
-- (POSHTTPRequestOptions *)merge:(POSHTTPRequestOptions *)options;
++ (POSHTTPRequestOptions *)merge:(POSHTTPRequestOptions *)source
+                            with:(POSHTTPRequestOptions *)target;
 
 @end

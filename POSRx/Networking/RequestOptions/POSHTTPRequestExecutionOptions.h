@@ -24,16 +24,19 @@
 - (instancetype)initWithHTTPOptions:(POSHTTPRequestOptions *)HTTP
                   simulationOptions:(POSHTTPRequestSimulationOptions *)simulation;
 
-/// @return New instance of options where input options override target options.
+/// @return New instance of options where target options override source options.
 ///         Nil options will not override not nil options.
-- (instancetype)merge:(POSHTTPRequestExecutionOptions *)options;
++ (instancetype)merge:(POSHTTPRequestExecutionOptions *)source
+                 with:(POSHTTPRequestExecutionOptions *)target;
 
 /// @return New instance of options where input HTTP options added to target
 ///         HTTP options. Nil options will not override not nil options.
-- (instancetype)mergeHTTPOptions:(POSHTTPRequestOptions *)options;
++ (instancetype)merge:(POSHTTPRequestExecutionOptions *)source
+      withHTTPOptions:(POSHTTPRequestOptions *)targetHTTP;
 
 /// @return New instance of options where input simulation options replace
 ///         target simulation options. Nil options will not override not nil options.
-- (instancetype)mergeSimulationOptions:(POSHTTPRequestSimulationOptions *)options;
++ (instancetype)merge:(POSHTTPRequestExecutionOptions *)source
+withSimulationOptions:(POSHTTPRequestSimulationOptions *)targetSimulation;
 
 @end
