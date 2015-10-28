@@ -39,7 +39,7 @@
 
 - (void)testTaskBlockExecutionShouldBeShecduledWithSpecifiedScheduler {
     XCTestExpectation *expectation = [self expectationWithDescription:@"task scheduledu"];
-    RACScheduler *taskScheduler = [RACScheduler scheduler];
+    RACTargetQueueScheduler *taskScheduler = [RACTargetQueueScheduler pos_scheduler];
     [taskScheduler schedule:^{
         POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
             return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {

@@ -46,6 +46,6 @@ FOUNDATION_EXTERN NSInteger const POSHTTPSystemError;
 @interface POSHTTPGateway : POSSchedulableObject <POSHTTPGateway>
 
 /// The designated initializer for launching in a background.
-- (instancetype)initWithScheduler:(RACScheduler *)scheduler backgroundSessionIdentifier:(NSString *)ID;
+- (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler backgroundSessionIdentifier:(NSString *)ID;
 
 @end

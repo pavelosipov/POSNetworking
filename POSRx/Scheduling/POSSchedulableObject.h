@@ -21,13 +21,14 @@
 
 @interface POSSchedulableObject : NSObject <POSSchedulable>
 
-- (instancetype)initWithScheduler:(RACScheduler *)scheduler;
-- (instancetype)initWithScheduler:(RACScheduler *)scheduler options:(POSScheduleProtectionOptions *)options;
+- (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler;
+- (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler options:(POSScheduleProtectionOptions *)options;
 
-+ (BOOL)protect:(id)object forScheduler:(RACScheduler *)scheduler;
-+ (BOOL)protect:(id)object forScheduler:(RACScheduler *)scheduler options:(POSScheduleProtectionOptions *)options;
++ (BOOL)protect:(id)object forScheduler:(RACTargetQueueScheduler *)scheduler;
++ (BOOL)protect:(id)object forScheduler:(RACTargetQueueScheduler *)scheduler options:(POSScheduleProtectionOptions *)options;
 
 + (RACSequence *)selectorsForClass:(Class)aClass;
++ (RACSequence *)selectorsForClass:(Class)aClass nonatomicOnly:(BOOL)nonatomicOnly;
 + (RACSequence *)selectorsForProtocol:(Protocol *)aProtocol;
 
 @end

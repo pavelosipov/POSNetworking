@@ -38,6 +38,7 @@
 		21853A911BC4137400CE401C /* POSHTTPRequestMethodTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21853A901BC4137400CE401C /* POSHTTPRequestMethodTests.m */; };
 		21B23CF41BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B23CF31BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m */; };
 		E95EF3381BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E95EF3371BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m */; };
+		E95EF33E1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = E95EF33D1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +128,8 @@
 		8088C90EC5168CEB712A8776 /* Pods-POSRxTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRxTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests.release.xcconfig"; sourceTree = "<group>"; };
 		D4F690DF728689B5020A334E /* libPods-POSRxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-POSRxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E95EF3371BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestExecutionOptionsTests.m; sourceTree = "<group>"; };
+		E95EF33C1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACTargetQueueScheduler+POSRx.h"; sourceTree = "<group>"; };
+		E95EF33D1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACTargetQueueScheduler+POSRx.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +333,8 @@
 				217D28AE1BD0E9C7005C38C9 /* POSSchedulableObject.m */,
 				217D28AF1BD0E9C7005C38C9 /* POSTask.h */,
 				217D28B01BD0E9C7005C38C9 /* POSTask.m */,
+				E95EF33C1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.h */,
+				E95EF33D1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m */,
 				217D28AB1BD0E9C7005C38C9 /* POSRxScheduling.h */,
 			);
 			path = Scheduling;
@@ -519,6 +524,7 @@
 				217D28CA1BD0E9C8005C38C9 /* NSException+POSRx.m in Sources */,
 				217D28C51BD0E9C8005C38C9 /* POSHTTPResponse.m in Sources */,
 				217D28C61BD0E9C8005C38C9 /* POSHTTPBackgroundUploadDescription.m in Sources */,
+				E95EF33E1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m in Sources */,
 				217D28B81BD0E9C7005C38C9 /* NSURL+POSRx.m in Sources */,
 				217D28C21BD0E9C7005C38C9 /* POSHTTPDownloadRequest.m in Sources */,
 				217D28C91BD0E9C8005C38C9 /* POSTask.m in Sources */,

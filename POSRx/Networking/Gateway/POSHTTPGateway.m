@@ -24,6 +24,27 @@ NSInteger const POSHTTPSystemError = 101;
 
 #pragma mark -
 
+@interface NSOperationQueue (POSHTTPGateway)
+@end
+
+@implementation NSOperationQueue (POSHTTPGateway)
+
++ (NSOperationQueue *)pos_operationQueueForScheduler:(RACTargetQueueScheduler *)scheduler {
+    if (![POSSystemInfo isOutdatedOS]) {
+        NSOperationQueue *operationQueue = [NSOperationQueue new];
+        operationQueue.underlyingQueue = scheduler.queue;
+        return operationQueue;
+    } else {
+        POSRX_CHECK([scheduler isEqual:[RACScheduler mainThreadScheduler]] ||
+                    scheduler.queue == dispatch_get_main_queue());
+        return [NSOperationQueue mainQueue];
+    }
+}
+
+@end
+
+#pragma mark -
+
 @interface POSHTTPGateway () <NSURLSessionDataDelegate, NSURLSessionDownloadDelegate, NSURLConnectionDelegate>
 @property (nonatomic) RACSignal *working;
 @property (nonatomic) NSMutableSet *actualTasks;
@@ -37,27 +58,30 @@ NSInteger const POSHTTPSystemError = 101;
 
 POSRX_DEADLYFY_SCHEDULABLE_INITIALIZERS
 
-- (instancetype)initWithScheduler:(RACScheduler *)scheduler backgroundSessionIdentifier:(NSString *)ID {
+- (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler backgroundSessionIdentifier:(NSString *)ID {
     if (self = [super initWithScheduler:scheduler]) {
         _actualTasks = [NSMutableSet new];
         NSURLSessionConfiguration *foregroundSessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSOperationQueue *operationQueue = [NSOperationQueue pos_operationQueueForScheduler:scheduler];
         foregroundSessionConfiguration.URLCache = [NSURLCache posrx_leaksFreeCache];
         _foregroundSession = [NSURLSession
                               sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
                               delegate:self
-                              delegateQueue:[NSOperationQueue mainQueue]];
-        NSURLSessionConfiguration *backgroundSessionConfiguration =
+                              delegateQueue:operationQueue];
+        if (ID) {
+            NSURLSessionConfiguration *backgroundSessionConfiguration =
             [POSSystemInfo isOutdatedOS] ?
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
             [NSURLSessionConfiguration backgroundSessionConfiguration:ID] :
 #pragma clang diagnostic pop
             [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:ID];
-        backgroundSessionConfiguration.URLCache = [NSURLCache posrx_leaksFreeCache];
-        _backgroundSession = [NSURLSession
-                              sessionWithConfiguration:backgroundSessionConfiguration
-                              delegate:self
-                              delegateQueue:[NSOperationQueue mainQueue]];
+            backgroundSessionConfiguration.URLCache = [NSURLCache posrx_leaksFreeCache];
+            _backgroundSession = [NSURLSession
+                                  sessionWithConfiguration:backgroundSessionConfiguration
+                                  delegate:self
+                                  delegateQueue:operationQueue];
+        }
     }
     return self;
 }

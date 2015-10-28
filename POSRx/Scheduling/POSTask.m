@@ -8,7 +8,7 @@
 
 #import "POSTask.h"
 #import "NSException+POSRx.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
+#import "RACTargetQueueScheduler+POSRx.h"
 
 #pragma mark - POSTaskContext
 
@@ -59,7 +59,7 @@
 POSRX_DEADLY_INITIALIZER(init)
 
 - (instancetype)initWithTask:(RACSignal *(^)(POSTaskContext *context))executionBlock
-                   scheduler:(RACScheduler *)scheduler
+                   scheduler:(RACTargetQueueScheduler *)scheduler
                     executor:(id<POSTaskExecutor>)executor {
     POSRX_CHECK(executionBlock);
     if (self = [super initWithScheduler:scheduler]) {
@@ -92,19 +92,19 @@ POSRX_DEADLY_INITIALIZER(init)
 
 + (instancetype)createTask:(RACSignal *(^)(POSTaskContext *context))executionBlock {
     return [[self.class alloc] initWithTask:executionBlock
-                                  scheduler:RACScheduler.mainThreadScheduler
+                                  scheduler:[RACTargetQueueScheduler pos_mainThreadScheduler]
                                    executor:nil];
 }
 
 + (instancetype)createTask:(RACSignal *(^)(POSTaskContext *context))executionBlock
-                 scheduler:(RACScheduler *)scheduler {
+                 scheduler:(RACTargetQueueScheduler *)scheduler {
     return [[self.class alloc] initWithTask:executionBlock
                                   scheduler:scheduler
                                    executor:nil];
 }
 
 + (instancetype)createTask:(RACSignal *(^)(POSTaskContext *))executionBlock
-                 scheduler:(RACScheduler *)scheduler
+                 scheduler:(RACTargetQueueScheduler *)scheduler
                   executor:(id<POSTaskExecutor>)executor {
     return [[self.class alloc] initWithTask:executionBlock
                                   scheduler:scheduler

@@ -55,11 +55,11 @@
 
 /// Creates self-executable task.
 + (instancetype)createTask:(RACSignal *(^)(POSTaskContext *context))executionBlock
-                 scheduler:(RACScheduler *)scheduler;
+                 scheduler:(RACTargetQueueScheduler *)scheduler;
 
 /// Creates task which should be scheduled and executed only within specified executor.
 + (instancetype)createTask:(RACSignal *(^)(POSTaskContext *context))executionBlock
-                 scheduler:(RACScheduler *)scheduler
+                 scheduler:(RACTargetQueueScheduler *)scheduler
                   executor:(id<POSTaskExecutor>)executor;
 
 @end

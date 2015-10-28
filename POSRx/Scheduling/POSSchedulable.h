@@ -10,7 +10,7 @@
 
 @protocol POSSchedulable <NSObject>
 
-@property (nonatomic, readonly) RACScheduler *scheduler;
+@property (nonatomic, readonly) RACTargetQueueScheduler *scheduler;
 
 - (RACDisposable *)schedule:(void (^)(void))block;
 

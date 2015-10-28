@@ -8,3 +8,4 @@
 
 #import <POSRx/POSTask.h>
 #import <POSRx/POSSchedulableObject.h>
+#import <POSRx/RACTargetQueueScheduler+POSRx.h>

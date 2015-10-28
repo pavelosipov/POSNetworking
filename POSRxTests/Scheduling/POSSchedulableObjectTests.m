@@ -48,32 +48,32 @@
 }
 
 - (void)testProtectObjectForSchedulerShouldPreventCallsWithinOtherSchedulers {
-    SchedulableObject *schedulable = [[SchedulableObject alloc] initWithScheduler:[RACScheduler scheduler]];
+    SchedulableObject *schedulable = [[SchedulableObject alloc] initWithScheduler:[RACTargetQueueScheduler pos_scheduler]];
     XCTAssertNoThrow([schedulable conformsToProtocol:@protocol(SafeProtocol)]);
     XCTAssertThrows([schedulable methodA]);
 }
 
 - (void)testProtectObjectForSchedulerShouldPreventIndirectCallsWithinOtherSchedulers {
-    SchedulableObject *schedulable = [[SchedulableObject alloc] initWithScheduler:[RACScheduler scheduler]];
+    SchedulableObject *schedulable = [[SchedulableObject alloc] initWithScheduler:[RACTargetQueueScheduler pos_scheduler]];
     XCTAssertNoThrow([schedulable conformsToProtocol:@protocol(SafeProtocol)]);
     XCTAssertThrows([schedulable performSelector:@selector(methodA)]);
 }
 
 - (void)testProtectOptionsBetweenDifferentClassInstancesShouldNotInterfere {
-    SchedulableObject *schedulable1 = [[SchedulableObject alloc] initWithScheduler:[RACScheduler scheduler]];
+    SchedulableObject *schedulable1 = [[SchedulableObject alloc] initWithScheduler:[RACTargetQueueScheduler pos_scheduler]];
     SchedulableObject *schedulable2 = [[SchedulableObject alloc]
-                                       initWithScheduler:[RACScheduler scheduler]
+                                       initWithScheduler:[RACTargetQueueScheduler pos_scheduler]
                                        options:[[POSScheduleProtectionOptions
                                                 defaultOptionsForClass:[SchedulableObject class]]
                                                 exclude:[POSSchedulableObject selectorsForProtocol:@protocol(SafeProtocol)]]];
-    SchedulableObject *schedulable3 = [[SchedulableObject alloc] initWithScheduler:[RACScheduler scheduler]];
+    SchedulableObject *schedulable3 = [[SchedulableObject alloc] initWithScheduler:[RACTargetQueueScheduler pos_scheduler]];
     XCTAssertThrows([schedulable1 methodA]);
     XCTAssertNoThrow([schedulable2 methodA]);
     XCTAssertThrows([schedulable3 methodA]);
 }
 
 - (void)testProtectOptionsShouldAllowToInvokeMethodWithinValidScheduler {
-    SchedulableObject *schedulable = [[SchedulableObject alloc] initWithScheduler:[RACScheduler mainThreadScheduler]];
+    SchedulableObject *schedulable = [[SchedulableObject alloc] initWithScheduler:[RACTargetQueueScheduler pos_mainThreadScheduler]];
     XCTAssertNoThrow([schedulable methodA]);
 }
 
