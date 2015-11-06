@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name         = 'POSRx'
-  s.version      = '0.9.3'
+  s.version      = '0.9.4'
   s.license      = 'MIT'
   s.summary      = 'Utilities around ReactiveCocoa.'
   s.homepage     = 'https://github.com/pavelosipov/POSRx'
   s.authors      = { 'Pavel Osipov' => 'posipov84@gmail.com' }
-  s.source       = { :git => 'https://github.com/pavelosipov/POSRx.git', :tag => '0.9.3' }
+  s.source       = { :git => 'https://github.com/pavelosipov/POSRx.git', :tag => '0.9.4' }
   s.requires_arc = true
   s.ios.deployment_target = '7.0'
   s.osx.deployment_target = '10.8'
