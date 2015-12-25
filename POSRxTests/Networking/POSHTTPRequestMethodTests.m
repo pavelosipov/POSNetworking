@@ -107,4 +107,14 @@
     XCTAssertEqualObjects(fullURL, [@"https://github.com/pavelosipov/?number=0&string=s&boolean=0" posrx_URL]);
 }
 
+- (void)testQueryMerge {
+    POSHTTPRequestMethod *method = [POSHTTPRequestMethod path:@"/pavelosipov/"
+                                                        query:@{@"number": @0,
+                                                                @"string": @"s",
+                                                                @"boolean": @NO}];
+    NSURL *partialURL = [@"https://github.com/" posrx_URL];
+    NSURL *fullURL = [method appendTo:partialURL withQuery:@{@"string": @"f", @"appended": @"a"}];
+    XCTAssertEqualObjects(fullURL, [@"https://github.com/pavelosipov/?number=0&string=f&boolean=0&appended=a" posrx_URL]);
+}
+
 @end

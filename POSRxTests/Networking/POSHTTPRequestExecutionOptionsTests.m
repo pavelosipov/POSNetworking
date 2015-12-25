@@ -21,6 +21,7 @@
          initWithHTTPOptions:[[POSHTTPRequestOptions alloc]
                               initWithHeaderFields:@{@"User-Agent": @"MyApp/1.0.0",
                                                      @"X-Header10": @"10"}
+                              queryParameters:nil
                               allowUntrustedSSLCertificates:@(YES)]
          simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
                             initWithRate:1.0f
@@ -30,6 +31,7 @@
          initWithHTTPOptions:[[POSHTTPRequestOptions alloc]
                               initWithHeaderFields:@{@"User-Agent": @"MyApp/2.0.0",
                                                      @"X-Header20": @"20"}
+                              queryParameters:nil
                               allowUntrustedSSLCertificates:@(NO)]
          simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
                             initWithRate:0.5f
@@ -54,6 +56,7 @@
      initWithHTTPOptions:[[POSHTTPRequestOptions alloc]
                           initWithHeaderFields:@{@"User-Agent": @"MyApp/2.0.0",
                                                  @"X-Header20": @"20"}
+                          queryParameters:nil
                           allowUntrustedSSLCertificates:@(NO)]
      simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
                         initWithRate:0.5f
@@ -74,6 +77,7 @@
      initWithHTTPOptions:[[POSHTTPRequestOptions alloc]
                           initWithHeaderFields:@{@"User-Agent": @"MyApp/1.0.0",
                                                  @"X-Header10": @"10"}
+                          queryParameters:nil
                           allowUntrustedSSLCertificates:@(YES)]
      simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
                         initWithRate:1.0f
@@ -93,6 +97,7 @@
     [[POSHTTPRequestExecutionOptions alloc]
      initWithHTTPOptions:[[POSHTTPRequestOptions alloc]
                           initWithHeaderFields:nil
+                          queryParameters:nil
                           allowUntrustedSSLCertificates:nil]
      simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
                         initWithRate:1.0f
@@ -102,6 +107,7 @@
      initWithHTTPOptions:[[POSHTTPRequestOptions alloc]
                           initWithHeaderFields:@{@"User-Agent": @"MyApp/2.0.0",
                                                  @"X-Header20": @"20"}
+                          queryParameters:nil
                           allowUntrustedSSLCertificates:@(NO)]
      simulationOptions:nil];
     POSHTTPRequestExecutionOptions *mergedOptions = [POSHTTPRequestExecutionOptions
@@ -122,12 +128,14 @@
      initWithHTTPOptions:[[POSHTTPRequestOptions alloc]
                           initWithHeaderFields:@{@"User-Agent": @"MyApp/1.0.0",
                                                  @"X-Header10": @"10"}
+                          queryParameters:nil
                           allowUntrustedSSLCertificates:@(YES)]
      simulationOptions:nil];
     POSHTTPRequestExecutionOptions *targetOptions =
     [[POSHTTPRequestExecutionOptions alloc]
      initWithHTTPOptions:[[POSHTTPRequestOptions alloc]
                           initWithHeaderFields:nil
+                          queryParameters:nil
                           allowUntrustedSSLCertificates:nil]
      simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
                         initWithRate:0.5f
@@ -152,6 +160,7 @@
      withHTTPOptions:[[POSHTTPRequestOptions alloc]
                       initWithHeaderFields:@{@"User-Agent": @"MyApp/1.0.0",
                                              @"X-Header10": @"10"}
+                      queryParameters:nil
                       allowUntrustedSSLCertificates:@(YES)]];
     XCTAssertEqualObjects(mergedOptions.HTTP.allowUntrustedSSLCertificates, @(YES));
     XCTAssertEqualObjects(mergedOptions.HTTP.headerFields[@"User-Agent"], @"MyApp/1.0.0");
@@ -165,6 +174,7 @@
      initWithHTTPOptions:[[POSHTTPRequestOptions alloc]
                           initWithHeaderFields:@{@"User-Agent": @"MyApp/1.0.0",
                                                  @"X-Header10": @"10"}
+                          queryParameters:nil
                           allowUntrustedSSLCertificates:@(YES)]
      simulationOptions:nil];
     POSHTTPRequestExecutionOptions *mergedOptions =
@@ -173,11 +183,39 @@
      withHTTPOptions:[[POSHTTPRequestOptions alloc]
                       initWithHeaderFields:@{@"User-Agent": @"MyApp/2.0.0",
                                              @"X-Header20": @"20"}
+                      queryParameters:nil
                       allowUntrustedSSLCertificates:@(NO)]];
     XCTAssertEqualObjects(mergedOptions.HTTP.allowUntrustedSSLCertificates, @(NO));
     XCTAssertEqualObjects(mergedOptions.HTTP.headerFields[@"User-Agent"], @"MyApp/2.0.0");
     XCTAssertEqualObjects(mergedOptions.HTTP.headerFields[@"X-Header10"], @"10");
     XCTAssertEqualObjects(mergedOptions.HTTP.headerFields[@"X-Header20"], @"20");
+    XCTAssertNil(mergedOptions.simulation);
+}
+
+- (void)testExecutionOptionsMerge8 {
+    POSHTTPRequestExecutionOptions *sourceOptions =
+    [[POSHTTPRequestExecutionOptions alloc]
+     initWithHTTPOptions:[[POSHTTPRequestOptions alloc]
+                          initWithHeaderFields:@{@"User-Agent": @"MyApp/1.0.0",
+                                                 @"X-Header10": @"10"}
+                          queryParameters:@{@"token": @"134",
+                                            @"from": @"123"}
+                          allowUntrustedSSLCertificates:@(YES)]
+     simulationOptions:nil];
+    POSHTTPRequestExecutionOptions *mergedOptions =
+    [POSHTTPRequestExecutionOptions
+     merge:sourceOptions
+     withHTTPOptions:[[POSHTTPRequestOptions alloc]
+                      initWithHeaderFields:@{@"User-Agent": @"MyApp/2.0.0",
+                                             @"X-Header20": @"20"}
+                      queryParameters:@{@"token": @"432"}
+                      allowUntrustedSSLCertificates:@(NO)]];
+    XCTAssertEqualObjects(mergedOptions.HTTP.allowUntrustedSSLCertificates, @(NO));
+    XCTAssertEqualObjects(mergedOptions.HTTP.headerFields[@"User-Agent"], @"MyApp/2.0.0");
+    XCTAssertEqualObjects(mergedOptions.HTTP.headerFields[@"X-Header10"], @"10");
+    XCTAssertEqualObjects(mergedOptions.HTTP.headerFields[@"X-Header20"], @"20");
+    XCTAssertEqualObjects(mergedOptions.HTTP.queryParameters[@"token"], @"432");
+    XCTAssertEqualObjects(mergedOptions.HTTP.queryParameters[@"from"], @"123");
     XCTAssertNil(mergedOptions.simulation);
 }
 

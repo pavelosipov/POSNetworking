@@ -19,6 +19,19 @@ NS_INLINE NSString *POSCreateStringByAddingPercentEscapes(NSString *unescaped, N
 
 @implementation NSDictionary (POSRx)
 
++ (NSDictionary *)posrx_merge:(NSDictionary *)sourceDictionary
+                         with:(NSDictionary *)targetDictionary {
+    if (!sourceDictionary) {
+        return [targetDictionary copy];
+    }
+    if (!targetDictionary) {
+        return [sourceDictionary copy];
+    }
+    NSMutableDictionary *resultDictionary = [sourceDictionary mutableCopy];
+    [resultDictionary addEntriesFromDictionary:targetDictionary];
+    return resultDictionary;
+}
+
 - (NSData *)posrx_URLBody {
     if (!self.count) {
         return [NSData new];

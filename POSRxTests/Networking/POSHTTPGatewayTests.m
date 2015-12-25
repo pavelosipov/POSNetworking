@@ -20,7 +20,7 @@
 - (void)setUp {
     [super setUp];
     self.gateway = [[POSHTTPGateway alloc]
-                    initWithScheduler:[RACScheduler mainThreadScheduler]
+                    initWithScheduler:[RACTargetQueueScheduler pos_mainThreadScheduler]
                     backgroundSessionIdentifier:@"com.github.pavelosipov.HTTPGatewayTests"];
 }
 

@@ -30,4 +30,8 @@
 /// Creates URL, where method components are appended to specified URL.
 - (NSURL *)appendTo:(NSURL *)URL;
 
+/// Creates URL, where method components are appended to specified URL with additional query parameter.
+- (NSURL *)appendTo:(NSURL *)URL
+          withQuery:(NSDictionary *)query;
+
 @end

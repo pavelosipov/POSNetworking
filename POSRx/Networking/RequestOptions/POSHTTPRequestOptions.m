@@ -7,24 +7,37 @@
 //
 
 #import "POSHTTPRequestOptions.h"
+#import "NSDictionary+POSRx.h"
 
 @implementation POSHTTPRequestOptions
 
 - (instancetype)initWithHeaderFields:(NSDictionary *)headerFields
+                     queryParameters:(NSDictionary *)queryParameters
        allowUntrustedSSLCertificates:(NSNumber *)allowUntrustedSSLCertificates {
     if (self = [super init]) {
         _headerFields = [headerFields copy];
+        _queryParameters = [queryParameters copy];
         _allowUntrustedSSLCertificates = allowUntrustedSSLCertificates;
     }
     return self;
 }
 
 - (instancetype)initWithAllowUntrustedSSLCertificates:(NSNumber *)allowUntrustedSSLCertificates {
-    return [self initWithHeaderFields:nil allowUntrustedSSLCertificates:allowUntrustedSSLCertificates];
+    return [self initWithHeaderFields:nil
+                      queryParameters:nil
+        allowUntrustedSSLCertificates:allowUntrustedSSLCertificates];
 }
 
 - (instancetype)initWithHeaderFields:(NSDictionary *)headerFields {
-    return [self initWithHeaderFields:headerFields allowUntrustedSSLCertificates:nil];
+    return [self initWithHeaderFields:headerFields
+                      queryParameters:nil
+        allowUntrustedSSLCertificates:nil];
+}
+
+- (instancetype)initWithQueryParameters:(NSDictionary *)queryParameters {
+    return [self initWithHeaderFields:nil
+                      queryParameters:queryParameters
+        allowUntrustedSSLCertificates:nil];
 }
 
 #pragma mark NSCoding
@@ -51,6 +64,7 @@
 - (id)copyWithZone:(NSZone *)zone {
     typeof(self) clone = [[[self class] allocWithZone:zone]
                           initWithHeaderFields:[_headerFields copy]
+                          queryParameters:[_queryParameters copy]
                           allowUntrustedSSLCertificates:_allowUntrustedSSLCertificates];
     return clone;
 }
@@ -68,16 +82,9 @@
     }
     NSNumber *mergedAllowUntrustedSSLCertificates = (target.allowUntrustedSSLCertificates ?:
                                                      source.allowUntrustedSSLCertificates);
-    NSDictionary *mergedHeaderFields = nil;
-    if (source->_headerFields) {
-        NSMutableDictionary *headerFields = [source->_headerFields mutableCopy];
-        [headerFields addEntriesFromDictionary:target.headerFields];
-        mergedHeaderFields = headerFields;
-    } else {
-        mergedHeaderFields = [target->_headerFields copy];
-    }
     return [[POSHTTPRequestOptions alloc]
-            initWithHeaderFields:mergedHeaderFields
+            initWithHeaderFields:[NSDictionary posrx_merge:source->_headerFields with:target->_headerFields]
+            queryParameters:[NSDictionary posrx_merge:source->_queryParameters with:target->_queryParameters]
             allowUntrustedSSLCertificates:mergedAllowUntrustedSSLCertificates];
 }
 

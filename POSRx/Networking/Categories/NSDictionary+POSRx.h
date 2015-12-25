@@ -10,6 +10,10 @@
 
 @interface NSDictionary (POSRx)
 
+/// @return Merged dictionary where target dictionary override source dictionary.
++ (NSDictionary *)posrx_merge:(NSDictionary *)sourceDictionary
+                         with:(NSDictionary *)targetDictionary;
+
 /// @brief Encodes parameters in query string of &-concatenated key-value pairs.
 /// @return NSData of UTF8 encoded string.
 - (NSData *)posrx_URLBody;

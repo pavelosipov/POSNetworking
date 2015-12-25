@@ -19,14 +19,21 @@
 /// Extra header fields, which will be appended to requests' header fields.
 @property (nonatomic, readonly) NSDictionary *headerFields;
 
+/// Extra query parameters, which will be appended to requests' query parameters.
+@property (nonatomic, readonly) NSDictionary *queryParameters;
+
 /// The convenience initializer.
 - (instancetype)initWithHeaderFields:(NSDictionary *)headerFields;
+
+/// The convenience initializer.
+- (instancetype)initWithQueryParameters:(NSDictionary *)queryParameters;
 
 /// The convenience initializer.
 - (instancetype)initWithAllowUntrustedSSLCertificates:(NSNumber *)allowUntrustedSSLCertificates;
 
 /// The designated initializer.
 - (instancetype)initWithHeaderFields:(NSDictionary *)headerFields
+                     queryParameters:(NSDictionary *)queryParameters
        allowUntrustedSSLCertificates:(NSNumber *)allowUntrustedSSLCertificates;
 
 /// @return New instance of options where target options override source options.
