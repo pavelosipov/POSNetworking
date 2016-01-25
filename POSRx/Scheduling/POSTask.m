@@ -54,9 +54,7 @@
 
 @implementation POSTask
 
-#pragma mark - Lifecycle
-
-POSRX_DEADLY_INITIALIZER(init)
+#pragma mark Lifecycle
 
 - (instancetype)initWithTask:(RACSignal *(^)(POSTaskContext *context))executionBlock
                    scheduler:(RACTargetQueueScheduler *)scheduler
@@ -111,7 +109,7 @@ POSRX_DEADLY_INITIALIZER(init)
                                    executor:executor];
 }
 
-#pragma mark - POSTask
+#pragma mark POSTask
 
 - (RACSignal *)signalForEvent:(id)eventKey {
     return [_context subjectForEvent:eventKey];
@@ -142,7 +140,7 @@ POSRX_DEADLY_INITIALIZER(init)
     [self cancel];
 }
 
-#pragma mark - Private
+#pragma mark Private
 
 - (RACSignal *)p_executeNow {
     NSParameterAssert(![self isExecuting]);

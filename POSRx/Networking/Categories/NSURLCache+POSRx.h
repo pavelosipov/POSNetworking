@@ -8,8 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSURLCache (POSRx)
 
 + (NSURLCache *)posrx_leaksFreeCache;
 
 @end
+
+NS_ASSUME_NONNULL_END

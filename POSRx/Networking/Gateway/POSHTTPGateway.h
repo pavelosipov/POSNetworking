@@ -8,6 +8,8 @@
 
 #import "POSSchedulableObject.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 FOUNDATION_EXTERN NSString * const POSRxErrorDomain;
 FOUNDATION_EXTERN NSInteger const POSHTTPSystemError;
 
@@ -23,7 +25,7 @@ FOUNDATION_EXTERN NSInteger const POSHTTPSystemError;
 @property (nonatomic, readonly) NSURLSession *foregroundSession;
 
 /// Session, which manages background requests.
-@property (nonatomic, readonly) NSURLSession *backgroundSession;
+@property (nonatomic, readonly, nullable) NSURLSession *backgroundSession;
 
 /// @brief Sends request to specified host.
 /// @param request Request which will be send to host with specified baseURL. It can not be nil.
@@ -31,7 +33,7 @@ FOUNDATION_EXTERN NSInteger const POSHTTPSystemError;
 /// @param options Request options. May be nil.
 - (RACSignal *)pushRequest:(id<POSHTTPRequest>)request
                     toHost:(NSURL *)hostURL
-                   options:(POSHTTPRequestExecutionOptions *)options;
+                   options:(nullable POSHTTPRequestExecutionOptions *)options;
 
 /// @brief Recovers all background upload requests as array of POSRecoveredHTTPBackgroundUpload objects.
 - (void)recoverBackgroundUploadRequestsUsingBlock:(void(^)(NSArray *uploadRequests))block;
@@ -46,6 +48,11 @@ FOUNDATION_EXTERN NSInteger const POSHTTPSystemError;
 @interface POSHTTPGateway : POSSchedulableObject <POSHTTPGateway>
 
 /// The designated initializer for launching in a background.
-- (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler backgroundSessionIdentifier:(NSString *)ID;
+- (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler
+      backgroundSessionIdentifier:(nullable NSString *)ID;
+
+POSRX_INIT_UNAVAILABLE;
 
 @end
+
+NS_ASSUME_NONNULL_END

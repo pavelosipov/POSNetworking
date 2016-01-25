@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 FOUNDATION_EXTERN uint64_t const POSUnknownUnitsCount;
 
 @interface POSHTTPRequestProgress : NSObject
@@ -19,3 +21,5 @@ FOUNDATION_EXTERN uint64_t const POSUnknownUnitsCount;
                         totalUnits:(uint64_t)totalUnits;
 
 @end
+
+NS_ASSUME_NONNULL_END

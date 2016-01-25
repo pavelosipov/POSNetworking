@@ -43,6 +43,11 @@
 
 #pragma mark Lifecycle
 
+- (instancetype)initWithRequest:(id<POSHTTPDownloadRequest>)request {
+    POSRX_CHECK([request conformsToProtocol:@protocol(POSHTTPDownloadRequest)]);
+    return [super initWithRequest:request];
+}
+
 - (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
                    destination:(void (^)(NSURL *))destination
                       progress:(void (^)(POSHTTPRequestProgress *))progress
@@ -80,6 +85,11 @@
                         method:nil
                           body:nil
                   headerFields:nil];
+}
+
+- (instancetype)initWithRequest:(id<POSHTTPDownloadRequest>)request {
+    POSRX_CHECK([request conformsToProtocol:@protocol(POSHTTPDownloadRequest)]);
+    return [super initWithRequest:request];
 }
 
 #pragma mark POSHTTPRequest

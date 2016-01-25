@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol POSHTTPGateway;
 @protocol POSURLSessionTask;
 
@@ -17,7 +19,7 @@
 
 /// Available types of HTTP requests.
 typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
-    POSHTTPRequestTypeGET,
+    POSHTTPRequestTypeGET = 0,
     POSHTTPRequestTypeHEAD,
     POSHTTPRequestTypePOST,
     POSHTTPRequestTypePUT
@@ -29,26 +31,26 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 /// Type of HTTP request.
 @property (nonatomic, readonly) POSHTTPRequestType type;
 
-/// Method which will be appended to host's base URL (for ex. "/users/?sort=ASC"). May be nil.
-@property (nonatomic, readonly) POSHTTPRequestMethod *method;
+/// Method which will be appended to host's base URL (for ex. "/users/?sort=ASC").
+@property (nonatomic, readonly, nullable) POSHTTPRequestMethod *method;
 
-/// Request's body. May be nil.
-@property (nonatomic, readonly) NSData *body;
+/// Request's body.
+@property (nonatomic, readonly, nullable) NSData *body;
 
-/// Request's headers, which will be appedned to or override default host headers. May be nil.
-@property (nonatomic, readonly) NSDictionary *headerFields;
+/// Request's headers, which will be appedned to or override default host headers.
+@property (nonatomic, readonly, nullable) NSDictionary *headerFields;
 
 /// Notifies how many bytes were received from remote host.
-@property (nonatomic, readonly, copy) void (^downloadProgressHandler)(POSHTTPRequestProgress *progress);
+@property (nonatomic, readonly, nullable, copy) void (^downloadProgressHandler)(POSHTTPRequestProgress *progress);
 
 /// Notifies how many bytes were sent to remote host.
-@property (nonatomic, readonly, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
+@property (nonatomic, readonly, nullable, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
 
 /// Creates network task using one of NSURLSessions inside POSHTTPGateway.
-- (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
-                          forGateway:(id<POSHTTPGateway>)gateway
-                             options:(POSHTTPRequestOptions *)options
-                               error:(NSError **)error;
+- (nullable id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
+                                   forGateway:(id<POSHTTPGateway>)gateway
+                                      options:(nullable POSHTTPRequestOptions *)options
+                                        error:(NSError **)error;
 
 @end
 
@@ -66,17 +68,17 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 
 /// The designated initializer.
 - (instancetype)initWithType:(POSHTTPRequestType)type
-                      method:(POSHTTPRequestMethod *)method
-                        body:(NSData *)body
-                headerFields:(NSDictionary *)headerFields;
+                      method:(nullable POSHTTPRequestMethod *)method
+                        body:(nullable NSData *)body
+                headerFields:(nullable NSDictionary *)headerFields;
 
 /// The designated initializer.
 - (instancetype)initWithType:(POSHTTPRequestType)type
-                      method:(POSHTTPRequestMethod *)method
-                        body:(NSData *)body
-                headerFields:(NSDictionary *)headerFields
-            downloadProgress:(void (^)(POSHTTPRequestProgress *progress))downloadProgress
-              uploadProgress:(void (^)(POSHTTPRequestProgress *progress))uploadProgress;
+                      method:(nullable POSHTTPRequestMethod *)method
+                        body:(nullable NSData *)body
+                headerFields:(nullable NSDictionary *)headerFields
+            downloadProgress:(nullable void (^)(POSHTTPRequestProgress *progress))downloadProgress
+              uploadProgress:(nullable void (^)(POSHTTPRequestProgress *progress))uploadProgress;
 
 @end
 
@@ -89,18 +91,34 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 @property (nonatomic) POSHTTPRequestType type;
 
 /// Method which will be appended to host's base URL (for ex. "/users/?sort=ASC"). May be nil.
-@property (nonatomic) POSHTTPRequestMethod *method;
+@property (nonatomic, nullable) POSHTTPRequestMethod *method;
 
 /// Request's body. May be nil.
-@property (nonatomic, copy) NSData *body;
+@property (nonatomic, nullable, copy) NSData *body;
 
 /// Request's headers, which will be appedned to or override default host headers. May be nil.
-@property (nonatomic, copy) NSDictionary *headerFields;
+@property (nonatomic, nullable, copy) NSDictionary *headerFields;
 
 /// Notifies how many bytes were received from remote host.
-@property (nonatomic, copy) void (^downloadProgressHandler)(POSHTTPRequestProgress *progress);
+@property (nonatomic, nullable, copy) void (^downloadProgressHandler)(POSHTTPRequestProgress *progress);
 
 /// Notifies how many bytes were sent to remote host.
-@property (nonatomic, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
+@property (nonatomic, nullable, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
 
 @end
+
+NS_ASSUME_NONNULL_END
+
+#define POSRX_HTTPREQUEST_TYPED_INIT_UNAVAILABLE                                                                        \
+- (instancetype)initWithType:(POSHTTPRequestType)type                                                            \
+                      method:(nullable POSHTTPRequestMethod *)method                                             \
+                        body:(nullable NSData *)body                                                             \
+                headerFields:(nullable NSDictionary *)headerFields NS_UNAVAILABLE;                               \
+                                                                                                                 \
+- (instancetype)initWithType:(POSHTTPRequestType)type                                                            \
+                      method:(nullable POSHTTPRequestMethod *)method                                             \
+                        body:(nullable NSData *)body                                                             \
+                headerFields:(nullable NSDictionary *)headerFields                                               \
+            downloadProgress:(nullable void (^)(POSHTTPRequestProgress *progress))downloadProgress               \
+              uploadProgress:(nullable void (^)(POSHTTPRequestProgress *progress))uploadProgress NS_UNAVAILABLE;
+

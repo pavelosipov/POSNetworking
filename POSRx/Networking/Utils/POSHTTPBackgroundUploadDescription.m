@@ -9,8 +9,22 @@
 #import "POSHTTPBackgroundUploadDescription.h"
 #import "POSHTTPRequestExecutionOptions.h"
 #import "POSHTTPBackgroundUploadRequest.h"
+#import "NSException+POSRx.h"
 
 @implementation POSHTTPBackgroundUploadDescription
+
+- (instancetype)initWithRequest:(id<POSHTTPBackgroundUploadRequest>)request
+                        hostURL:(NSURL *)hostURL
+                        options:(POSHTTPRequestOptions *)options {
+    POSRX_CHECK(request);
+    POSRX_CHECK(hostURL);
+    if (self = [super init]) {
+        _request = request;
+        _hostURL = hostURL;
+        _options = options;
+    }
+    return self;
+}
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {

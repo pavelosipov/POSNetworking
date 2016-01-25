@@ -8,16 +8,18 @@
 
 #import "POSHTTPRequest.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class POSHTTPRequestProgress;
 
 /// Protocol for making background upload requests.
 @protocol POSHTTPBackgroundUploadRequest <POSHTTPRequest, NSCoding>
 
 /// Location of uploading file in the application sandbox.
-@property (nonatomic, readonly, copy) NSURL *fileLocation;
+@property (nonatomic, readonly, nullable, copy) NSURL *fileLocation;
 
 /// Additional information which will be persisted in request even between app launches.
-@property (nonatomic, readonly) id<NSObject, NSCoding> userInfo;
+@property (nonatomic, readonly, nullable) id<NSObject, NSCoding> userInfo;
 
 @end
 
@@ -27,10 +29,10 @@
 @interface POSHTTPBackgroundUploadRequest : POSHTTPRequest <POSHTTPBackgroundUploadRequest>
 
 /// The designated initializer.
-- (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
+- (instancetype)initWithMethod:(nullable POSHTTPRequestMethod *)method
                   fileLocation:(NSURL *)fileLocation
-                      progress:(void (^)(POSHTTPRequestProgress *progress))progress
-                  headerFields:(NSDictionary *)headerFields;
+                      progress:(nullable void (^)(POSHTTPRequestProgress *progress))progress
+                  headerFields:(nullable NSDictionary *)headerFields;
 
 @end
 
@@ -40,10 +42,10 @@
 @interface POSMutableHTTPBackgroundUploadRequest : POSMutableHTTPRequest <POSHTTPBackgroundUploadRequest>
 
 /// Location of uploading file in the application sandbox.
-@property (nonatomic, copy) NSURL *fileLocation;
+@property (nonatomic, nullable, copy) NSURL *fileLocation;
 
 /// Additional information which will be persisted in request even between app launches.
-@property (nonatomic) id<NSObject, NSCoding> userInfo;
+@property (nonatomic, nullable) id<NSObject, NSCoding> userInfo;
 
 /// The designated initializer.
 - (instancetype)initWithFileLocation:(NSURL *)fileLocation;
@@ -59,12 +61,14 @@
 @property (nonatomic, readonly) NSURL *hostURL;
 
 /// Options which were used to run that request.
-@property (nonatomic, readonly) POSHTTPRequestOptions *options;
+@property (nonatomic, nullable, readonly) POSHTTPRequestOptions *options;
 
 /// Notifies how many bytes were sent to remote host.
-@property (nonatomic, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
+@property (nonatomic, nullable, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
 
 /// The designated initializer.
 - (instancetype)initWithRecoveredTask:(NSURLSessionUploadTask *)sessionTask;
 
 @end
+
+NS_ASSUME_NONNULL_END

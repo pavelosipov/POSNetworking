@@ -8,18 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// Represents response from the server side.
 @interface POSHTTPResponse : NSObject <NSCopying, NSCoding>
 
-@property (nonatomic, readonly) NSData *data;
+@property (nonatomic, readonly, nullable) NSData *data;
 @property (nonatomic, readonly) NSHTTPURLResponse *metadata;
 
 /// The designated initializer.
-- (instancetype)initWithData:(NSData *)data
+- (instancetype)initWithData:(nullable NSData *)data
                     metadata:(NSHTTPURLResponse *)metadata;
+
 /// Initializer for simulating success response with status code 200.
-- (instancetype)initWithData:(NSData *)data;
+- (instancetype)initWithData:(nullable NSData *)data;
+
 /// Initializer for simulating failure response without data.
 - (instancetype)initWithStatusCode:(NSInteger)statusCode;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -6,19 +6,28 @@
 //  Copyright (c) 2015 Pavel Osipov. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "POSContracts.h"
+
+NS_ASSUME_NONNULL_BEGIN
 
 @protocol POSHTTPBackgroundUploadRequest;
 @class POSHTTPRequestOptions;
 
 @interface POSHTTPBackgroundUploadDescription : NSObject <NSCoding>
 
-@property (nonatomic) id<POSHTTPBackgroundUploadRequest> request;
-@property (nonatomic) NSURL *hostURL;
-@property (nonatomic) POSHTTPRequestOptions *options;
+@property (nonatomic, readonly) id<POSHTTPBackgroundUploadRequest> request;
+@property (nonatomic, readonly) NSURL *hostURL;
+@property (nonatomic, readonly, nullable) POSHTTPRequestOptions *options;
+
+- (instancetype)initWithRequest:(id<POSHTTPBackgroundUploadRequest>)request
+                        hostURL:(NSURL *)hostURL
+                        options:(nullable POSHTTPRequestOptions *)options;
 
 + (instancetype)fromString:(NSString *)description;
 - (NSString *)asString;
 
+POSRX_INIT_UNAVAILABLE;
+
 @end
 
+NS_ASSUME_NONNULL_END

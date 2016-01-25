@@ -46,6 +46,7 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 }
 
 - (instancetype)initWithRequest:(id<POSHTTPRequest>)request {
+    POSRX_CHECK(request);
     if (self = [super init]) {
         _type = request.type;
         _method = request.method;
@@ -114,6 +115,7 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
                           forGateway:(id<POSHTTPGateway>)gateway
                              options:(POSHTTPRequestOptions *)options
                                error:(NSError **)error {
+    POSRX_CHECK(gateway);
     NSURLRequest *request = [self requestWithURL:hostURL options:options];
     return [gateway.foregroundSession dataTaskWithRequest:request];
 }

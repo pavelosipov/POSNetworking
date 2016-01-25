@@ -19,4 +19,8 @@
 
 - (void)methodA {}
 
+- (CGSize)preferedSize {
+    return CGSizeMake(0.0, 0.0);
+}
+
 @end

@@ -7,3 +7,4 @@
 //
 
 #import <POSRx/NSException+POSRx.h>
+#import <POSRx/POSContracts.h>

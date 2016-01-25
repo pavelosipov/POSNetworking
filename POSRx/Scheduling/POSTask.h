@@ -8,6 +8,8 @@
 
 #import "POSSchedulableObject.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol POSTaskExecutor;
 
 /// Task represents restartable and cancelable unit of work.
@@ -62,6 +64,9 @@
                  scheduler:(RACTargetQueueScheduler *)scheduler
                   executor:(id<POSTaskExecutor>)executor;
 
+/// Preventing usage of base initializers.
+POSRX_INIT_UNAVAILABLE;
+
 @end
 
 /// Specifies protocol which should be impleme
@@ -76,3 +81,5 @@
 /// This executor should be used as a base class for more complicated executors.
 @interface POSDirectTaskExecutor : NSObject <POSTaskExecutor>
 @end
+
+NS_ASSUME_NONNULL_END

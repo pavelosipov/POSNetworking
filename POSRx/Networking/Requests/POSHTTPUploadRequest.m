@@ -52,22 +52,6 @@
 
 @implementation POSHTTPUploadRequest
 
-POSRX_DEADLY_INITIALIZER(init)
-
-POSRX_DEADLY_INITIALIZER(initWithRequest:(id<POSHTTPRequest>)request)
-
-POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
-                         method:(NSString *)endpointMethod
-                         body:(NSData *)body
-                         headerFields:(NSDictionary *)headerFields)
-
-POSRX_DEADLY_INITIALIZER(initWithType:(POSHTTPRequestType)type
-                         method:(NSString *)endpointMethod
-                         body:(NSData *)body
-                         headerFields:(NSDictionary *)headerFields
-                         downloadProgress:(void (^)(POSHTTPRequestProgress *))downloadProgress
-                         uploadProgress:(void (^)(POSHTTPRequestProgress *))uploadProgress)
-
 - (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
                     bodyStream:(NSInputStream *(^)())bodyStream
                       progress:(void (^)(POSHTTPRequestProgress *))progress

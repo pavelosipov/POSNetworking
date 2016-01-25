@@ -127,6 +127,7 @@
 		6DBCEF70C626019ADB0DC3AA /* Pods-POSRxTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRxTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8088C90EC5168CEB712A8776 /* Pods-POSRxTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRxTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests.release.xcconfig"; sourceTree = "<group>"; };
 		D4F690DF728689B5020A334E /* libPods-POSRxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-POSRxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E91B8A211C56666000DD9626 /* POSContracts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSContracts.h; sourceTree = "<group>"; };
 		E95EF3371BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestExecutionOptionsTests.m; sourceTree = "<group>"; };
 		E95EF33C1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACTargetQueueScheduler+POSRx.h"; sourceTree = "<group>"; };
 		E95EF33D1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACTargetQueueScheduler+POSRx.m"; sourceTree = "<group>"; };
@@ -345,6 +346,7 @@
 			children = (
 				217D28B21BD0E9C7005C38C9 /* NSException+POSRx.h */,
 				217D28B31BD0E9C7005C38C9 /* NSException+POSRx.m */,
+				E91B8A211C56666000DD9626 /* POSContracts.h */,
 				217D28B41BD0E9C7005C38C9 /* POSRxUtils.h */,
 			);
 			path = Utils;

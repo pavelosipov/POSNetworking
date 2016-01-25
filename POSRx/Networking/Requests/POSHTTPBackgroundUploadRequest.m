@@ -80,10 +80,10 @@ static char kPOSUserInfoKey;
         }
         return nil;
     }
-    POSHTTPBackgroundUploadDescription *description = [POSHTTPBackgroundUploadDescription new];
-    description.request = self;
-    description.hostURL = hostURL;
-    description.options = options;
+    POSHTTPBackgroundUploadDescription *description = [[POSHTTPBackgroundUploadDescription alloc]
+                                                       initWithRequest:self
+                                                       hostURL:hostURL
+                                                       options:options];
     task.taskDescription = [description asString];
     return task;
 }

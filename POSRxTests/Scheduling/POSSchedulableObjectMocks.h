@@ -26,4 +26,5 @@
 @end
 
 @interface SchedulableObject : POSSchedulableObject <SafeProtocol>
+- (CGSize)preferedSize;
 @end

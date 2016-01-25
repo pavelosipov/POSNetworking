@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSException (POSRx)
 
 /// Throws NSInternalInconsistencyException with specified message.
@@ -15,11 +17,7 @@
 
 @end
 
-#define POSRX_DEADLY_INITIALIZER(itor) \
-- (instancetype)itor { \
-    [NSException posrx_throw:@"Unexpected deadly selector invokation '%@'.", NSStringFromSelector(_cmd)]; \
-    return nil; \
-}
+NS_ASSUME_NONNULL_END
 
 #define POSRX_CHECK_EX(condition, description, ...) \
 do { \

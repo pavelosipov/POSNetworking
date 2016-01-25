@@ -8,9 +8,13 @@
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface RACTargetQueueScheduler (POSRx)
 
 + (RACTargetQueueScheduler *)pos_scheduler;
 + (RACTargetQueueScheduler *)pos_mainThreadScheduler;
 
 @end
+
+NS_ASSUME_NONNULL_END

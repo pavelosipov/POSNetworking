@@ -8,10 +8,12 @@
 
 #import "POSHTTPRequest.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol POSHTTPDownloadRequest <POSHTTPRequest>
 
 /// Handler of the downloaded file at specified path.
-@property (nonatomic, readonly, copy) void (^fileHandler)(NSURL *location);
+@property (nonatomic, readonly, nullable, copy) void (^fileHandler)(NSURL *location);
 
 @end
 
@@ -21,10 +23,16 @@
 @interface POSHTTPDownloadRequest : POSHTTPRequest <POSHTTPDownloadRequest>
 
 /// The designated initializer for foreground download.
-- (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
-                   destination:(void (^)(NSURL *))destination
-                      progress:(void (^)(POSHTTPRequestProgress *progress))progress
-                  headerFields:(NSDictionary *)headerFields;
+- (instancetype)initWithMethod:(nullable POSHTTPRequestMethod *)method
+                   destination:(nullable void (^)(NSURL *))destination
+                      progress:(nullable void (^)(POSHTTPRequestProgress *progress))progress
+                  headerFields:(nullable NSDictionary *)headerFields;
+
+/// Copying initializer.
+- (instancetype)initWithRequest:(id<POSHTTPDownloadRequest>)request;
+
+/// Hiding deadly initializers.
+POSRX_HTTPREQUEST_TYPED_INIT_UNAVAILABLE;
 
 @end
 
@@ -39,4 +47,12 @@
 /// Creates HTTP GET request.
 - (instancetype)init;
 
+/// Copying initializer.
+- (instancetype)initWithRequest:(id<POSHTTPDownloadRequest>)request;
+
+/// Hiding deadly initializers.
+POSRX_HTTPREQUEST_TYPED_INIT_UNAVAILABLE;
+
 @end
+
+NS_ASSUME_NONNULL_END

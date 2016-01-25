@@ -8,8 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSError (POSRx)
 
-- (NSError *)errorWithURL:(NSURL *)URL;
+- (NSError *)errorWithURL:(nullable NSURL *)URL;
 
 @end
+
+NS_ASSUME_NONNULL_END

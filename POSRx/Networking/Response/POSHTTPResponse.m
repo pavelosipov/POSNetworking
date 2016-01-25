@@ -7,12 +7,14 @@
 //
 
 #import "POSHTTPResponse.h"
+#import "NSException+POSRx.h"
 
 @implementation POSHTTPResponse
 
 #pragma mark Lifecycle
 
-- (instancetype)initWithData:(NSData *)data metadata:(NSHTTPURLResponse *)metadata {
+- (instancetype)initWithData:(nullable NSData *)data metadata:(NSHTTPURLResponse *)metadata {
+    POSRX_CHECK(metadata);
     if (self = [super init]) {
         _data = data;
         _metadata = metadata;

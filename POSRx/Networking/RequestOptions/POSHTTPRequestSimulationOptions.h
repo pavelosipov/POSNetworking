@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class POSHTTPResponse;
 
 /// Options to simulate responses from server.
@@ -34,9 +36,11 @@
 /// @brief Probe simulation.
 /// @return Response if it is time to simulate according to 'rate' parameter
 ///         or nil in other case.
-- (POSHTTPResponse *)probeSimulationWithURL:(NSURL *)URL;
+- (nullable POSHTTPResponse *)probeSimulationWithURL:(NSURL *)URL;
 
 /// The designated initializer
-- (instancetype)initWithRate:(float)rate responses:(NSDictionary *)responses;
+- (instancetype)initWithRate:(float)rate responses:(nullable NSDictionary *)responses;
 
 @end
+
+NS_ASSUME_NONNULL_END

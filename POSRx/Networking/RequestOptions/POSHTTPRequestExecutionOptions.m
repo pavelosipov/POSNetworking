@@ -44,6 +44,9 @@
 
 + (instancetype)merge:(POSHTTPRequestExecutionOptions *)source
                  with:(POSHTTPRequestExecutionOptions *)target {
+    if (!source && !target) {
+        return nil;
+    }
     return [[POSHTTPRequestExecutionOptions alloc]
             initWithHTTPOptions:[POSHTTPRequestOptions merge:source.HTTP with:target.HTTP]
             simulationOptions:(target.simulation ?: source.simulation)];
@@ -51,6 +54,9 @@
 
 + (instancetype)merge:(POSHTTPRequestExecutionOptions *)source
       withHTTPOptions:(POSHTTPRequestOptions *)targetHTTP {
+    if (!source && !targetHTTP) {
+        return nil;
+    }
     return [[POSHTTPRequestExecutionOptions alloc]
             initWithHTTPOptions:[POSHTTPRequestOptions merge:source.HTTP with:targetHTTP]
             simulationOptions:source.simulation];
@@ -58,6 +64,9 @@
 
 + (instancetype)merge:(POSHTTPRequestExecutionOptions *)source
 withSimulationOptions:(POSHTTPRequestSimulationOptions *)targetSimulation {
+    if (!source && !targetSimulation) {
+        return nil;
+    }
     return [[POSHTTPRequestExecutionOptions alloc]
             initWithHTTPOptions:[source.HTTP copy]
             simulationOptions:(targetSimulation ?: source.simulation)];

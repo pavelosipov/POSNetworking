@@ -53,7 +53,7 @@
     return self;
 }
 
-- (instancetype)initWithRate:(float)rate responses:(NSDictionary *)responses {
+- (instancetype)initWithRate:(float)rate responses:(nullable NSDictionary *)responses {
     if (self = [super init]) {
         _rate = rate;
         self.responses = responses ?: [NSDictionary new];

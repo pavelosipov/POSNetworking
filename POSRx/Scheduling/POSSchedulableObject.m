@@ -8,6 +8,7 @@
 
 #import "POSSchedulableObject.h"
 #import "NSException+POSRx.h"
+#import "RACTargetQueueScheduler+POSRx.h"
 #import <Aspects/Aspects.h>
 #import <objc/runtime.h>
 
@@ -50,7 +51,9 @@ static char kPOSQueueSchedulerKey;
 
 @implementation POSSchedulableObject
 
-POSRX_DEADLY_INITIALIZER(init)
+- (instancetype)init {
+    return [self initWithScheduler:[RACTargetQueueScheduler pos_mainThreadScheduler]];
+}
 
 - (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler {
     POSRX_CHECK(scheduler);
@@ -81,13 +84,16 @@ POSRX_DEADLY_INITIALIZER(init)
 
 #pragma mark - POSSchedulableObject
 
-+ (BOOL)protect:(id)object forScheduler:(RACTargetQueueScheduler *)scheduler {
++ (BOOL)protect:(id<NSObject>)object
+   forScheduler:(RACTargetQueueScheduler *)scheduler {
     return [self.class protect:object
                   forScheduler:scheduler
                        options:[POSScheduleProtectionOptions defaultOptionsForClass:[object class]]];
 }
 
-+ (BOOL)protect:(id)object forScheduler:(RACTargetQueueScheduler *)scheduler options:(POSScheduleProtectionOptions *)options {
++ (BOOL)protect:(id<NSObject>)object
+   forScheduler:(RACTargetQueueScheduler *)scheduler
+        options:(POSScheduleProtectionOptions *)options {
     if (!options.includedSelectors) {
         return YES;
     }
@@ -96,6 +102,7 @@ POSRX_DEADLY_INITIALIZER(init)
     if (options.excludedSelectors) {
         [protectingSelectors removeObjectsInArray:[options.excludedSelectors array]];
     }
+    Class objectClass = object.class;
     for (NSValue *selectorValue in protectingSelectors) {
         SEL selector = (SEL)[selectorValue pointerValue];
         NSString *selectorName = NSStringFromSelector(selector);
@@ -104,9 +111,19 @@ POSRX_DEADLY_INITIALIZER(init)
             [selectorName rangeOfString:@"aspects__"].location != NSNotFound) {
             continue;
         }
+#if !defined(__arm64__)
+        // Prevent adding hooks on 32 bit arch for methods which return C structs.
+        // Additional info is here https://github.com/steipete/Aspects/issues/64
+        Method method = class_getInstanceMethod(objectClass, selector);
+        const char *encoding = method_getTypeEncoding(method);
+        BOOL methodReturnsStructValue = encoding[0] == _C_STRUCT_B;
+        if (methodReturnsStructValue) {
+            continue;
+        }
+#endif
         NSError *error;
         @weakify(object);
-        id hooked = [object aspect_hookSelector:selector withOptions:AspectPositionBefore usingBlock:^(id<AspectInfo> aspectInfo) {
+        id hooked = [(id)object aspect_hookSelector:selector withOptions:AspectPositionBefore usingBlock:^(id<AspectInfo> aspectInfo) {
             @strongify(object);
             RACScheduler *currentScheduler = (__bridge RACScheduler *)dispatch_get_specific(&kPOSQueueSchedulerKey);
             if (!currentScheduler) {

@@ -77,4 +77,9 @@
     XCTAssertNoThrow([schedulable methodA]);
 }
 
+- (void)testHookForMethodWithStructureReturnValueShouldNotCrash {
+    SchedulableObject *schedulable = [[SchedulableObject alloc] initWithScheduler:[RACTargetQueueScheduler pos_mainThreadScheduler]];
+    XCTAssertNoThrow([schedulable preferedSize]);
+}
+
 @end

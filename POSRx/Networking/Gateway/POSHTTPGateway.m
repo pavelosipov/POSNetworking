@@ -19,6 +19,8 @@
 #import "NSException+POSRx.h"
 #import "NSURLCache+POSRx.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSString * const POSRxErrorDomain = @"com.github.pavelosipov.POSRxErrorDomain";
 NSInteger const POSHTTPSystemError = 101;
 
@@ -56,9 +58,8 @@ NSInteger const POSHTTPSystemError = 101;
 
 #pragma mark Lifecycle
 
-POSRX_DEADLYFY_SCHEDULABLE_INITIALIZERS
-
-- (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler backgroundSessionIdentifier:(NSString *)ID {
+- (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler
+      backgroundSessionIdentifier:(nullable NSString *)ID {
     if (self = [super initWithScheduler:scheduler]) {
         _actualTasks = [NSMutableSet new];
         NSURLSessionConfiguration *foregroundSessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -90,8 +91,9 @@ POSRX_DEADLYFY_SCHEDULABLE_INITIALIZERS
 
 - (RACSignal *)pushRequest:(id<POSHTTPRequest>)request
                     toHost:(NSURL *)hostURL
-                   options:(POSHTTPRequestExecutionOptions *)options {
+                   options:(nullable POSHTTPRequestExecutionOptions *)options {
     POSRX_CHECK(request);
+    POSRX_CHECK(hostURL);
     RACSignal *signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         NSError *error = nil;
         id<POSURLSessionTask> sessionTask = [request taskWithURL:hostURL
@@ -123,15 +125,22 @@ POSRX_DEADLYFY_SCHEDULABLE_INITIALIZERS
         }
         sessionTask.posrx_completionHandler = ^(NSError *error) {
             @strongify(sessionTask);
-            if (!error) {
+            NSURL *responseURL = sessionTask.posrx_originalRequest.URL ?: hostURL;
+            if (error) {
+                [subscriber sendError:[error errorWithURL:responseURL]];
+            } else if (!error && !sessionTask.posrx_response) {
+                [subscriber
+                 sendError:[NSError
+                            errorWithDomain:POSRxErrorDomain
+                            code:POSHTTPSystemError
+                            userInfo:@{NSURLErrorKey:responseURL,
+                                       NSLocalizedDescriptionKey:@"Response doesn't have metadata."}]];
+            } else {
                 POSHTTPResponse *response = [[POSHTTPResponse alloc]
                                              initWithData:responseData
                                              metadata:sessionTask.posrx_response];
                 [subscriber sendNext:response];
                 [subscriber sendCompleted];
-            } else {
-                NSURL *issuedURL = sessionTask.posrx_originalRequest.URL ?: hostURL;
-                [subscriber sendError:[error errorWithURL:issuedURL]];
             }
         };
         sessionTask.posrx_dataHandler = ^(NSData *data) {
@@ -184,7 +193,7 @@ POSRX_DEADLYFY_SCHEDULABLE_INITIALIZERS
 
 #pragma mark NSURLSessionDelegate
 
-- (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(NSError *)error {
+- (void)URLSession:(NSURLSession *)session didBecomeInvalidWithError:(nullable NSError *)error {
     if (error) {
         [session.posrx_invalidateSubject sendError:error];
     } else {
@@ -194,7 +203,7 @@ POSRX_DEADLYFY_SCHEDULABLE_INITIALIZERS
 
 #pragma mark NSURLSessionTaskDelegate
 
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error {
     if (task.posrx_completionHandler) {
         task.posrx_completionHandler(error);
     }
@@ -214,7 +223,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
 
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
- needNewBodyStream:(void (^)(NSInputStream *))completionHandler {
+ needNewBodyStream:(void (^)(NSInputStream * __nullable))completionHandler {
     if (task.posrx_bodyStreamBuilder) {
         completionHandler(task.posrx_bodyStreamBuilder());
     } else {
@@ -227,7 +236,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
 - (void)URLSession:(NSURLSession *)session
           dataTask:(NSURLSessionDataTask *)dataTask
  willCacheResponse:(NSCachedURLResponse *)proposedResponse
- completionHandler:(void (^)(NSCachedURLResponse *))completionHandler {
+ completionHandler:(void (^)(NSCachedURLResponse * __nullable))completionHandler {
     completionHandler(nil);
 }
 
@@ -251,7 +260,7 @@ didReceiveResponse:(NSURLResponse *)response
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
 didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
- completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
+ completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * __nullable credential))completionHandler
 {
     if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust] &&
         [task.posrx_allowUntrustedSSLCertificates boolValue]) {
@@ -347,3 +356,5 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

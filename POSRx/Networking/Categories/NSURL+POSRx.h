@@ -8,9 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface NSURL (POSRx)
 
-- (NSURL *)posrx_URLByAppendingEscapedPathComponent:(NSString *)pathComponent;
-- (NSURL *)posrx_URLByAppendingQueryString:(NSString *)queryString;
+- (nullable NSURL *)posrx_URLByAppendingEscapedPathComponent:(nullable NSString *)pathComponent;
+- (nullable NSURL *)posrx_URLByAppendingQueryString:(nullable NSString *)queryString;
 
 @end
+
+NS_ASSUME_NONNULL_END
