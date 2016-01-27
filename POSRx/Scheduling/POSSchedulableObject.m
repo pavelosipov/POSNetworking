@@ -97,7 +97,6 @@ static char kPOSQueueSchedulerKey;
     if (options.excludedSelectors) {
         [protectingSelectors removeObjectsInArray:[options.excludedSelectors array]];
     }
-    Class objectClass = object.class;
     for (NSValue *selectorValue in protectingSelectors) {
         SEL selector = (SEL)[selectorValue pointerValue];
         NSString *selectorName = NSStringFromSelector(selector);
@@ -109,7 +108,7 @@ static char kPOSQueueSchedulerKey;
 #if !defined(__arm64__)
         // Prevent adding hooks on 32 bit arch for methods which return C structs.
         // Additional info is here https://github.com/steipete/Aspects/issues/64
-        Method method = class_getInstanceMethod(objectClass, selector);
+        Method method = class_getInstanceMethod(object.class, selector);
         const char *encoding = method_getTypeEncoding(method);
         BOOL methodReturnsStructValue = encoding[0] == _C_STRUCT_B;
         if (methodReturnsStructValue) {
