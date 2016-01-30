@@ -1,3 +1,4 @@
+
 //
 //  POSHTTPGateway.h
 //  POSRx
@@ -51,7 +52,7 @@ FOUNDATION_EXTERN NSInteger const POSHTTPSystemError;
 - (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler
       backgroundSessionIdentifier:(nullable NSString *)ID;
 
-POSRX_INIT_UNAVAILABLE;
+POSRX_SCHEDULABLE_INIT_RECURSIVELY_UNAVAILABLE;
 
 @end
 
