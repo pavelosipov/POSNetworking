@@ -50,7 +50,8 @@ NS_INLINE NSString *POSCreateStringByAddingPercentEscapes(NSString *unescaped, N
     NSMutableString *query = [NSMutableString new];
     [self enumerateKeysAndObjectsUsingBlock:^(NSString *key, id value, BOOL *stop) {
         NSString *pairFormat = query.length ? @"&%@=%@" : @"%@=%@";
-        [query appendString:[NSString stringWithFormat:pairFormat, key, value]];
+        NSString *encodedValue = [[value description] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        [query appendFormat:pairFormat, key, encodedValue];
     }];
     return query;
 }
