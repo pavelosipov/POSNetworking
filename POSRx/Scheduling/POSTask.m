@@ -120,11 +120,18 @@
 }
 
 - (RACSignal *)execute {
+    RACSignal *executeSignal;
     if (_executor) {
-        return [_executor pushTask:self];
+        executeSignal = [_executor pushTask:self];
     } else {
-        return [self p_executeNow];
+        executeSignal = [self p_executeNow];
     }
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        [executeSignal subscribe:subscriber];
+        return [RACDisposable disposableWithBlock:^{
+            [self cancel];
+        }];
+    }];
 }
 
 - (void)cancel {
