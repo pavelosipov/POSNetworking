@@ -17,6 +17,7 @@ FOUNDATION_EXTERN NSInteger const POSHTTPSystemError;
 #pragma mark - Gateway
 
 @protocol POSHTTPRequest;
+@protocol POSTask;
 @class POSHTTPRequestExecutionOptions;
 
 /// Performs network requests.
@@ -32,9 +33,9 @@ FOUNDATION_EXTERN NSInteger const POSHTTPSystemError;
 /// @param request Request which will be send to host with specified baseURL. It can not be nil.
 /// @param hostURL URL, which will be combined with request's endpoint method to construct full URL. May be nil.
 /// @param options Request options. May be nil.
-- (RACSignal *)pushRequest:(id<POSHTTPRequest>)request
-                    toHost:(NSURL *)hostURL
-                   options:(nullable POSHTTPRequestExecutionOptions *)options;
+- (id<POSTask>)taskForRequest:(id<POSHTTPRequest>)request
+                       toHost:(NSURL *)hostURL
+                      options:(nullable POSHTTPRequestExecutionOptions *)options;
 
 /// @brief Recovers all background upload requests as array of POSRecoveredHTTPBackgroundUpload objects.
 - (void)recoverBackgroundUploadRequestsUsingBlock:(void(^)(NSArray *uploadRequests))block;

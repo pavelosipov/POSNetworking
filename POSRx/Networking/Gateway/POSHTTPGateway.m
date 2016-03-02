@@ -13,6 +13,7 @@
 #import "POSHTTPRequestOptions.h"
 #import "POSHTTPResponse.h"
 #import "POSHTTPRequestProgress.h"
+#import "POSTask.h"
 #import "POSSystemInfo.h"
 #import "NSObject+POSRx.h"
 #import "NSError+POSRx.h"
@@ -89,77 +90,73 @@ NSInteger const POSHTTPSystemError = 101;
 
 #pragma mark MRCHTTPGateway
 
-- (RACSignal *)pushRequest:(id<POSHTTPRequest>)request
-                    toHost:(NSURL *)hostURL
-                   options:(nullable POSHTTPRequestExecutionOptions *)options {
+- (id<POSTask>)taskForRequest:(id<POSHTTPRequest>)request
+                       toHost:(NSURL *)hostURL
+                      options:(nullable POSHTTPRequestExecutionOptions *)options {
     POSRX_CHECK(request);
     POSRX_CHECK(hostURL);
-    RACSignal *signal = [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        NSError *error = nil;
-        id<POSURLSessionTask> sessionTask = [request taskWithURL:hostURL
-                                                      forGateway:self
-                                                         options:options.HTTP
-                                                           error:&error];
-        if (!sessionTask) {
-            [subscriber sendError:error];
-            [subscriber sendCompleted];
-            return nil;
-        }
-        POSRX_CHECK(sessionTask);
-        POSHTTPResponse *simulatedResponse = [options.simulation probeSimulationWithURL:sessionTask.posrx_originalRequest.URL];
-        if (simulatedResponse) {
-            [subscriber sendNext:simulatedResponse];
-            [subscriber sendCompleted];
-            return nil;
-        }
-        NSMutableData *responseData = [NSMutableData new];
-        @weakify(sessionTask);
-        if (options.HTTP.allowUntrustedSSLCertificates) {
-            sessionTask.posrx_allowUntrustedSSLCertificates = options.HTTP.allowUntrustedSSLCertificates;
-        }
-        if (request.downloadProgressHandler) {
-            sessionTask.posrx_downloadProgressHandler = request.downloadProgressHandler;
-        }
-        if (request.uploadProgressHandler) {
-            sessionTask.posrx_uploadProgressHandler = request.uploadProgressHandler;
-        }
-        sessionTask.posrx_completionHandler = ^(NSError *error) {
-            @strongify(sessionTask);
-            NSURL *responseURL = sessionTask.posrx_originalRequest.URL ?: hostURL;
-            if (error) {
-                [subscriber sendError:[error errorWithURL:responseURL]];
-            } else if (!error && !sessionTask.posrx_response) {
-                [subscriber
-                 sendError:[NSError
-                            errorWithDomain:POSRxErrorDomain
-                            code:POSHTTPSystemError
-                            userInfo:@{NSURLErrorKey:responseURL,
-                                       NSLocalizedDescriptionKey:@"Response doesn't have metadata."}]];
-            } else {
-                POSHTTPResponse *response = [[POSHTTPResponse alloc]
-                                             initWithData:responseData
-                                             metadata:sessionTask.posrx_response];
-                [subscriber sendNext:response];
+    return [POSTask createTask:^RACSignal * _Nonnull(POSTaskContext * _Nonnull context) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            NSError *error = nil;
+            id<POSURLSessionTask> sessionTask = [request taskWithURL:hostURL
+                                                          forGateway:self
+                                                             options:options.HTTP
+                                                               error:&error];
+            if (!sessionTask) {
+                [subscriber sendError:error];
                 [subscriber sendCompleted];
+                return nil;
             }
-        };
-        sessionTask.posrx_dataHandler = ^(NSData *data) {
-            [responseData appendData:data];
-        };
-        sessionTask.posrx_responseHandler = ^NSURLSessionResponseDisposition(NSURLResponse *URLResponse) {
-            return NSURLSessionResponseAllow;
-        };
-        [sessionTask posrx_start];
-        return [RACDisposable disposableWithBlock:^{
-            [sessionTask posrx_cancel];
+            POSRX_CHECK(sessionTask);
+            POSHTTPResponse *simulatedResponse = [options.simulation probeSimulationWithURL:sessionTask.posrx_originalRequest.URL];
+            if (simulatedResponse) {
+                [subscriber sendNext:simulatedResponse];
+                [subscriber sendCompleted];
+                return nil;
+            }
+            NSMutableData *responseData = [NSMutableData new];
+            @weakify(sessionTask);
+            if (options.HTTP.allowUntrustedSSLCertificates) {
+                sessionTask.posrx_allowUntrustedSSLCertificates = options.HTTP.allowUntrustedSSLCertificates;
+            }
+            if (request.downloadProgressHandler) {
+                sessionTask.posrx_downloadProgressHandler = request.downloadProgressHandler;
+            }
+            if (request.uploadProgressHandler) {
+                sessionTask.posrx_uploadProgressHandler = request.uploadProgressHandler;
+            }
+            sessionTask.posrx_completionHandler = ^(NSError *error) {
+                @strongify(sessionTask);
+                NSURL *responseURL = sessionTask.posrx_originalRequest.URL ?: hostURL;
+                if (error) {
+                    [subscriber sendError:[error errorWithURL:responseURL]];
+                } else if (!error && !sessionTask.posrx_response) {
+                    [subscriber
+                     sendError:[NSError
+                                errorWithDomain:POSRxErrorDomain
+                                code:POSHTTPSystemError
+                                userInfo:@{NSURLErrorKey:responseURL,
+                                           NSLocalizedDescriptionKey:@"Response doesn't have metadata."}]];
+                } else {
+                    POSHTTPResponse *response = [[POSHTTPResponse alloc]
+                                                 initWithData:responseData
+                                                 metadata:sessionTask.posrx_response];
+                    [subscriber sendNext:response];
+                    [subscriber sendCompleted];
+                }
+            };
+            sessionTask.posrx_dataHandler = ^(NSData *data) {
+                [responseData appendData:data];
+            };
+            sessionTask.posrx_responseHandler = ^NSURLSessionResponseDisposition(NSURLResponse *URLResponse) {
+                return NSURLSessionResponseAllow;
+            };
+            [sessionTask posrx_start];
+            return [RACDisposable disposableWithBlock:^{
+                [sessionTask posrx_cancel];
+            }];
         }];
-    }];
-    RACMulticastConnection *connection = [[[signal
-        subscribeOn:self.scheduler]
-        deliverOn:self.scheduler]
-        multicast:RACReplaySubject.subject];
-    [connection connect];
-    return connection.signal;
+    } scheduler:self.scheduler];
 }
 
 - (void)recoverBackgroundUploadRequestsUsingBlock:(void(^)(NSArray *uploadRequests))block {

@@ -41,7 +41,7 @@
      simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
                         initWithRate:1.0f
                         responses:@{[[POSHTTPResponse alloc] initWithData:responseData]: @(1)}]];
-    [[_gateway pushRequest:[POSHTTPRequest new] toHost:hostURL options:options] subscribeCompleted:^{
+    [[[_gateway taskForRequest:[POSHTTPRequest new] toHost:hostURL options:options] execute] subscribeCompleted:^{
         [[_gateway invalidateCancelingRequests:YES] subscribeCompleted:^{
             self.gateway = nil;
             [[RACScheduler mainThreadScheduler] afterDelay:0.01 schedule:^{
