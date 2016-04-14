@@ -23,8 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// Initializer for simulating success response with status code 200.
 - (instancetype)initWithData:(nullable NSData *)data;
 
-/// Initializer for simulating failure response without data.
+/// Initializer for simulating response without data.
 - (instancetype)initWithStatusCode:(NSInteger)statusCode;
+
+/// Initializer for simulating response without data from specified host.
+- (instancetype)initWithStatusCode:(NSInteger)statusCode hostURL:(nullable NSURL *)hostURL;
 
 @end
 

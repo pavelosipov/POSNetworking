@@ -7,6 +7,7 @@
 //
 
 #import "POSHTTPResponse.h"
+#import "NSString+POSRx.h"
 #import "NSException+POSRx.h"
 
 @implementation POSHTTPResponse
@@ -35,10 +36,14 @@
 }
 
 - (instancetype)initWithStatusCode:(NSInteger)statusCode {
+    return [self initWithStatusCode:statusCode hostURL:nil];
+}
+
+- (instancetype)initWithStatusCode:(NSInteger)statusCode hostURL:(nullable NSURL *)hostURL {
     if (self = [super init]) {
         _data = nil;
         _metadata = [[NSHTTPURLResponse alloc]
-                     initWithURL:[[NSURL alloc] initWithString:@"http://unspecified.com"]
+                     initWithURL:(hostURL ?: [@"http://unspecified.com" posrx_URL])
                      statusCode:statusCode
                      HTTPVersion:@"1.1"
                      headerFields:[NSDictionary new]];

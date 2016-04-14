@@ -184,8 +184,12 @@ NSInteger const POSHTTPSystemError = 101;
         [_foregroundSession finishTasksAndInvalidate];
         [_backgroundSession finishTasksAndInvalidate];
     }
-    return [RACSignal merge:@[_foregroundSession.posrx_invalidateSubject,
-                              _backgroundSession.posrx_invalidateSubject]];
+    if (_backgroundSession) {
+        return [RACSignal merge:@[_foregroundSession.posrx_invalidateSubject,
+                                  _backgroundSession.posrx_invalidateSubject]];
+    } else {
+        return _foregroundSession.posrx_invalidateSubject;
+    }
 }
 
 #pragma mark NSURLSessionDelegate
