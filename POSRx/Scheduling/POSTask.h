@@ -25,9 +25,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Emits errors from source signal and keeps the last one until reexecution.
 @property (nonatomic, readonly) RACSignal *errors;
 
-/// Additional task signals.
- - (RACSignal *)signalForEvent:(id)eventKey;
-
 /// @return YES if task is executing right now.
 - (BOOL)isExecuting;
 
@@ -42,30 +39,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// Context contains state which is shared between executions.
-@interface POSTaskContext : NSObject
-
-/// Subjects for emitting additional events during execution.
-- (RACSubject *)subjectForEvent:(id)eventKey;
-
-@end
-
 @interface POSTask : POSSchedulableObject <POSTask>
 
+/// The designated initializer.
+- (instancetype)initWithExecutionBlock:(RACSignal *(^)(id task))executionBlock
+                             scheduler:(RACTargetQueueScheduler *)scheduler
+                              executor:(nullable id<POSTaskExecutor>)executor;
+
 /// Creates self-executable task with implicit UI scheduler.
-+ (instancetype)createTask:(RACSignal *(^)(POSTaskContext *context))executionBlock;
++ (instancetype)createTask:(RACSignal *(^)(id task))executionBlock;
 
 /// Creates self-executable task.
-+ (instancetype)createTask:(RACSignal *(^)(POSTaskContext *context))executionBlock
-                 scheduler:(RACTargetQueueScheduler *)scheduler;
++ (instancetype)createTask:(RACSignal *(^)(id task))executionBlock
+                 scheduler:(nullable RACTargetQueueScheduler *)scheduler;
 
 /// Creates task which should be scheduled and executed only within specified executor.
-+ (instancetype)createTask:(RACSignal *(^)(POSTaskContext *context))executionBlock
-                 scheduler:(RACTargetQueueScheduler *)scheduler
-                  executor:(id<POSTaskExecutor>)executor;
++ (instancetype)createTask:(RACSignal *(^)(id task))executionBlock
+                 scheduler:(nullable RACTargetQueueScheduler *)scheduler
+                  executor:(nullable id<POSTaskExecutor>)executor;
 
 /// Preventing usage of base initializers.
-POSRX_INIT_UNAVAILABLE;
+POSRX_SCHEDULABLE_INIT_RECURSIVELY_UNAVAILABLE;
 
 @end
 

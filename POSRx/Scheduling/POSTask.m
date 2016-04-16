@@ -10,60 +10,32 @@
 #import "NSException+POSRx.h"
 #import "RACTargetQueueScheduler+POSRx.h"
 
-#pragma mark - POSTaskContext
-
-@interface POSTaskContext ()
-@property (nonatomic) NSMutableDictionary *subjects;
-@end
-
-@implementation POSTaskContext
-
-- (instancetype)init {
-    if (self = [super init]) {
-        _subjects = NSMutableDictionary.new;
-    }
-    return self;
-}
-
-- (RACSubject *)subjectForEvent:(id)eventKey {
-    RACSubject *subject = _subjects[eventKey];
-    if (subject) {
-        return subject;
-    }
-    subject = [RACSubject subject];
-    _subjects[eventKey] = subject;
-    return subject;
-}
-
-@end
-
-#pragma mark - POSTask
+NS_ASSUME_NONNULL_BEGIN
 
 @interface POSTask ()
-@property (nonatomic, copy, readonly) RACSignal *(^executionBlock)(POSTaskContext *context);
+@property (nonatomic, copy, readonly) RACSignal *(^executionBlock)(POSTask *task);
 @property (nonatomic, weak) id<POSTaskExecutor> executor;
 @property (nonatomic) RACSignal *executing;
 @property (nonatomic) RACSignal *sourceSignals;
-@property (nonatomic) RACSignal *sourceSignal;
-@property (nonatomic) RACDisposable *sourceSignalDisposable;
+@property (nonatomic, nullable) RACSignal *sourceSignal;
+@property (nonatomic, nullable) RACDisposable *sourceSignalDisposable;
 @property (nonatomic) RACSignal *errors;
 @property (nonatomic) RACSubject *extraErrors;
 @property (nonatomic) RACSignal *values;
-@property (nonatomic) POSTaskContext *context;
 @end
 
 @implementation POSTask
 
 #pragma mark Lifecycle
 
-- (instancetype)initWithTask:(RACSignal *(^)(POSTaskContext *context))executionBlock
-                   scheduler:(RACTargetQueueScheduler *)scheduler
-                    executor:(id<POSTaskExecutor>)executor {
+- (instancetype)initWithExecutionBlock:(RACSignal *(^)(id))executionBlock
+                             scheduler:(RACTargetQueueScheduler *)scheduler
+                              executor:(nullable id<POSTaskExecutor>)executor {
+    POSRX_CHECK(scheduler);
     POSRX_CHECK(executionBlock);
     if (self = [super initWithScheduler:scheduler]) {
         _executionBlock = [executionBlock copy];
         _executor = executor;
-        _context = POSTaskContext.new;
         
         _sourceSignals = RACObserve(self, sourceSignal);
 
@@ -88,32 +60,24 @@
     return self;
 }
 
-+ (instancetype)createTask:(RACSignal *(^)(POSTaskContext *context))executionBlock {
-    return [[self.class alloc] initWithTask:executionBlock
-                                  scheduler:[RACTargetQueueScheduler pos_mainThreadScheduler]
-                                   executor:nil];
++ (instancetype)createTask:(RACSignal *(^)(id task))executionBlock {
+    return [self createTask:executionBlock scheduler:nil executor:nil];
 }
 
-+ (instancetype)createTask:(RACSignal *(^)(POSTaskContext *context))executionBlock
-                 scheduler:(RACTargetQueueScheduler *)scheduler {
-    return [[self.class alloc] initWithTask:executionBlock
-                                  scheduler:scheduler
-                                   executor:nil];
++ (instancetype)createTask:(RACSignal *(^)(id task))executionBlock
+                 scheduler:(nullable RACTargetQueueScheduler *)scheduler {
+    return [self createTask:executionBlock scheduler:scheduler executor:nil];
 }
 
-+ (instancetype)createTask:(RACSignal *(^)(POSTaskContext *))executionBlock
-                 scheduler:(RACTargetQueueScheduler *)scheduler
-                  executor:(id<POSTaskExecutor>)executor {
-    return [[self.class alloc] initWithTask:executionBlock
-                                  scheduler:scheduler
-                                   executor:executor];
++ (instancetype)createTask:(RACSignal *(^)(id task))executionBlock
+                 scheduler:(nullable RACTargetQueueScheduler *)scheduler
+                  executor:(nullable id<POSTaskExecutor>)executor {
+    return [[self alloc] initWithExecutionBlock:executionBlock
+                                      scheduler:(scheduler ?: [RACTargetQueueScheduler pos_mainThreadScheduler])
+                                       executor:executor];
 }
 
 #pragma mark POSTask
-
-- (RACSignal *)signalForEvent:(id)eventKey {
-    return [_context subjectForEvent:eventKey];
-}
 
 - (BOOL)isExecuting {
     return _sourceSignal != nil;
@@ -154,7 +118,7 @@
     if ([self isExecuting]) {
         return _sourceSignal;
     }
-    RACSignal *signal = self.executionBlock(_context);
+    RACSignal *signal = self.executionBlock(self);
     POSRX_CHECK(signal);
     RACMulticastConnection *connection = [[signal
         subscribeOn:self.scheduler]
@@ -183,3 +147,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -29,7 +29,7 @@
 }
 
 - (void)testTaskExecutionSignalShouldEmitNOBeforeFirstExecution {
-    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal empty];
     }];
     __block BOOL executionValue = @YES;
@@ -42,7 +42,7 @@
 - (void)testTaskResetValueAfterReexecution {
     XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
     __block int executionCount = 0;
-    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             if (++executionCount == 1) {
                 [subscriber sendNext:@(1)];
@@ -73,7 +73,7 @@
 
 - (void)testTaskKeepLastValueUntilReexecution {
     XCTestExpectation *expectation = [self expectationWithDescription:@"document open"];
-    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             [subscriber sendNext:@(1)];
             [subscriber sendCompleted];
@@ -92,7 +92,7 @@
 - (void)testTaskResetErrorAfterReexecution {
     XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
     __block int executionCount = 0;
-    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             if (++executionCount == 1) {
                 [subscriber sendError:[NSError errorWithDomain:@"test" code:0 userInfo:nil]];
@@ -123,7 +123,7 @@
 
 - (void)testTaskKeepLastErrorUntilReexecution {
     XCTestExpectation *expectation = [self expectationWithDescription:@"error emitted"];
-    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             [subscriber sendError:[NSError errorWithDomain:@"test" code:0 userInfo:nil]];
             [expectation fulfill];
@@ -138,16 +138,9 @@
     }];
 }
 
-- (void)testTaskShouldCreateSubjectOnDemand {
-    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
-        return [RACSignal empty];
-    }];
-    XCTAssertNotNil([task signalForEvent:@"new_event"]);
-}
-
 - (void)testTaskSuccessfulExecutionSignal {
     XCTestExpectation *expectation = [self expectationWithDescription:@"completion emitted"];
-    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal return:@1];
     }];
     __block NSNumber *receivedValue;
@@ -163,7 +156,7 @@
 - (void)testTaskFailedExecutionSignal {
     XCTestExpectation *expectation = [self expectationWithDescription:@"error emitted"];
     NSError *emittingError = [NSError errorWithDomain:@"com.github.pavelosipov.POSRx.Test" code:0 userInfo:nil];
-    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal error:emittingError];
     }];
     [[task execute] subscribeError:^(NSError *error) {

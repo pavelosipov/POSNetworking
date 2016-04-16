@@ -17,7 +17,7 @@
 
 - (void)testSchedulingEventFromNonTaskScheduler {
     XCTestExpectation *expectation = [self expectationWithDescription:@"task completes"];
-    POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             return [[RACScheduler scheduler] schedule:^{
                 [subscriber sendNext:@1];
@@ -41,7 +41,7 @@
     XCTestExpectation *expectation = [self expectationWithDescription:@"task scheduledu"];
     RACTargetQueueScheduler *taskScheduler = [RACTargetQueueScheduler pos_scheduler];
     [taskScheduler schedule:^{
-        POSTask *task = [POSTask createTask:^RACSignal *(POSTaskContext *context) {
+        POSTask *task = [POSTask createTask:^RACSignal *(POSTask *task) {
             return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
                 XCTAssert([RACScheduler currentScheduler] == taskScheduler);
                 [subscriber sendCompleted];

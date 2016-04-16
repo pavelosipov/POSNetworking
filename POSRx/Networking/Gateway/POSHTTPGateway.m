@@ -95,7 +95,7 @@ NSInteger const POSHTTPSystemError = 101;
                       options:(nullable POSHTTPRequestExecutionOptions *)options {
     POSRX_CHECK(request);
     POSRX_CHECK(hostURL);
-    return [POSTask createTask:^RACSignal * _Nonnull(POSTaskContext * _Nonnull context) {
+    return [POSTask createTask:^RACSignal * _Nonnull(POSTask * _Nonnull task) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             NSError *error = nil;
             id<POSURLSessionTask> sessionTask = [request taskWithURL:hostURL

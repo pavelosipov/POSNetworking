@@ -39,6 +39,7 @@
 		21B23CF41BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B23CF31BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m */; };
 		E95EF3381BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E95EF3371BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m */; };
 		E95EF33E1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = E95EF33D1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m */; };
+		E980732F1CC24697007A6B46 /* POSTaskSubclassingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E980732E1CC24697007A6B46 /* POSTaskSubclassingTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +132,7 @@
 		E95EF3371BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestExecutionOptionsTests.m; sourceTree = "<group>"; };
 		E95EF33C1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACTargetQueueScheduler+POSRx.h"; sourceTree = "<group>"; };
 		E95EF33D1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACTargetQueueScheduler+POSRx.m"; sourceTree = "<group>"; };
+		E980732E1CC24697007A6B46 /* POSTaskSubclassingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTaskSubclassingTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +222,7 @@
 				212B41E41B85BC1D00B59E48 /* POSSchedulableObjectTests.m */,
 				211A33461B9D726800D92A27 /* POSTaskTests.m */,
 				211A33D51BA0862100D92A27 /* POSTaskSchedulingTests.m */,
+				E980732E1CC24697007A6B46 /* POSTaskSubclassingTests.m */,
 			);
 			path = Scheduling;
 			sourceTree = "<group>";
@@ -538,6 +541,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E980732F1CC24697007A6B46 /* POSTaskSubclassingTests.m in Sources */,
 				212B41E81B85BC1D00B59E48 /* POSSchedulableObjectTests.m in Sources */,
 				211A33D61BA0862100D92A27 /* POSTaskSchedulingTests.m in Sources */,
 				212B41E71B85BC1D00B59E48 /* POSSchedulableObjectMocks.m in Sources */,
