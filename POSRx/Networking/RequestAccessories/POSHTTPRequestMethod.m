@@ -55,25 +55,6 @@
     return method;
 }
 
-- (NSURL *)appendTo:(NSURL *)URL {
-    return [self appendTo:URL withQuery:nil];
-}
-
-- (NSURL *)appendTo:(NSURL *)URL
-          withQuery:(NSDictionary *)query {
-    NSURL *fullURL = URL;
-    if (_path) {
-        POSRX_CHECK(!URL.query);
-        fullURL = [fullURL posrx_URLByAppendingEscapedPathComponent:_path];
-    }
-    NSDictionary *fullQuery = [NSDictionary posrx_merge:_query with:query];
-    if (fullQuery) {
-        POSRX_CHECK(!URL.fragment);
-        fullURL = [fullURL posrx_URLByAppendingQueryString:[fullQuery posrx_URLQuery]];
-    }
-    return fullURL;
-}
-
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@{path='%@', query='%@'}",
             [super description], _path, [_query posrx_URLQuery]];

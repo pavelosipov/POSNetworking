@@ -29,13 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Creates method which contains only query.
 + (instancetype)query:(nullable NSDictionary *)query;
 
-/// Creates URL, where method components are appended to specified URL.
-- (nullable NSURL *)appendTo:(nullable NSURL *)URL;
-
-/// Creates URL, where method components are appended to specified URL with additional query parameter.
-- (nullable NSURL *)appendTo:(nullable NSURL *)URL
-                   withQuery:(nullable NSDictionary *)query;
-
 @end
 
 NS_ASSUME_NONNULL_END
