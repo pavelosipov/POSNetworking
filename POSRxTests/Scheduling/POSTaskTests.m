@@ -11,6 +11,20 @@
 #import <POSRx/POSRx.h>
 #import <POSAllocationTracker/POSAllocationTracker.h>
 
+@interface POSTaskClient : NSObject
+@end
+
+@implementation POSTaskClient
+
+- (RACSignal *)executeInfiniteTask {
+    POSTask *task = [POSTask createTask:^RACSignal *(id task) {
+        return [RACSignal never];
+    }];
+    return [[task execute] takeUntil:self.rac_willDeallocSignal];
+}
+
+@end
+
 @interface POSTaskTests : XCTestCase
 @end
 
@@ -18,6 +32,7 @@
 
 - (void)setUp {
     [super setUp];
+    [POSAllocationTracker resetAllCounters];
     XCTAssert([POSAllocationTracker instanceCountForClass:POSTask.class] == 0);
     XCTAssert([POSAllocationTracker instanceCountForClass:RACDisposable.class] == 0);
 }
@@ -163,6 +178,19 @@
         XCTAssertEqualObjects(error, emittingError);
         [expectation fulfill];
     }];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
+- (void)testInfiniteTaskExecution {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"expectation"];
+    @autoreleasepool {
+        POSTaskClient *client = [POSTaskClient new];
+        [[client executeInfiniteTask] subscribeCompleted:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [expectation fulfill];
+            });
+        }];
+    }
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 

@@ -123,7 +123,8 @@ NS_ASSUME_NONNULL_BEGIN
     RACMulticastConnection *connection = [[signal
         subscribeOn:self.scheduler]
         multicast:RACReplaySubject.subject];
-    self.sourceSignal = [connection.signal deliverOn:self.scheduler];
+    self.sourceSignal = [[connection.signal deliverOn:self.scheduler]
+                         takeUntil:self.rac_willDeallocSignal];
     @weakify(self);
     [self.sourceSignal subscribeError:^(NSError *error) {
         @strongify(self);
