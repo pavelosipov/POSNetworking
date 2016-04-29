@@ -37,11 +37,11 @@ NS_INLINE NSString *POSCreateStringByAddingPercentEscapes(NSString *unescaped, N
         return [NSData new];
     }
     NSMutableString *query = [NSMutableString new];
-    [self enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *value, BOOL *stop) {
+    [self enumerateKeysAndObjectsUsingBlock:^(NSString *key, id value, BOOL *stop) {
         NSString *pairFormat = query.length ? @"&%@=%@" : @"%@=%@";
         [query appendString:[NSString stringWithFormat:pairFormat,
                              key,
-                             POSCreateStringByAddingPercentEscapes(value, @"!*'();:@&=+$,/?%#[]")]];
+                             POSCreateStringByAddingPercentEscapes([value description], @"!*'();:@&=+$,/?%#[]")]];
     }];
     return [query dataUsingEncoding:NSASCIIStringEncoding];
 }
