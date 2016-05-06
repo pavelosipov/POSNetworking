@@ -7,6 +7,7 @@
 //
 
 #import "NSDictionary+POSRx.h"
+#import "NSException+POSRx.h"
 
 NS_INLINE NSString *POSCreateStringByAddingPercentEscapes(NSString *unescaped, NSString *escapedSymbols) {
     return (__bridge_transfer NSString*)CFURLCreateStringByAddingPercentEscapes(
@@ -32,7 +33,7 @@ NS_INLINE NSString *POSCreateStringByAddingPercentEscapes(NSString *unescaped, N
     return resultDictionary;
 }
 
-- (NSData *)posrx_URLBody {
+- (NSData *)posrx_URLQueryBody {
     if (!self.count) {
         return [NSData new];
     }
@@ -44,6 +45,16 @@ NS_INLINE NSString *POSCreateStringByAddingPercentEscapes(NSString *unescaped, N
                              POSCreateStringByAddingPercentEscapes([value description], @"!*'();:@&=+$,/?%#[]")]];
     }];
     return [query dataUsingEncoding:NSASCIIStringEncoding];
+}
+
+- (NSData *)posrx_URLJSONBody {
+    POSRX_CHECK(![NSJSONSerialization isValidJSONObject:self]);
+    NSError *error = nil;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:self
+                                                   options:0
+                                                     error:&error];
+    POSRX_CHECK_EX(data, @"Failed to encode %@ to JSON: %@", self, error);
+    return data;
 }
 
 - (NSString *)posrx_URLQuery {

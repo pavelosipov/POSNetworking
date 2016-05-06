@@ -18,7 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// @brief Encodes parameters in query string of &-concatenated key-value pairs.
 /// @return NSData of UTF8 encoded string.
-- (NSData *)posrx_URLBody;
+- (NSData *)posrx_URLQueryBody;
+
+/// @brief Encodes parameters in JSON.
+/// @return NSData of JSON encoded dictionary.
+- (NSData *)posrx_URLJSONBody;
 
 /// @brief Encodes parameters in query string of &-concatenated key-value pairs.
 /// @return Percent escaped query string for URL.
