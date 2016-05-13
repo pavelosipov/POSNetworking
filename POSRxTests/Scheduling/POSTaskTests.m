@@ -194,4 +194,22 @@
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
+- (void)testTaskExecutionDisposableShouldDisposeTaskDisposable {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
+    @weakify(expectation);
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTask *task) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            return [RACDisposable disposableWithBlock:^{
+                @strongify(expectation);
+                [expectation fulfill];
+            }];
+        }];
+    }];
+    RACDisposable *disposable = [[task execute] subscribeCompleted:^{}];
+    [task schedule:^{
+        [disposable dispose];
+    }];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
 @end

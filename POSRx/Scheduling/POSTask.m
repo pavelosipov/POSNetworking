@@ -84,25 +84,20 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (RACSignal *)execute {
-    RACSignal *executeSignal;
     if (_executor) {
-        executeSignal = [_executor pushTask:self];
+        return [_executor submitTask:self];
     } else {
-        executeSignal = [self p_executeNow];
-    }
-    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        [executeSignal subscribe:subscriber];
-        return [RACDisposable disposableWithBlock:^{
-            [self cancel];
+        return [self p_executeWithDisposableBlock:^{
+            [self p_cancelNow];
         }];
-    }];
+    }
 }
 
 - (void)cancel {
-    if ([self isExecuting]) {
-        [_sourceSignalDisposable dispose];
-        self.sourceSignalDisposable = nil;
-        self.sourceSignal = nil;
+    if (_executor) {
+        [_executor reclaimTask:self];
+    } else {
+        [self p_cancelNow];
     }
 }
 
@@ -113,7 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Private
 
-- (RACSignal *)p_executeNow {
+- (RACSignal *)p_executeWithDisposableBlock:(void (^)(void))block {
     NSParameterAssert(![self isExecuting]);
     if ([self isExecuting]) {
         return _sourceSignal;
@@ -123,8 +118,9 @@ NS_ASSUME_NONNULL_BEGIN
     RACMulticastConnection *connection = [[signal
         subscribeOn:self.scheduler]
         multicast:RACReplaySubject.subject];
-    self.sourceSignal = [[connection.signal deliverOn:self.scheduler]
-                         takeUntil:self.rac_willDeallocSignal];
+    RACSignal *sourceSignal = [[connection.signal deliverOn:self.scheduler]
+                               takeUntil:self.rac_willDeallocSignal];
+    self.sourceSignal = sourceSignal;
     @weakify(self);
     [self.sourceSignal subscribeError:^(NSError *error) {
         @strongify(self);
@@ -134,7 +130,18 @@ NS_ASSUME_NONNULL_BEGIN
         self.sourceSignal = nil;
     }];
     self.sourceSignalDisposable = [connection connect];
-    return _sourceSignal;
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        [sourceSignal subscribe:subscriber];
+        return [RACDisposable disposableWithBlock:block];
+    }];
+}
+
+- (void)p_cancelNow {
+    if ([self isExecuting]) {
+        [_sourceSignalDisposable dispose];
+        self.sourceSignalDisposable = nil;
+        self.sourceSignal = nil;
+    }
 }
 
 @end
@@ -143,8 +150,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation POSDirectTaskExecutor
 
-- (RACSignal *)pushTask:(POSTask *)task {
-    return [task p_executeNow];
+- (RACSignal *)submitTask:(POSTask *)task {
+    @weakify(self);
+    @weakify(task);
+    return [task p_executeWithDisposableBlock:^{
+        @strongify(self);
+        @strongify(task);
+        [self reclaimTask:task];
+    }];
+}
+
+- (void)reclaimTask:(POSTask *)task {
+    [task p_cancelNow];
 }
 
 @end

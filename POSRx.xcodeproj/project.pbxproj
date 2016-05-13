@@ -8,11 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		1936FDDE061907BFAB2145AE /* libPods-POSRxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4F690DF728689B5020A334E /* libPods-POSRxTests.a */; };
+		210083221CE4714200FF9AB9 /* POSTaskQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 210083211CE4714200FF9AB9 /* POSTaskQueue.m */; };
+		210083291CE5CCFD00FF9AB9 /* POSDirectTaskExecutorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 210083281CE5CCFD00FF9AB9 /* POSDirectTaskExecutorTests.m */; };
 		211A33471B9D726800D92A27 /* POSTaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33461B9D726800D92A27 /* POSTaskTests.m */; };
 		211A33D41BA0267700D92A27 /* POSHTTPGatewayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33D31BA0267700D92A27 /* POSHTTPGatewayTests.m */; };
 		211A33D61BA0862100D92A27 /* POSTaskSchedulingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33D51BA0862100D92A27 /* POSTaskSchedulingTests.m */; };
 		212B41E71B85BC1D00B59E48 /* POSSchedulableObjectMocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 212B41E31B85BC1D00B59E48 /* POSSchedulableObjectMocks.m */; };
 		212B41E81B85BC1D00B59E48 /* POSSchedulableObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 212B41E41B85BC1D00B59E48 /* POSSchedulableObjectTests.m */; };
+		213326F71CE46CC50074EE8D /* POSSequentialTaskExecutorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 213326F61CE46CC50074EE8D /* POSSequentialTaskExecutorTests.m */; };
+		214D30591CE1D7CD005820D2 /* POSSequentialTaskExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 214D30581CE1D7CD005820D2 /* POSSequentialTaskExecutor.m */; };
 		217D28B51BD0E9C7005C38C9 /* NSDictionary+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D287D1BD0E9C7005C38C9 /* NSDictionary+POSRx.m */; };
 		217D28B61BD0E9C7005C38C9 /* NSError+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D287F1BD0E9C7005C38C9 /* NSError+POSRx.m */; };
 		217D28B91BD0E9C7005C38C9 /* NSURLCache+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28851BD0E9C7005C38C9 /* NSURLCache+POSRx.m */; };
@@ -65,6 +69,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		210083211CE4714200FF9AB9 /* POSTaskQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTaskQueue.m; sourceTree = "<group>"; };
+		210083281CE5CCFD00FF9AB9 /* POSDirectTaskExecutorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSDirectTaskExecutorTests.m; sourceTree = "<group>"; };
 		211A33461B9D726800D92A27 /* POSTaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTaskTests.m; sourceTree = "<group>"; };
 		211A33D31BA0267700D92A27 /* POSHTTPGatewayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayTests.m; sourceTree = "<group>"; };
 		211A33D51BA0862100D92A27 /* POSTaskSchedulingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTaskSchedulingTests.m; sourceTree = "<group>"; };
@@ -74,6 +80,10 @@
 		212B41E21B85BC1D00B59E48 /* POSSchedulableObjectMocks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSSchedulableObjectMocks.h; sourceTree = "<group>"; };
 		212B41E31B85BC1D00B59E48 /* POSSchedulableObjectMocks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSSchedulableObjectMocks.m; sourceTree = "<group>"; };
 		212B41E41B85BC1D00B59E48 /* POSSchedulableObjectTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSSchedulableObjectTests.m; sourceTree = "<group>"; };
+		213326F61CE46CC50074EE8D /* POSSequentialTaskExecutorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSSequentialTaskExecutorTests.m; sourceTree = "<group>"; };
+		214D30561CE1D420005820D2 /* POSTaskQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSTaskQueue.h; sourceTree = "<group>"; };
+		214D30571CE1D7CD005820D2 /* POSSequentialTaskExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSSequentialTaskExecutor.h; sourceTree = "<group>"; };
+		214D30581CE1D7CD005820D2 /* POSSequentialTaskExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSSequentialTaskExecutor.m; sourceTree = "<group>"; };
 		217D287C1BD0E9C7005C38C9 /* NSDictionary+POSRx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+POSRx.h"; sourceTree = "<group>"; };
 		217D287D1BD0E9C7005C38C9 /* NSDictionary+POSRx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+POSRx.m"; sourceTree = "<group>"; };
 		217D287E1BD0E9C7005C38C9 /* NSError+POSRx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+POSRx.h"; sourceTree = "<group>"; };
@@ -223,6 +233,8 @@
 				211A33461B9D726800D92A27 /* POSTaskTests.m */,
 				211A33D51BA0862100D92A27 /* POSTaskSchedulingTests.m */,
 				E980732E1CC24697007A6B46 /* POSTaskSubclassingTests.m */,
+				210083281CE5CCFD00FF9AB9 /* POSDirectTaskExecutorTests.m */,
+				213326F61CE46CC50074EE8D /* POSSequentialTaskExecutorTests.m */,
 			);
 			path = Scheduling;
 			sourceTree = "<group>";
@@ -333,6 +345,10 @@
 				217D28AE1BD0E9C7005C38C9 /* POSSchedulableObject.m */,
 				217D28AF1BD0E9C7005C38C9 /* POSTask.h */,
 				217D28B01BD0E9C7005C38C9 /* POSTask.m */,
+				214D30561CE1D420005820D2 /* POSTaskQueue.h */,
+				210083211CE4714200FF9AB9 /* POSTaskQueue.m */,
+				214D30571CE1D7CD005820D2 /* POSSequentialTaskExecutor.h */,
+				214D30581CE1D7CD005820D2 /* POSSequentialTaskExecutor.m */,
 				E95EF33C1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.h */,
 				E95EF33D1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m */,
 				217D28AB1BD0E9C7005C38C9 /* POSRxScheduling.h */,
@@ -516,6 +532,8 @@
 				217D28C31BD0E9C8005C38C9 /* POSHTTPRequest.m in Sources */,
 				217D28C11BD0E9C7005C38C9 /* POSHTTPBackgroundUploadRequest.m in Sources */,
 				217D28BF1BD0E9C7005C38C9 /* POSHTTPRequestOptions.m in Sources */,
+				210083221CE4714200FF9AB9 /* POSTaskQueue.m in Sources */,
+				214D30591CE1D7CD005820D2 /* POSSequentialTaskExecutor.m in Sources */,
 				217D28BD1BD0E9C7005C38C9 /* POSHTTPRequestProgress.m in Sources */,
 				217D28BE1BD0E9C7005C38C9 /* POSHTTPRequestExecutionOptions.m in Sources */,
 				217D28C71BD0E9C8005C38C9 /* POSSystemInfo.m in Sources */,
@@ -543,12 +561,14 @@
 			files = (
 				E980732F1CC24697007A6B46 /* POSTaskSubclassingTests.m in Sources */,
 				212B41E81B85BC1D00B59E48 /* POSSchedulableObjectTests.m in Sources */,
+				213326F71CE46CC50074EE8D /* POSSequentialTaskExecutorTests.m in Sources */,
 				211A33D61BA0862100D92A27 /* POSTaskSchedulingTests.m in Sources */,
 				212B41E71B85BC1D00B59E48 /* POSSchedulableObjectMocks.m in Sources */,
 				211A33471B9D726800D92A27 /* POSTaskTests.m in Sources */,
 				21B23CF41BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m in Sources */,
 				211A33D41BA0267700D92A27 /* POSHTTPGatewayTests.m in Sources */,
 				E95EF3381BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m in Sources */,
+				210083291CE5CCFD00FF9AB9 /* POSDirectTaskExecutorTests.m in Sources */,
 				21853A911BC4137400CE401C /* POSHTTPRequestMethodTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,5 +7,7 @@
 //
 
 #import <POSRx/POSTask.h>
+#import <POSRx/POSTaskQueue.h>
+#import <POSRx/POSSequentialTaskExecutor.h>
 #import <POSRx/POSSchedulableObject.h>
 #import <POSRx/RACTargetQueueScheduler+POSRx.h>
