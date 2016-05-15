@@ -22,6 +22,9 @@ NS_INLINE NSString *POSCreateStringByAddingPercentEscapes(NSString *unescaped, N
 
 + (NSDictionary *)posrx_merge:(NSDictionary *)sourceDictionary
                          with:(NSDictionary *)targetDictionary {
+    if (sourceDictionary == targetDictionary) {
+        return sourceDictionary;
+    }
     if (!sourceDictionary) {
         return [targetDictionary copy];
     }
