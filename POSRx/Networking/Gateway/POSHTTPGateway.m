@@ -165,7 +165,7 @@ NSInteger const POSHTTPSystemError = 101;
         NSMutableArray *requests = [NSMutableArray new];
         for (NSURLSessionUploadTask *task in uploadTasks) {
             POSRecoveredHTTPBackgroundUploadRequest *request = [[POSRecoveredHTTPBackgroundUploadRequest alloc]
-                                                         initWithRecoveredTask:task];
+                                                                initWithRecoveredTask:task];
             if (request) {
                 [requests addObject:request];
             } else {

@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
 
 /// The designated initializer.
-- (instancetype)initWithRecoveredTask:(NSURLSessionUploadTask *)sessionTask;
+- (nullable instancetype)initWithRecoveredTask:(NSURLSessionUploadTask *)sessionTask;
 
 @end
 

@@ -51,7 +51,7 @@ NS_INLINE NSString *POSCreateStringByAddingPercentEscapes(NSString *unescaped, N
 }
 
 - (NSData *)posrx_URLJSONBody {
-    POSRX_CHECK(![NSJSONSerialization isValidJSONObject:self]);
+    POSRX_CHECK([NSJSONSerialization isValidJSONObject:self]);
     NSError *error = nil;
     NSData *data = [NSJSONSerialization dataWithJSONObject:self
                                                    options:0
