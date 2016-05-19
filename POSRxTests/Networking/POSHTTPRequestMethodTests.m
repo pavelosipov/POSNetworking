@@ -89,13 +89,13 @@
 }
 
 - (void)testPathWithSlashesAndQueryConcatWithHostWithoutSlash {
-    POSHTTPRequestMethod *method = [POSHTTPRequestMethod path:@"/pavelosipov/"
+    POSHTTPRequestMethod *method = [POSHTTPRequestMethod path:@"/api/v2/"
                                                         query:@{@"number": @0,
                                                                 @"string": @"s",
                                                                 @"boolean": @NO}];
     NSURL *partialURL = [@"https://github.com" posrx_URL];
     NSURL *fullURL = [partialURL posrx_URLByAppendingMethod:method];
-    XCTAssertEqualObjects(fullURL, [@"https://github.com/pavelosipov/?number=0&string=s&boolean=0" posrx_URL]);
+    XCTAssertEqualObjects(fullURL, [@"https://github.com/api/v2/?number=0&string=s&boolean=0" posrx_URL]);
 }
 
 - (void)testPathWithSlashesAndQueryConcatWithHostWithSlash {

@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSURL (POSRx)
 
 - (nullable NSURL *)posrx_URLByAppendingEscapedPathComponent:(nullable NSString *)pathComponent;
+- (nullable NSURL *)posrx_URLByAppendingPathComponent:(nullable NSString *)pathComponent;
 - (nullable NSURL *)posrx_URLByAppendingQueryString:(nullable NSString *)queryString;
 
 - (NSURL *)posrx_URLByAppendingMethod:(nullable POSHTTPRequestMethod *)method;

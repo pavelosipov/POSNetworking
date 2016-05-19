@@ -15,6 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// Creates URL from that string.
 - (nullable NSURL *)posrx_URL;
 
+/// Creates percent escaped string.
+- (NSString *)posrx_percentEscaped;
+
+/// Creates percent escaped string.
+- (NSString *)posrx_percentEscapedWithEscapingSymbols:(NSString *)symbols;
+
 @end
 
 NS_ASSUME_NONNULL_END

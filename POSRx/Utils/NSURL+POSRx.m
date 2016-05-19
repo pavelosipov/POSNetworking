@@ -9,6 +9,7 @@
 #import "NSURL+POSRx.h"
 #import "POSHTTPRequestMethod.h"
 #import "NSDictionary+POSRx.h"
+#import "NSString+POSRx.h"
 #import "NSException+POSRx.h"
 
 @implementation NSURL (POSRx)
@@ -23,6 +24,10 @@
     }
     absoluteString = [absoluteString stringByAppendingString:pathComponent];
     return [NSURL URLWithString:absoluteString];
+}
+
+- (nullable NSURL *)posrx_URLByAppendingPathComponent:(nullable NSString *)pathComponent {
+    return [self posrx_URLByAppendingEscapedPathComponent:[pathComponent posrx_percentEscaped]];
 }
 
 - (NSURL *)posrx_URLByAppendingQueryString:(NSString *)queryString {

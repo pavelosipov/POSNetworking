@@ -14,4 +14,17 @@
     return [NSURL URLWithString:self];
 }
 
+- (NSString *)posrx_percentEscaped {
+    return [self posrx_percentEscapedWithEscapingSymbols:@"!*'();:@&=+$,/?%#[]"];
+}
+
+- (NSString *)posrx_percentEscapedWithEscapingSymbols:(NSString *)symbols {
+    return (__bridge_transfer NSString*)CFURLCreateStringByAddingPercentEscapes(
+                kCFAllocatorDefault,
+                (CFStringRef)self,
+                NULL,
+                (CFStringRef)symbols,
+                kCFStringEncodingUTF8);
+}
+
 @end

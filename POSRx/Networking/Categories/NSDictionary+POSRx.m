@@ -7,21 +7,15 @@
 //
 
 #import "NSDictionary+POSRx.h"
+#import "NSString+POSRx.h"
 #import "NSException+POSRx.h"
 
-NS_INLINE NSString *POSCreateStringByAddingPercentEscapes(NSString *unescaped, NSString *escapedSymbols) {
-    return (__bridge_transfer NSString*)CFURLCreateStringByAddingPercentEscapes(
-        kCFAllocatorDefault,
-        (CFStringRef)unescaped,
-        NULL,
-        (CFStringRef)escapedSymbols,
-        kCFStringEncodingUTF8);
-}
+NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSDictionary (POSRx)
 
-+ (NSDictionary *)posrx_merge:(NSDictionary *)sourceDictionary
-                         with:(NSDictionary *)targetDictionary {
++ (nullable NSDictionary *)posrx_merge:(nullable NSDictionary *)sourceDictionary
+                                  with:(nullable NSDictionary *)targetDictionary {
     if (sourceDictionary == targetDictionary) {
         return sourceDictionary;
     }
@@ -45,7 +39,7 @@ NS_INLINE NSString *POSCreateStringByAddingPercentEscapes(NSString *unescaped, N
         NSString *pairFormat = query.length ? @"&%@=%@" : @"%@=%@";
         [query appendString:[NSString stringWithFormat:pairFormat,
                              key,
-                             POSCreateStringByAddingPercentEscapes([value description], @"!*'();:@&=+$,/?%#[]")]];
+                             [[value description] posrx_percentEscaped]]];
     }];
     return [query dataUsingEncoding:NSASCIIStringEncoding];
 }
@@ -71,3 +65,5 @@ NS_INLINE NSString *POSCreateStringByAddingPercentEscapes(NSString *unescaped, N
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
