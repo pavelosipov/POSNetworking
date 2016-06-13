@@ -206,7 +206,7 @@
         }];
     }];
     RACDisposable *disposable = [[task execute] subscribeCompleted:^{}];
-    [task schedule:^{
+    [[task schedule] subscribeNext:^(id x) {
         [disposable dispose];
     }];
     [self waitForExpectationsWithTimeout:1 handler:nil];

@@ -14,7 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) RACTargetQueueScheduler *scheduler;
 
-- (RACDisposable *)schedule:(void (^)(void))block;
+/// @return Signal with this nonnull object delivered in the object's scheduler.
+- (RACSignal *)schedule;
 
 @end
 

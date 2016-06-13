@@ -141,8 +141,8 @@
     }]] subscribeCompleted:^{
         [expectation fulfill];
     }];
-    [_executor schedule:^{
-        self.executor.maxConcurrentTaskCount = 1;
+    [[_executor schedule] subscribeNext:^(POSSequentialTaskExecutor *executor) {
+        executor.maxConcurrentTaskCount = 1;
     }];
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
@@ -179,7 +179,7 @@
     [disposable dispose];
     XCTAssertTrue(_executorQueue.count == 0);
     XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
-    [_executor schedule:^{
+    [[_executor schedule] subscribeNext:^(POSSequentialTaskExecutor *executor) {
         [expectation fulfill];
     }];
     [self waitForExpectationsWithTimeout:2 handler:nil];

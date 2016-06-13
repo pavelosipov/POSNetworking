@@ -73,8 +73,13 @@ static char kPOSQueueSchedulerKey;
     return self;
 }
 
-- (RACDisposable *)schedule:(void (^)(void))block {
-    return [_scheduler schedule:block];
+- (RACSignal *)schedule {
+    return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+        return [self.scheduler schedule:^{
+            [subscriber sendNext:self];
+            [subscriber sendCompleted];
+        }];
+    }];
 }
 
 #pragma mark - POSSchedulableObject

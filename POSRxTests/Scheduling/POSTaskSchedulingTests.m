@@ -50,8 +50,8 @@
             }];
         } scheduler:taskScheduler];
         [[RACScheduler mainThreadScheduler] schedule:^{
-            [task schedule:^{
-                [task execute];
+            [[task schedule] subscribeNext:^(POSTask *thisTask) {
+                [thisTask execute];
             }];
         }];
     }];

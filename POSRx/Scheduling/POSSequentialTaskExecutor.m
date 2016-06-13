@@ -95,11 +95,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)p_scheduleProcessPendingTasks {
     if (!_processingDisposable) {
-        self.processingDisposable = [self schedule:^{
-            if (![self.processingDisposable isDisposed]) {
-                [self p_processPendingTasks];
+        self.processingDisposable = [[self schedule] subscribeNext:^(POSSequentialTaskExecutor *this) {
+            if (![this.processingDisposable isDisposed]) {
+                [this p_processPendingTasks];
             }
-            self.processingDisposable = nil;
+            this.processingDisposable = nil;
         }];
     }
 }

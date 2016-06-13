@@ -43,7 +43,9 @@
 		21D80EF21CCF5140000AAC32 /* NSURL+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D80EF01CCF5140000AAC32 /* NSURL+POSRx.m */; };
 		E95EF3381BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E95EF3371BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m */; };
 		E95EF33E1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = E95EF33D1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m */; };
+		E967368B1D0EF6B8001E84F9 /* POSSignalAwaitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E967368A1D0EF6B8001E84F9 /* POSSignalAwaitTests.m */; };
 		E980732F1CC24697007A6B46 /* POSTaskSubclassingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E980732E1CC24697007A6B46 /* POSTaskSubclassingTests.m */; };
+		E9F46E7D1D0EF42D00824110 /* RACSignal+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F46E7C1D0EF42D00824110 /* RACSignal+POSRx.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -142,7 +144,10 @@
 		E95EF3371BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestExecutionOptionsTests.m; sourceTree = "<group>"; };
 		E95EF33C1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACTargetQueueScheduler+POSRx.h"; sourceTree = "<group>"; };
 		E95EF33D1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACTargetQueueScheduler+POSRx.m"; sourceTree = "<group>"; };
+		E967368A1D0EF6B8001E84F9 /* POSSignalAwaitTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSSignalAwaitTests.m; sourceTree = "<group>"; };
 		E980732E1CC24697007A6B46 /* POSTaskSubclassingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTaskSubclassingTests.m; sourceTree = "<group>"; };
+		E9F46E7B1D0EF42D00824110 /* RACSignal+POSRx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACSignal+POSRx.h"; sourceTree = "<group>"; };
+		E9F46E7C1D0EF42D00824110 /* RACSignal+POSRx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "RACSignal+POSRx.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +240,7 @@
 				E980732E1CC24697007A6B46 /* POSTaskSubclassingTests.m */,
 				210083281CE5CCFD00FF9AB9 /* POSDirectTaskExecutorTests.m */,
 				213326F61CE46CC50074EE8D /* POSSequentialTaskExecutorTests.m */,
+				E967368A1D0EF6B8001E84F9 /* POSSignalAwaitTests.m */,
 			);
 			path = Scheduling;
 			sourceTree = "<group>";
@@ -366,6 +372,8 @@
 				21D80EEF1CCF5140000AAC32 /* NSURL+POSRx.h */,
 				21D80EF01CCF5140000AAC32 /* NSURL+POSRx.m */,
 				E91B8A211C56666000DD9626 /* POSContracts.h */,
+				E9F46E7B1D0EF42D00824110 /* RACSignal+POSRx.h */,
+				E9F46E7C1D0EF42D00824110 /* RACSignal+POSRx.m */,
 				217D28B41BD0E9C7005C38C9 /* POSRxUtils.h */,
 			);
 			path = Utils;
@@ -540,6 +548,7 @@
 				217D28B61BD0E9C7005C38C9 /* NSError+POSRx.m in Sources */,
 				217D28C81BD0E9C8005C38C9 /* POSSchedulableObject.m in Sources */,
 				217D28BB1BD0E9C7005C38C9 /* POSHTTPGateway.m in Sources */,
+				E9F46E7D1D0EF42D00824110 /* RACSignal+POSRx.m in Sources */,
 				217D28BA1BD0E9C7005C38C9 /* NSObject+POSRx.m in Sources */,
 				217D28B51BD0E9C7005C38C9 /* NSDictionary+POSRx.m in Sources */,
 				217D28BC1BD0E9C7005C38C9 /* POSHTTPRequestMethod.m in Sources */,
@@ -564,6 +573,7 @@
 				213326F71CE46CC50074EE8D /* POSSequentialTaskExecutorTests.m in Sources */,
 				211A33D61BA0862100D92A27 /* POSTaskSchedulingTests.m in Sources */,
 				212B41E71B85BC1D00B59E48 /* POSSchedulableObjectMocks.m in Sources */,
+				E967368B1D0EF6B8001E84F9 /* POSSignalAwaitTests.m in Sources */,
 				211A33471B9D726800D92A27 /* POSTaskTests.m in Sources */,
 				21B23CF41BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m in Sources */,
 				211A33D41BA0267700D92A27 /* POSHTTPGatewayTests.m in Sources */,
