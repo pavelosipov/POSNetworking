@@ -8,9 +8,11 @@
 
 #import "NSString+POSRx.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation NSString (POSRx)
 
-- (NSURL *)posrx_URL {
+- (nullable NSURL *)posrx_URL {
     return [NSURL URLWithString:self];
 }
 
@@ -27,4 +29,14 @@
                 kCFStringEncodingUTF8);
 }
 
+- (nullable NSString *)posrx_percentDecoded {
+    return (__bridge_transfer NSString *)CFURLCreateStringByReplacingPercentEscapesUsingEncoding(
+                kCFAllocatorDefault,
+                (CFStringRef)self,
+                CFSTR(""),
+                kCFStringEncodingUTF8);
+}
+
 @end
+
+NS_ASSUME_NONNULL_END

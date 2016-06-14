@@ -21,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Creates percent escaped string.
 - (NSString *)posrx_percentEscapedWithEscapingSymbols:(NSString *)symbols;
 
+/// Decodes percent escaped string.
+- (nullable NSString *)posrx_percentDecoded;
+
 @end
 
 NS_ASSUME_NONNULL_END
