@@ -82,4 +82,15 @@
     XCTAssertNoThrow([schedulable preferedSize]);
 }
 
+- (void)testDisabledProtectionForSchedulableProtocol {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
+    SchedulableObject *s = [[SchedulableObject alloc]
+                            initWithScheduler:[RACTargetQueueScheduler pos_scheduler]];
+    [s scheduleBlock:^(SchedulableObject *scheduledObject) {
+        [scheduledObject methodA];
+        [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
 @end
