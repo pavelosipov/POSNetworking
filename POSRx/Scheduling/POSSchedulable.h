@@ -17,6 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @return Signal with this nonnull object delivered in the object's scheduler.
 - (RACSignal *)schedule;
 
+/// @return Signal with this nonnull object delivered in the object's scheduler.
+- (void)scheduleBlock:(void (^)(id schedulable))block;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -82,6 +82,13 @@ static char kPOSQueueSchedulerKey;
     }];
 }
 
+- (void)scheduleBlock:(void (^)(id _Nonnull))block {
+    POSRX_CHECK(block);
+    [self.scheduler schedule:^{
+        block(self);
+    }];
+}
+
 #pragma mark - POSSchedulableObject
 
 + (BOOL)protect:(id<NSObject>)object
