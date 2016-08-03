@@ -23,6 +23,9 @@ FOUNDATION_EXTERN NSInteger const POSHTTPSystemError;
 /// Performs network requests.
 @protocol POSHTTPGateway <POSSchedulable>
 
+/// Default options for request execution.
+@property (nonatomic, nullable) POSHTTPRequestExecutionOptions *options;
+
 /// Session, which manages foreground requests.
 @property (nonatomic, readonly) NSURLSession *foregroundSession;
 
@@ -53,7 +56,7 @@ FOUNDATION_EXTERN NSInteger const POSHTTPSystemError;
 - (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler
       backgroundSessionIdentifier:(nullable NSString *)ID;
 
-POSRX_SCHEDULABLE_INIT_RECURSIVELY_UNAVAILABLE;
+POSRX_SCHEDULABLE_INIT_RECURSIVELY_UNAVAILABLE
 
 @end
 

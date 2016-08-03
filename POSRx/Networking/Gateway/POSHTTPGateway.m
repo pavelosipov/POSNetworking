@@ -55,7 +55,10 @@ NSInteger const POSHTTPSystemError = 101;
 @property (nonatomic) NSURLSession *backgroundSession;
 @end
 
-@implementation POSHTTPGateway
+@implementation POSHTTPGateway {
+    POSHTTPRequestExecutionOptions * __nullable _options;
+}
+@synthesize options = _options;
 
 #pragma mark Lifecycle
 
@@ -95,12 +98,13 @@ NSInteger const POSHTTPSystemError = 101;
                       options:(nullable POSHTTPRequestExecutionOptions *)options {
     POSRX_CHECK(request);
     POSRX_CHECK(hostURL);
-    return [POSTask createTask:^RACSignal * _Nonnull(POSTask * _Nonnull task) {
+    POSHTTPRequestExecutionOptions *mergedOptions = [POSHTTPRequestExecutionOptions merge:_options with:options];
+    return [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             NSError *error = nil;
             id<POSURLSessionTask> sessionTask = [request taskWithURL:hostURL
                                                           forGateway:self
-                                                             options:options.HTTP
+                                                             options:mergedOptions.HTTP
                                                                error:&error];
             if (!sessionTask) {
                 [subscriber sendError:error];
@@ -108,7 +112,7 @@ NSInteger const POSHTTPSystemError = 101;
                 return nil;
             }
             POSRX_CHECK(sessionTask);
-            POSHTTPResponse *simulatedResponse = [options.simulation probeSimulationWithURL:sessionTask.posrx_originalRequest.URL];
+            POSHTTPResponse *simulatedResponse = [mergedOptions.simulation probeSimulationWithURL:sessionTask.posrx_originalRequest.URL];
             if (simulatedResponse) {
                 [subscriber sendNext:simulatedResponse];
                 [subscriber sendCompleted];
@@ -116,8 +120,8 @@ NSInteger const POSHTTPSystemError = 101;
             }
             NSMutableData *responseData = [NSMutableData new];
             @weakify(sessionTask);
-            if (options.HTTP.allowUntrustedSSLCertificates) {
-                sessionTask.posrx_allowUntrustedSSLCertificates = options.HTTP.allowUntrustedSSLCertificates;
+            if (mergedOptions.HTTP.allowUntrustedSSLCertificates) {
+                sessionTask.posrx_allowUntrustedSSLCertificates = mergedOptions.HTTP.allowUntrustedSSLCertificates;
             }
             if (request.downloadProgressHandler) {
                 sessionTask.posrx_downloadProgressHandler = request.downloadProgressHandler;

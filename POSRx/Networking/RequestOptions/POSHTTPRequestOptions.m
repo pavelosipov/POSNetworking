@@ -9,40 +9,47 @@
 #import "POSHTTPRequestOptions.h"
 #import "NSDictionary+POSRx.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation POSHTTPRequestOptions
 
-- (instancetype)initWithHeaderFields:(NSDictionary *)headerFields
-                     queryParameters:(NSDictionary *)queryParameters
-       allowUntrustedSSLCertificates:(NSNumber *)allowUntrustedSSLCertificates {
+- (instancetype)initWithHeaderFields:(nullable NSDictionary *)headerFields
+                     queryParameters:(nullable NSDictionary *)queryParameters
+       allowUntrustedSSLCertificates:(nullable NSNumber *)allowUntrustedSSLCertificates
+                     responseTimeout:(nullable NSNumber *)responseTimeout {
     if (self = [super init]) {
         _headerFields = [headerFields copy];
         _queryParameters = [queryParameters copy];
         _allowUntrustedSSLCertificates = allowUntrustedSSLCertificates;
+        _responseTimeout = responseTimeout;
     }
     return self;
 }
 
-- (instancetype)initWithAllowUntrustedSSLCertificates:(NSNumber *)allowUntrustedSSLCertificates {
+- (instancetype)initWithAllowUntrustedSSLCertificates:(nullable NSNumber *)allowUntrustedSSLCertificates {
     return [self initWithHeaderFields:nil
                       queryParameters:nil
-        allowUntrustedSSLCertificates:allowUntrustedSSLCertificates];
+        allowUntrustedSSLCertificates:allowUntrustedSSLCertificates
+                      responseTimeout:nil];
 }
 
-- (instancetype)initWithHeaderFields:(NSDictionary *)headerFields {
+- (instancetype)initWithHeaderFields:(nullable NSDictionary *)headerFields {
     return [self initWithHeaderFields:headerFields
                       queryParameters:nil
-        allowUntrustedSSLCertificates:nil];
+        allowUntrustedSSLCertificates:nil
+                      responseTimeout:nil];
 }
 
-- (instancetype)initWithQueryParameters:(NSDictionary *)queryParameters {
+- (instancetype)initWithQueryParameters:(nullable NSDictionary *)queryParameters {
     return [self initWithHeaderFields:nil
                       queryParameters:queryParameters
-        allowUntrustedSSLCertificates:nil];
+        allowUntrustedSSLCertificates:nil
+                      responseTimeout:nil];
 }
 
 #pragma mark NSCoding
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super init]) {
         _allowUntrustedSSLCertificates = [aDecoder decodeObjectForKey:@"allowUntrustedSSLCertificates"];
         _headerFields = [aDecoder decodeObjectForKey:@"headerFields"];
@@ -61,16 +68,17 @@
 
 #pragma mark NSCopying
 
-- (id)copyWithZone:(NSZone *)zone {
+- (id)copyWithZone:(nullable NSZone *)zone {
     typeof(self) clone = [[[self class] allocWithZone:zone]
                           initWithHeaderFields:[_headerFields copy]
                           queryParameters:[_queryParameters copy]
-                          allowUntrustedSSLCertificates:_allowUntrustedSSLCertificates];
+                          allowUntrustedSSLCertificates:_allowUntrustedSSLCertificates
+                          responseTimeout:_responseTimeout];
     return clone;
 }
 
-+ (POSHTTPRequestOptions *)merge:(POSHTTPRequestOptions *)source
-                            with:(POSHTTPRequestOptions *)target {
++ (nullable POSHTTPRequestOptions *)merge:(nullable POSHTTPRequestOptions *)source
+                                     with:(nullable POSHTTPRequestOptions *)target {
     if (!target && !source) {
         return nil;
     }
@@ -80,12 +88,16 @@
     if (!target) {
         return [source copy];
     }
-    NSNumber *mergedAllowUntrustedSSLCertificates = (target.allowUntrustedSSLCertificates ?:
-                                                     source.allowUntrustedSSLCertificates);
+    NSNumber *allowUntrustedSSLCertificates = (target.allowUntrustedSSLCertificates ?:
+                                               source.allowUntrustedSSLCertificates);
+    NSNumber *responseTimeout = (target.responseTimeout ?: source.responseTimeout);
     return [[POSHTTPRequestOptions alloc]
             initWithHeaderFields:[NSDictionary posrx_merge:source->_headerFields with:target->_headerFields]
             queryParameters:[NSDictionary posrx_merge:source->_queryParameters with:target->_queryParameters]
-            allowUntrustedSSLCertificates:mergedAllowUntrustedSSLCertificates];
+            allowUntrustedSSLCertificates:allowUntrustedSSLCertificates
+            responseTimeout:responseTimeout];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -18,6 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// May be nil if default value should be used.
 @property (nonatomic, readonly, nullable) NSNumber *allowUntrustedSSLCertificates;
 
+/// Specifies the maximum waiting time for response.
+@property (nonatomic, readonly, nullable) NSNumber *responseTimeout;
+
 /// Extra header fields, which will be appended to requests' header fields.
 @property (nonatomic, readonly, nullable) NSDictionary *headerFields;
 
@@ -36,7 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// The designated initializer.
 - (instancetype)initWithHeaderFields:(nullable NSDictionary *)headerFields
                      queryParameters:(nullable NSDictionary *)queryParameters
-       allowUntrustedSSLCertificates:(nullable NSNumber *)allowUntrustedSSLCertificates;
+       allowUntrustedSSLCertificates:(nullable NSNumber *)allowUntrustedSSLCertificates
+                     responseTimeout:(nullable NSNumber *)responseTimeout;
 
 /// @return New instance of options where target options override source options.
 ///         Nil options will not override not nil options.

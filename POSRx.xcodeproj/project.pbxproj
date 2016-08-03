@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1936FDDE061907BFAB2145AE /* libPods-POSRxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4F690DF728689B5020A334E /* libPods-POSRxTests.a */; };
 		210083221CE4714200FF9AB9 /* POSTaskQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 210083211CE4714200FF9AB9 /* POSTaskQueue.m */; };
 		210083291CE5CCFD00FF9AB9 /* POSDirectTaskExecutorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 210083281CE5CCFD00FF9AB9 /* POSDirectTaskExecutorTests.m */; };
 		211A33471B9D726800D92A27 /* POSTaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33461B9D726800D92A27 /* POSTaskTests.m */; };
@@ -41,6 +40,8 @@
 		21B23CF41BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21B23CF31BA1AD67006D4FAA /* POSHTTPGatewayLeakTests.m */; };
 		21D80EF11CCF5140000AAC32 /* NSString+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D80EEE1CCF5140000AAC32 /* NSString+POSRx.m */; };
 		21D80EF21CCF5140000AAC32 /* NSURL+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D80EF01CCF5140000AAC32 /* NSURL+POSRx.m */; };
+		2D87085467A761C1BFBAF0C1 /* libPods-POSRx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E05A8406CF61D4750280976 /* libPods-POSRx.a */; };
+		905E05F6505148CD5716C3FB /* libPods-POSRxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFE8C5290A8733EB148D5241 /* libPods-POSRxTests.a */; };
 		E95EF3381BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E95EF3371BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m */; };
 		E95EF33E1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = E95EF33D1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m */; };
 		E967368B1D0EF6B8001E84F9 /* POSSignalAwaitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E967368A1D0EF6B8001E84F9 /* POSSignalAwaitTests.m */; };
@@ -71,6 +72,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0BF725B68FA215A2035DBE1E /* Pods-POSRx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRx.release.xcconfig"; path = "Pods/Target Support Files/Pods-POSRx/Pods-POSRx.release.xcconfig"; sourceTree = "<group>"; };
+		0E8A52108E3BF8D20C851461 /* Pods-POSRxTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRxTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests.release.xcconfig"; sourceTree = "<group>"; };
 		210083211CE4714200FF9AB9 /* POSTaskQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTaskQueue.m; sourceTree = "<group>"; };
 		210083281CE5CCFD00FF9AB9 /* POSDirectTaskExecutorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSDirectTaskExecutorTests.m; sourceTree = "<group>"; };
 		211A33461B9D726800D92A27 /* POSTaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTaskTests.m; sourceTree = "<group>"; };
@@ -137,9 +140,10 @@
 		21D80EEE1CCF5140000AAC32 /* NSString+POSRx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+POSRx.m"; sourceTree = "<group>"; };
 		21D80EEF1CCF5140000AAC32 /* NSURL+POSRx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+POSRx.h"; sourceTree = "<group>"; };
 		21D80EF01CCF5140000AAC32 /* NSURL+POSRx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+POSRx.m"; sourceTree = "<group>"; };
-		6DBCEF70C626019ADB0DC3AA /* Pods-POSRxTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRxTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests.debug.xcconfig"; sourceTree = "<group>"; };
-		8088C90EC5168CEB712A8776 /* Pods-POSRxTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRxTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests.release.xcconfig"; sourceTree = "<group>"; };
-		D4F690DF728689B5020A334E /* libPods-POSRxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-POSRxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E05A8406CF61D4750280976 /* libPods-POSRx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-POSRx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AE04A7E99F3C205C8BBD0CD0 /* Pods-POSRx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-POSRx/Pods-POSRx.debug.xcconfig"; sourceTree = "<group>"; };
+		CFE8C5290A8733EB148D5241 /* libPods-POSRxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-POSRxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D840311248F3BFAA73075F6B /* Pods-POSRxTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRxTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E91B8A211C56666000DD9626 /* POSContracts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSContracts.h; sourceTree = "<group>"; };
 		E95EF3371BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestExecutionOptionsTests.m; sourceTree = "<group>"; };
 		E95EF33C1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACTargetQueueScheduler+POSRx.h"; sourceTree = "<group>"; };
@@ -155,6 +159,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D87085467A761C1BFBAF0C1 /* libPods-POSRx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,7 +167,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1936FDDE061907BFAB2145AE /* libPods-POSRxTests.a in Frameworks */,
+				905E05F6505148CD5716C3FB /* libPods-POSRxTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,8 +191,8 @@
 				212B41D41B85BBB200B59E48 /* POSRx */,
 				212B41C91B85B89300B59E48 /* POSRxTests */,
 				212B41BB1B85B89300B59E48 /* Products */,
-				5DD89B6C08F3FA4C0F5097B9 /* Pods */,
-				A9DD9B38CF6F46E4098FF3EC /* Frameworks */,
+				7B65736E1830B1F7C1F214DA /* Pods */,
+				F00B9E7BFF2926553CDE265E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -379,19 +384,22 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		5DD89B6C08F3FA4C0F5097B9 /* Pods */ = {
+		7B65736E1830B1F7C1F214DA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				6DBCEF70C626019ADB0DC3AA /* Pods-POSRxTests.debug.xcconfig */,
-				8088C90EC5168CEB712A8776 /* Pods-POSRxTests.release.xcconfig */,
+				AE04A7E99F3C205C8BBD0CD0 /* Pods-POSRx.debug.xcconfig */,
+				0BF725B68FA215A2035DBE1E /* Pods-POSRx.release.xcconfig */,
+				D840311248F3BFAA73075F6B /* Pods-POSRxTests.debug.xcconfig */,
+				0E8A52108E3BF8D20C851461 /* Pods-POSRxTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		A9DD9B38CF6F46E4098FF3EC /* Frameworks */ = {
+		F00B9E7BFF2926553CDE265E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D4F690DF728689B5020A334E /* libPods-POSRxTests.a */,
+				3E05A8406CF61D4750280976 /* libPods-POSRx.a */,
+				CFE8C5290A8733EB148D5241 /* libPods-POSRxTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -403,9 +411,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 212B41CE1B85B89300B59E48 /* Build configuration list for PBXNativeTarget "POSRx" */;
 			buildPhases = (
+				C9D397401D6F9A614026E32A /* [CP] Check Pods Manifest.lock */,
 				212B41B61B85B89300B59E48 /* Sources */,
 				212B41B71B85B89300B59E48 /* Frameworks */,
 				212B41B81B85B89300B59E48 /* CopyFiles */,
+				BD2B94CE69A3B9ABF00964EF /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -420,12 +430,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 212B41D11B85B89300B59E48 /* Build configuration list for PBXNativeTarget "POSRxTests" */;
 			buildPhases = (
-				A8E25C3052763FCA801214BB /* Check Pods Manifest.lock */,
+				3A2591B29CC894D523043DCE /* [CP] Check Pods Manifest.lock */,
 				212B41C11B85B89300B59E48 /* Sources */,
 				212B41C21B85B89300B59E48 /* Frameworks */,
 				212B41C31B85B89300B59E48 /* Resources */,
-				87E7B213C818C55E98771855 /* Copy Pods Resources */,
-				B9C7803B494FA6E88A9E3796 /* Embed Pods Frameworks */,
+				E0792031F8A570AD9FBCBFF1 /* [CP] Embed Pods Frameworks */,
+				A3C8C4E36664BB8BF7D1F5E6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -483,29 +493,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		87E7B213C818C55E98771855 /* Copy Pods Resources */ = {
+		3A2591B29CC894D523043DCE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A8E25C3052763FCA801214BB /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -513,14 +508,59 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		B9C7803B494FA6E88A9E3796 /* Embed Pods Frameworks */ = {
+		A3C8C4E36664BB8BF7D1F5E6 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BD2B94CE69A3B9ABF00964EF /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-POSRx/Pods-POSRx-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C9D397401D6F9A614026E32A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E0792031F8A570AD9FBCBFF1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -675,14 +715,13 @@
 		};
 		212B41CF1B85B89300B59E48 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE04A7E99F3C205C8BBD0CD0 /* Pods-POSRx.debug.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				OTHER_LDFLAGS = "-ObjC";
-				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -690,14 +729,13 @@
 		};
 		212B41D01B85B89300B59E48 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BF725B68FA215A2035DBE1E /* Pods-POSRx.release.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				OTHER_LDFLAGS = "-ObjC";
-				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -705,7 +743,7 @@
 		};
 		212B41D21B85B89300B59E48 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6DBCEF70C626019ADB0DC3AA /* Pods-POSRxTests.debug.xcconfig */;
+			baseConfigurationReference = D840311248F3BFAA73075F6B /* Pods-POSRxTests.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -721,7 +759,7 @@
 		};
 		212B41D31B85B89300B59E48 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8088C90EC5168CEB712A8776 /* Pods-POSRxTests.release.xcconfig */;
+			baseConfigurationReference = 0E8A52108E3BF8D20C851461 /* Pods-POSRxTests.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = POSRxTests/Info.plist;
