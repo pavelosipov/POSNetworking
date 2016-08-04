@@ -44,7 +44,9 @@ NS_ASSUME_NONNULL_BEGIN
         options:(nullable POSScheduleProtectionOptions *)options;
 
 + (RACSequence *)selectorsForClass:(Class)aClass;
-+ (RACSequence *)selectorsForClass:(Class)aClass nonatomicOnly:(BOOL)nonatomicOnly;
++ (RACSequence *)selectorsForClass:(Class)aClass
+                     nonatomicOnly:(BOOL)nonatomicOnly
+                         predicate:(BOOL (^ __nullable)(SEL selector))predicate;
 + (RACSequence *)selectorsForProtocol:(Protocol *)aProtocol;
 
 @end

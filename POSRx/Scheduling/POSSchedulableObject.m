@@ -22,7 +22,7 @@ static char kPOSQueueSchedulerKey;
 @implementation POSScheduleProtectionOptions
 
 + (instancetype)defaultOptionsForClass:(Class)aClass {
-    return [self.class include:[POSSchedulableObject selectorsForClass:aClass nonatomicOnly:YES]
+    return [self.class include:[POSSchedulableObject selectorsForClass:aClass nonatomicOnly:YES predicate:nil]
                        exclude:[POSSchedulableObject selectorsForClass:[NSObject class]]];
 }
 
@@ -151,11 +151,13 @@ static char kPOSQueueSchedulerKey;
 }
 
 + (RACSequence *)selectorsForClass:(Class)aClass {
-    return [[self.class p_selectorsSetForClass:aClass nonatomicOnly:NO] rac_sequence];
+    return [[self.class p_selectorsSetForClass:aClass nonatomicOnly:NO predicate:nil] rac_sequence];
 }
 
-+ (RACSequence *)selectorsForClass:(Class)aClass nonatomicOnly:(BOOL)nonatomicOnly {
-    return [[self.class p_selectorsSetForClass:aClass nonatomicOnly:nonatomicOnly] rac_sequence];
++ (RACSequence *)selectorsForClass:(Class)aClass
+                     nonatomicOnly:(BOOL)nonatomicOnly
+                         predicate:(BOOL (^ _Nullable)(SEL))predicate {
+    return [[self.class p_selectorsSetForClass:aClass nonatomicOnly:nonatomicOnly predicate:predicate] rac_sequence];
 }
 
 + (RACSequence *)selectorsForProtocol:(Protocol *)aProtocol {
@@ -164,9 +166,12 @@ static char kPOSQueueSchedulerKey;
 
 #pragma mark - Private
 
-+ (NSSet *)p_selectorsSetForClass:(Class)aClass nonatomicOnly:(BOOL)nonatomicOnly {
++ (NSSet *)p_selectorsSetForClass:(Class)aClass
+                    nonatomicOnly:(BOOL)nonatomicOnly
+                        predicate:(BOOL (^ __nullable)(SEL))predicate {
     Class base = class_getSuperclass(aClass);
-    NSSet *baseSelectors = base ? [self p_selectorsSetForClass:base nonatomicOnly:nonatomicOnly] : [NSSet set];
+    NSSet *baseSelectors =
+    base ? [self p_selectorsSetForClass:base nonatomicOnly:nonatomicOnly predicate:predicate] : [NSSet set];
     unsigned int methodCount = 0;
     Method *methods = class_copyMethodList(aClass, &methodCount);
     NSMutableSet *selectors = [NSMutableSet setWithCapacity:methodCount];
@@ -174,11 +179,14 @@ static char kPOSQueueSchedulerKey;
         SEL selector = method_getName(methods[i]);
         if (nonatomicOnly) {
             objc_property_t property = class_getProperty(
-                aClass,
-                NSStringFromSelector(selector).UTF8String);
+                                                         aClass,
+                                                         NSStringFromSelector(selector).UTF8String);
             if (property && !property_copyAttributeValue(property, "N")) {
                 continue;
             }
+        }
+        if (predicate && !predicate(selector)) {
+            continue;
         }
         [selectors addObject:[NSValue valueWithPointer:method_getName(methods[i])]];
     }
