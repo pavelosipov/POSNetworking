@@ -61,13 +61,14 @@ static char kPOSQueueSchedulerKey;
 
 - (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler options:(POSScheduleProtectionOptions *)options {
     POSRX_CHECK(scheduler);
-    if (!options) {
-        options = [[POSScheduleProtectionOptions
-                    defaultOptionsForClass:[self class]]
-                    exclude:[self.class selectorsForProtocol:@protocol(POSSchedulable)]];
-    }
     if (self = [super init]) {
-        NSParameterAssert([self.class protect:self forScheduler:scheduler options:options]);
+        NSParameterAssert([self.class
+                           protect:self
+                           forScheduler:scheduler
+                           options:(options ?:
+                                    [[POSScheduleProtectionOptions
+                                      defaultOptionsForClass:[self class]]
+                                     exclude:[self.class selectorsForProtocol:@protocol(POSSchedulable)]])]);
         _scheduler = scheduler;
     }
     return self;
