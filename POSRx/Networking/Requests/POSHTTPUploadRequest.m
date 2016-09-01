@@ -54,7 +54,7 @@
 
 - (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
                     bodyStream:(NSInputStream *(^)())bodyStream
-                      progress:(void (^)(POSHTTPRequestProgress *))progress
+                      progress:(void (^)(POSProgressValue *))progress
                   headerFields:(NSDictionary *)headerFields {
     POSRX_CHECK(bodyStream);
     if (self = [super initWithType:POSHTTPRequestTypePUT

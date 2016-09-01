@@ -15,6 +15,5 @@
 #import <POSRx/POSHTTPRequestOptions.h>
 #import <POSRx/POSHTTPResponse.h>
 #import <POSRx/POSHTTPRequestMethod.h>
-#import <POSRx/POSHTTPRequestProgress.h>
 #import <POSRx/NSDictionary+POSRx.h>
 #import <POSRx/NSURL+POSRx.h>

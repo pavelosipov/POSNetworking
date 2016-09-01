@@ -12,6 +12,7 @@
 		211A33471B9D726800D92A27 /* POSTaskTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33461B9D726800D92A27 /* POSTaskTests.m */; };
 		211A33D41BA0267700D92A27 /* POSHTTPGatewayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33D31BA0267700D92A27 /* POSHTTPGatewayTests.m */; };
 		211A33D61BA0862100D92A27 /* POSTaskSchedulingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 211A33D51BA0862100D92A27 /* POSTaskSchedulingTests.m */; };
+		211FACAB1D7820D400B529E1 /* POSProgressValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 211FACAA1D7820D400B529E1 /* POSProgressValue.m */; };
 		212B41E71B85BC1D00B59E48 /* POSSchedulableObjectMocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 212B41E31B85BC1D00B59E48 /* POSSchedulableObjectMocks.m */; };
 		212B41E81B85BC1D00B59E48 /* POSSchedulableObjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 212B41E41B85BC1D00B59E48 /* POSSchedulableObjectTests.m */; };
 		213326F71CE46CC50074EE8D /* POSSequentialTaskExecutorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 213326F61CE46CC50074EE8D /* POSSequentialTaskExecutorTests.m */; };
@@ -22,7 +23,6 @@
 		217D28BA1BD0E9C7005C38C9 /* NSObject+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28881BD0E9C7005C38C9 /* NSObject+POSRx.m */; };
 		217D28BB1BD0E9C7005C38C9 /* POSHTTPGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D288A1BD0E9C7005C38C9 /* POSHTTPGateway.m */; };
 		217D28BC1BD0E9C7005C38C9 /* POSHTTPRequestMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D288E1BD0E9C7005C38C9 /* POSHTTPRequestMethod.m */; };
-		217D28BD1BD0E9C7005C38C9 /* POSHTTPRequestProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28901BD0E9C7005C38C9 /* POSHTTPRequestProgress.m */; };
 		217D28BE1BD0E9C7005C38C9 /* POSHTTPRequestExecutionOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28931BD0E9C7005C38C9 /* POSHTTPRequestExecutionOptions.m */; };
 		217D28BF1BD0E9C7005C38C9 /* POSHTTPRequestOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28951BD0E9C7005C38C9 /* POSHTTPRequestOptions.m */; };
 		217D28C01BD0E9C7005C38C9 /* POSHTTPRequestSimulationOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28971BD0E9C7005C38C9 /* POSHTTPRequestSimulationOptions.m */; };
@@ -79,6 +79,8 @@
 		211A33461B9D726800D92A27 /* POSTaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTaskTests.m; sourceTree = "<group>"; };
 		211A33D31BA0267700D92A27 /* POSHTTPGatewayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayTests.m; sourceTree = "<group>"; };
 		211A33D51BA0862100D92A27 /* POSTaskSchedulingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTaskSchedulingTests.m; sourceTree = "<group>"; };
+		211FACA91D7820D400B529E1 /* POSProgressValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSProgressValue.h; sourceTree = "<group>"; };
+		211FACAA1D7820D400B529E1 /* POSProgressValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSProgressValue.m; sourceTree = "<group>"; };
 		212B41BA1B85B89300B59E48 /* libPOSRx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPOSRx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		212B41C51B85B89300B59E48 /* POSRxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = POSRxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		212B41CB1B85B89300B59E48 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -102,8 +104,6 @@
 		217D288B1BD0E9C7005C38C9 /* POSRxNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSRxNetworking.h; sourceTree = "<group>"; };
 		217D288D1BD0E9C7005C38C9 /* POSHTTPRequestMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestMethod.h; sourceTree = "<group>"; };
 		217D288E1BD0E9C7005C38C9 /* POSHTTPRequestMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestMethod.m; sourceTree = "<group>"; };
-		217D288F1BD0E9C7005C38C9 /* POSHTTPRequestProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestProgress.h; sourceTree = "<group>"; };
-		217D28901BD0E9C7005C38C9 /* POSHTTPRequestProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestProgress.m; sourceTree = "<group>"; };
 		217D28921BD0E9C7005C38C9 /* POSHTTPRequestExecutionOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestExecutionOptions.h; sourceTree = "<group>"; };
 		217D28931BD0E9C7005C38C9 /* POSHTTPRequestExecutionOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestExecutionOptions.m; sourceTree = "<group>"; };
 		217D28941BD0E9C7005C38C9 /* POSHTTPRequestOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestOptions.h; sourceTree = "<group>"; };
@@ -294,8 +294,6 @@
 			children = (
 				217D288D1BD0E9C7005C38C9 /* POSHTTPRequestMethod.h */,
 				217D288E1BD0E9C7005C38C9 /* POSHTTPRequestMethod.m */,
-				217D288F1BD0E9C7005C38C9 /* POSHTTPRequestProgress.h */,
-				217D28901BD0E9C7005C38C9 /* POSHTTPRequestProgress.m */,
 			);
 			path = RequestAccessories;
 			sourceTree = "<group>";
@@ -379,6 +377,8 @@
 				E91B8A211C56666000DD9626 /* POSContracts.h */,
 				E9F46E7B1D0EF42D00824110 /* RACSignal+POSRx.h */,
 				E9F46E7C1D0EF42D00824110 /* RACSignal+POSRx.m */,
+				211FACA91D7820D400B529E1 /* POSProgressValue.h */,
+				211FACAA1D7820D400B529E1 /* POSProgressValue.m */,
 				217D28B41BD0E9C7005C38C9 /* POSRxUtils.h */,
 			);
 			path = Utils;
@@ -582,7 +582,6 @@
 				217D28BF1BD0E9C7005C38C9 /* POSHTTPRequestOptions.m in Sources */,
 				210083221CE4714200FF9AB9 /* POSTaskQueue.m in Sources */,
 				214D30591CE1D7CD005820D2 /* POSSequentialTaskExecutor.m in Sources */,
-				217D28BD1BD0E9C7005C38C9 /* POSHTTPRequestProgress.m in Sources */,
 				217D28BE1BD0E9C7005C38C9 /* POSHTTPRequestExecutionOptions.m in Sources */,
 				217D28C71BD0E9C8005C38C9 /* POSSystemInfo.m in Sources */,
 				217D28B61BD0E9C7005C38C9 /* NSError+POSRx.m in Sources */,
@@ -601,6 +600,7 @@
 				217D28C91BD0E9C8005C38C9 /* POSTask.m in Sources */,
 				217D28B91BD0E9C7005C38C9 /* NSURLCache+POSRx.m in Sources */,
 				21D80EF21CCF5140000AAC32 /* NSURL+POSRx.m in Sources */,
+				211FACAB1D7820D400B529E1 /* POSProgressValue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class POSHTTPRequestMethod;
 @class POSHTTPRequestOptions;
-@class POSHTTPRequestProgress;
+@class POSProgressValue;
 
 /// Available types of HTTP requests.
 typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
@@ -41,10 +41,10 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 @property (nonatomic, readonly, nullable) NSDictionary *headerFields;
 
 /// Notifies how many bytes were received from remote host.
-@property (nonatomic, readonly, nullable, copy) void (^downloadProgressHandler)(POSHTTPRequestProgress *progress);
+@property (nonatomic, readonly, nullable, copy) void (^downloadProgressHandler)(POSProgressValue *progress);
 
 /// Notifies how many bytes were sent to remote host.
-@property (nonatomic, readonly, nullable, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
+@property (nonatomic, readonly, nullable, copy) void (^uploadProgressHandler)(POSProgressValue *progress);
 
 /// Creates network task using one of NSURLSessions inside POSHTTPGateway.
 - (nullable id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
@@ -77,8 +77,8 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
                       method:(nullable POSHTTPRequestMethod *)method
                         body:(nullable NSData *)body
                 headerFields:(nullable NSDictionary *)headerFields
-            downloadProgress:(nullable void (^)(POSHTTPRequestProgress *progress))downloadProgress
-              uploadProgress:(nullable void (^)(POSHTTPRequestProgress *progress))uploadProgress;
+            downloadProgress:(nullable void (^)(POSProgressValue *progress))downloadProgress
+              uploadProgress:(nullable void (^)(POSProgressValue *progress))uploadProgress;
 
 @end
 
@@ -100,10 +100,10 @@ typedef NS_ENUM(NSInteger, POSHTTPRequestType) {
 @property (nonatomic, nullable, copy) NSDictionary *headerFields;
 
 /// Notifies how many bytes were received from remote host.
-@property (nonatomic, nullable, copy) void (^downloadProgressHandler)(POSHTTPRequestProgress *progress);
+@property (nonatomic, nullable, copy) void (^downloadProgressHandler)(POSProgressValue *progress);
 
 /// Notifies how many bytes were sent to remote host.
-@property (nonatomic, nullable, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
+@property (nonatomic, nullable, copy) void (^uploadProgressHandler)(POSProgressValue *progress);
 
 @end
 
@@ -119,6 +119,6 @@ NS_ASSUME_NONNULL_END
                       method:(nullable POSHTTPRequestMethod *)method                                             \
                         body:(nullable NSData *)body                                                             \
                 headerFields:(nullable NSDictionary *)headerFields                                               \
-            downloadProgress:(nullable void (^)(POSHTTPRequestProgress *progress))downloadProgress               \
-              uploadProgress:(nullable void (^)(POSHTTPRequestProgress *progress))uploadProgress NS_UNAVAILABLE;
+            downloadProgress:(nullable void (^)(POSProgressValue *progress))downloadProgress               \
+              uploadProgress:(nullable void (^)(POSProgressValue *progress))uploadProgress NS_UNAVAILABLE;
 

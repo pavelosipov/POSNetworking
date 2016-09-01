@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// The designated initializer for foreground upload.
 - (instancetype)initWithMethod:(nullable POSHTTPRequestMethod *)method
                     bodyStream:(NSInputStream *(^)())bodyStream
-                      progress:(nullable void (^)(POSHTTPRequestProgress *progress))progress
+                      progress:(nullable void (^)(POSProgressValue *progress))progress
                   headerFields:(nullable NSDictionary *)headerFields;
 
 /// Hidnig copying initializer.

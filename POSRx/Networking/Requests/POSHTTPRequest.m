@@ -30,8 +30,8 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 @property (nonatomic) POSHTTPRequestMethod *method;
 @property (nonatomic) NSData *body;
 @property (nonatomic) NSDictionary *headerFields;
-@property (nonatomic, copy) void (^downloadProgressHandler)(POSHTTPRequestProgress *progress);
-@property (nonatomic, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
+@property (nonatomic, copy) void (^downloadProgressHandler)(POSProgressValue *progress);
+@property (nonatomic, copy) void (^uploadProgressHandler)(POSProgressValue *progress);
 @end
 
 @implementation POSHTTPRequest
@@ -73,8 +73,8 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
                       method:(POSHTTPRequestMethod *)method
                         body:(NSData *)body
                 headerFields:(NSDictionary *)headerFields
-            downloadProgress:(void (^)(POSHTTPRequestProgress *))downloadProgress
-              uploadProgress:(void (^)(POSHTTPRequestProgress *))uploadProgress {
+            downloadProgress:(void (^)(POSProgressValue *))downloadProgress
+              uploadProgress:(void (^)(POSProgressValue *))uploadProgress {
     if (self = [super init]) {
         _type = type;
         _method = method;

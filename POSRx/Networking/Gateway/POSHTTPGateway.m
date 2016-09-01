@@ -12,7 +12,7 @@
 #import "POSHTTPRequestSimulationOptions.h"
 #import "POSHTTPRequestOptions.h"
 #import "POSHTTPResponse.h"
-#import "POSHTTPRequestProgress.h"
+#import "POSProgressValue.h"
 #import "POSTask.h"
 #import "POSSystemInfo.h"
 #import "NSObject+POSRx.h"
@@ -220,9 +220,9 @@ NSInteger const POSHTTPSystemError = 101;
     totalBytesSent:(int64_t)totalBytesSent
 totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
     if (task.posrx_uploadProgressHandler) {
-        task.posrx_uploadProgressHandler([[POSHTTPRequestProgress alloc]
-                                          initWithReadyUnits:totalBytesSent
-                                          totalUnits:totalBytesExpectedToSend]);
+        task.posrx_uploadProgressHandler([[POSProgressValue alloc]
+                                          initWithReady:totalBytesSent
+                                          total:totalBytesExpectedToSend]);
     }
 }
 
@@ -292,9 +292,9 @@ didFinishDownloadingToURL:(NSURL *)location {
  totalBytesWritten:(int64_t)totalBytesWritten
 totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
     if (downloadTask.posrx_downloadProgressHandler) {
-        downloadTask.posrx_downloadProgressHandler([[POSHTTPRequestProgress alloc]
-                                                    initWithReadyUnits:totalBytesWritten
-                                                    totalUnits:totalBytesExpectedToWrite]);
+        downloadTask.posrx_downloadProgressHandler([[POSProgressValue alloc]
+                                                    initWithReady:totalBytesWritten
+                                                    total:totalBytesExpectedToWrite]);
     }
 }
 
@@ -318,9 +318,9 @@ totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
  totalBytesWritten:(NSInteger)totalBytesWritten
 totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     if (connection.posrx_uploadProgressHandler) {
-        connection.posrx_uploadProgressHandler([[POSHTTPRequestProgress alloc]
-                                                initWithReadyUnits:totalBytesWritten
-                                                totalUnits:totalBytesExpectedToWrite]);
+        connection.posrx_uploadProgressHandler([[POSProgressValue alloc]
+                                                initWithReady:totalBytesWritten
+                                                total:totalBytesExpectedToWrite]);
     }
 }
 

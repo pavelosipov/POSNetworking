@@ -10,8 +10,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class POSHTTPRequestProgress;
-
 /// Protocol for making background upload requests.
 @protocol POSHTTPBackgroundUploadRequest <POSHTTPRequest, NSCoding>
 
@@ -31,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// The designated initializer.
 - (instancetype)initWithMethod:(nullable POSHTTPRequestMethod *)method
                   fileLocation:(NSURL *)fileLocation
-                      progress:(nullable void (^)(POSHTTPRequestProgress *progress))progress
+                      progress:(nullable void (^)(POSProgressValue *progress))progress
                   headerFields:(nullable NSDictionary *)headerFields;
 
 @end
@@ -64,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable, readonly) POSHTTPRequestOptions *options;
 
 /// Notifies how many bytes were sent to remote host.
-@property (nonatomic, nullable, copy) void (^uploadProgressHandler)(POSHTTPRequestProgress *progress);
+@property (nonatomic, nullable, copy) void (^uploadProgressHandler)(POSProgressValue *progress);
 
 /// The designated initializer.
 - (nullable instancetype)initWithRecoveredTask:(NSURLSessionUploadTask *)sessionTask;

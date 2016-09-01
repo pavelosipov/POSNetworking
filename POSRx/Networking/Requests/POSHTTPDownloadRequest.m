@@ -50,7 +50,7 @@
 
 - (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
                    destination:(void (^)(NSURL *))destination
-                      progress:(void (^)(POSHTTPRequestProgress *))progress
+                      progress:(void (^)(POSProgressValue *))progress
                   headerFields:(NSDictionary *)headerFields {
     if (self = [super initWithType:POSHTTPRequestTypeGET
                             method:method

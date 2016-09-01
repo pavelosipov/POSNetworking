@@ -100,11 +100,11 @@ static char kURLSessionInvalidateSubject;
     objc_setAssociatedObject(self, &kAllowUntrustedSSLCertificates, allowUntrustedSSLCertificates, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void (^)(POSHTTPRequestProgress *))posrx_uploadProgressHandler {
+- (void (^)(POSProgressValue *))posrx_uploadProgressHandler {
     return objc_getAssociatedObject(self, &kUploadProgressHandlerKey);
 }
 
-- (void)posrx_setUploadProgressHandler:(void (^)(POSHTTPRequestProgress *))uploadProgressHandler {
+- (void)posrx_setUploadProgressHandler:(void (^)(POSProgressValue *))uploadProgressHandler {
     objc_setAssociatedObject(self, &kUploadProgressHandlerKey, uploadProgressHandler, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
@@ -140,11 +140,11 @@ static char kURLSessionInvalidateSubject;
     objc_setAssociatedObject(self, &kDataHandlerKey, dataHandler, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (void (^)(POSHTTPRequestProgress *))posrx_downloadProgressHandler {
+- (void (^)(POSProgressValue *))posrx_downloadProgressHandler {
     return objc_getAssociatedObject(self, &kDownloadProgressHandlerKey);
 }
 
-- (void)posrx_setDownloadProgressHandler:(void (^)(POSHTTPRequestProgress *))downloadProgressHandler {
+- (void)posrx_setDownloadProgressHandler:(void (^)(POSProgressValue *))downloadProgressHandler {
     objc_setAssociatedObject(self, &kDownloadProgressHandlerKey, downloadProgressHandler, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 

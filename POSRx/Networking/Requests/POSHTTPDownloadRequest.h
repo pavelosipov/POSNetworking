@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// The designated initializer for foreground download.
 - (instancetype)initWithMethod:(nullable POSHTTPRequestMethod *)method
                    destination:(nullable void (^)(NSURL *))destination
-                      progress:(nullable void (^)(POSHTTPRequestProgress *progress))progress
+                      progress:(nullable void (^)(POSProgressValue *progress))progress
                   headerFields:(nullable NSDictionary *)headerFields;
 
 /// Copying initializer.
