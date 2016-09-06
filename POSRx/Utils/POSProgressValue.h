@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-FOUNDATION_EXTERN uint64_t const POSUnknownValue;
+FOUNDATION_EXTERN uint64_t const kPOSProgressValueUnknown;
 
 @interface POSProgressValue : NSObject
 

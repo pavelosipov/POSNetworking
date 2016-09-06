@@ -8,6 +8,10 @@
 
 #import "POSProgressValue.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
+uint64_t const kPOSProgressValueUnknown = UINT64_MAX;
+
 @implementation POSProgressValue
 
 - (instancetype)initWithReady:(uint64_t)ready total:(uint64_t)total {
@@ -19,3 +23,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
