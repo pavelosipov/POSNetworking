@@ -90,6 +90,32 @@
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
+- (void)testItShouldBePossibleToReexecuteTaskWhenErrorsOccurred {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
+    __block BOOL taskShouldEmitError = YES;
+    POSTask *task = [POSTask createTask:^RACSignal *(id task) {
+        if (taskShouldEmitError) {
+            return [RACSignal error:[NSError errorWithDomain:@"ru.mail.cloud.test" code:123 userInfo:nil]];
+        } else {
+            return [RACSignal return:@(1)];
+        }
+    }];
+    [task.values subscribeNext:^(id x) {
+        [expectation fulfill];
+    }];
+    @weakify(self);
+    @weakify(task);
+    [[_executor submitTask:task] subscribeError:^(NSError *error) {
+        @strongify(self);
+        @strongify(task);
+        XCTAssertEqualObjects(error.domain, @"ru.mail.cloud.test");
+        XCTAssertTrue(error.code == 123);
+        taskShouldEmitError = NO;
+        [self.executor submitTask:task];
+    }];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
 - (void)testExecutorSubmitMethodShouldExecuteTaskWithoutSubscriptions {
     XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
     POSTask *task = [POSTask createTask:^RACSignal *(id task) {
@@ -100,6 +126,28 @@
         [expectation fulfill];
     }];
     [_executor submitTask:task];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
+- (void)testExecutorSubmitMethodShouldExecuteSeveralTasksWithoutSubscriptions {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
+    POSTask *task1 = [POSTask createTask:^RACSignal *(id task) {
+        return [RACSignal return:@1];
+    }];
+    POSTask *task2 = [POSTask createTask:^RACSignal *(id task) {
+        return [RACSignal return:@2];
+    }];
+    @weakify(self);
+    [task1.values subscribeNext:^(id value) {
+        @strongify(self);
+        XCTAssertEqualObjects(value, @1);
+        [self.executor submitTask:task2];
+    }];
+    [task2.values subscribeNext:^(id value) {
+        XCTAssertEqualObjects(value, @2);
+        [expectation fulfill];
+    }];
+    [_executor submitTask:task1];
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
@@ -185,20 +233,20 @@
     [self waitForExpectationsWithTimeout:2 handler:nil];
 }
 
-- (void)testExecutorShouldNotExecuteOneTaskMultipleTimes {
+- (void)testExecutorMayExecuteMultipleTasksSimultaneously {
     XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
     const NSInteger submisionCount = 10;
     __block NSInteger executeCount = 0;
-    POSTask *task = [POSTask createTask:^RACSignal *(id task) {
-        ++executeCount;
-        return [RACSignal never];
-    }];
     _executor.maxConcurrentTaskCount = submisionCount;
     for (int i = 0; i < submisionCount; ++i) {
+        POSTask *task = [POSTask createTask:^RACSignal *(id task) {
+            ++executeCount;
+            return [RACSignal never];
+        }];
         [_executor submitTask:task];
     }
     [_executor.scheduler schedule:^{ // skip executor processing tasks runloop iteration.
-        XCTAssertTrue(executeCount == 1);
+        XCTAssertTrue(executeCount == 10);
         [expectation fulfill];
     }];
     [self waitForExpectationsWithTimeout:2 handler:nil];
