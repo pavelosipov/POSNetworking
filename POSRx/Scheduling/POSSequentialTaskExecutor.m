@@ -22,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) id<POSTaskExecutor> underlyingExecutor;
 @property (nonatomic, readonly) id<POSTaskQueue> pendingTasks;
 @property (nonatomic, readonly) NSMutableArray<id<POSTask>> *executingTasks;
-@property (nonatomic, nullable) RACDisposable *processingDisposable;
 @end
 
 @implementation POSSequentialTaskExecutor
@@ -46,10 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
         _executingTasks = [NSMutableArray<id<POSTask>> new];
     }
     return self;
-}
-
-- (void)dealloc {
-    [_processingDisposable dispose];
 }
 
 #pragma mark POSTaskExecutor
@@ -114,23 +109,27 @@ NS_ASSUME_NONNULL_BEGIN
         @weakify(self);
         @weakify(task);
         RACCompoundDisposable *reclaimDisposable = [RACCompoundDisposable compoundDisposable];
-        RACDisposable *executeDisposable = [[_underlyingExecutor submitTask:task] subscribeNext:^(id value) {
-            [taskSubscriber sendNext:value];
-        } error:^(NSError *error) {
-            @strongify(task);
-            [task.posrx_reclaimDisposable dispose];
-            [taskSubscriber sendError:error];
-        } completed:^{
-            @strongify(task);
-            [task.posrx_reclaimDisposable dispose];
-            [taskSubscriber sendCompleted];
-        }];
+        RACDisposable *executeDisposable =
+        [[[_underlyingExecutor submitTask:task]
+         takeUntil:self.rac_willDeallocSignal]
+         subscribeNext:^(id value) {
+             [taskSubscriber sendNext:value];
+         } error:^(NSError *error) {
+             @strongify(task);
+             [task.posrx_reclaimDisposable dispose];
+             [taskSubscriber sendError:error];
+         } completed:^{
+             @strongify(task);
+             [task.posrx_reclaimDisposable dispose];
+             [taskSubscriber sendCompleted];
+         }];
         [reclaimDisposable addDisposable:executeDisposable];
         [reclaimDisposable addDisposable:[RACDisposable disposableWithBlock:^{
             @strongify(self);
             @strongify(task);
             task.posrx_reclaimDisposable = nil;
             [self.executingTasks removeObject:task];
+            [self.underlyingExecutor reclaimTask:task];
             [self p_scheduleProcessPendingTasks];
         }]];
         task.posrx_reclaimDisposable = reclaimDisposable;

@@ -87,9 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
     if (_executor) {
         return [_executor submitTask:self];
     } else {
-        return [self p_executeWithDisposableBlock:^{
-            [self p_cancelNow];
-        }];
+        return [self p_executeNow];
     }
 }
 
@@ -108,7 +106,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Private
 
-- (RACSignal *)p_executeWithDisposableBlock:(void (^)(void))block {
+- (RACSignal *)p_executeNow {
     NSParameterAssert(![self isExecuting]);
     if ([self isExecuting]) {
         return _sourceSignal;
@@ -132,7 +130,9 @@ NS_ASSUME_NONNULL_BEGIN
     self.sourceSignalDisposable = [connection connect];
     return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         [sourceSignal subscribe:subscriber];
-        return [RACDisposable disposableWithBlock:block];
+        return [RACDisposable disposableWithBlock:^{
+            [self cancel];
+        }];
     }];
 }
 
@@ -151,13 +151,7 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation POSDirectTaskExecutor
 
 - (RACSignal *)submitTask:(POSTask *)task {
-    @weakify(self);
-    @weakify(task);
-    return [task p_executeWithDisposableBlock:^{
-        @strongify(self);
-        @strongify(task);
-        [self reclaimTask:task];
-    }];
+    return [task p_executeNow];
 }
 
 - (void)reclaimTask:(POSTask *)task {

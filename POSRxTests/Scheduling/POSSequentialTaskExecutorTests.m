@@ -48,6 +48,7 @@
     XCTAssert([POSAllocationTracker instanceCountForClass:POSTask.class] == 0);
     XCTAssert([POSAllocationTracker instanceCountForClass:RACSignal.class] == 0);
     XCTAssert([POSAllocationTracker instanceCountForClass:RACDisposable.class] == 0);
+    [POSAllocationTracker resetAllCounters];
 }
 
 - (void)testMemoryLeaksAbsenceWhenExecutingInfiniteTask {
@@ -161,7 +162,7 @@
     for (int i = 0; i < taskCount; ++i) {
         [[_executor submitTask:[POSTask createTask:^RACSignal *(id task) {
             ++executionCount;
-            XCTAssertTrue(executionCount <= maxConcurrentTaskCount - 1);
+            XCTAssertTrue(executionCount <= maxConcurrentTaskCount);
             return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
                 return [RACScheduler.mainThreadScheduler schedule:^{
                     [subscriber sendCompleted];
@@ -171,6 +172,7 @@
             --executionCount;
             ++completionCount;
             if (completionCount == taskCount) {
+                self.executor = nil;
                 [expectation fulfill];
             }
         }];
@@ -247,6 +249,7 @@
     }
     [_executor.scheduler schedule:^{ // skip executor processing tasks runloop iteration.
         XCTAssertTrue(executeCount == 10);
+        self.executor = nil;
         [expectation fulfill];
     }];
     [self waitForExpectationsWithTimeout:2 handler:nil];
