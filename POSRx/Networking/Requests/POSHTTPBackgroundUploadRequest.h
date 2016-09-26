@@ -64,6 +64,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Notifies how many bytes were sent to remote host.
 @property (nonatomic, nullable, copy) void (^uploadProgressHandler)(POSProgressValue *progress);
 
+/// Cancels that request.
+- (void)cancel;
+
 /// The designated initializer.
 - (nullable instancetype)initWithRecoveredTask:(NSURLSessionUploadTask *)sessionTask;
 

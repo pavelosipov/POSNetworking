@@ -207,6 +207,12 @@ static char kPOSUserInfoKey;
     return self;
 }
 
+#pragma mark Public
+
+- (void)cancel {
+    [_sessionTask cancel];
+}
+
 #pragma mark POSHTTPRequest
 
 - (id<POSURLSessionTask>)taskWithURL:(NSURL *)hostURL
