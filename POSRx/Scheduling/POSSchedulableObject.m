@@ -12,6 +12,12 @@
 #import <Aspects/Aspects.h>
 #import <objc/runtime.h>
 
+#ifndef POS_ENABLE_RUNTIME_CHECKS
+#   ifdef DEBUG
+#       define POS_ENABLE_RUNTIME_CHECKS 1
+#   endif
+#endif
+
 static char kPOSQueueSchedulerKey;
 
 @interface POSScheduleProtectionOptions ()
@@ -62,13 +68,15 @@ static char kPOSQueueSchedulerKey;
 - (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler options:(POSScheduleProtectionOptions *)options {
     POSRX_CHECK(scheduler);
     if (self = [super init]) {
-        NSParameterAssert([self.class
-                           protect:self
-                           forScheduler:scheduler
-                           options:(options ?:
-                                    [[POSScheduleProtectionOptions
-                                      defaultOptionsForClass:[self class]]
-                                     exclude:[self.class selectorsForProtocol:@protocol(POSSchedulable)]])]);
+#if POS_ENABLE_RUNTIME_CHECKS
+        [self.class
+         protect:self
+         forScheduler:scheduler
+         options:(options ?:
+                  [[POSScheduleProtectionOptions
+                    defaultOptionsForClass:[self class]]
+                   exclude:[self.class selectorsForProtocol:@protocol(POSSchedulable)]])];
+#endif
         _scheduler = scheduler;
     }
     return self;
