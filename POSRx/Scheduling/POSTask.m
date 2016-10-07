@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) RACSignal *(^executionBlock)(POSTask *task);
 @property (nonatomic, weak) id<POSTaskExecutor> executor;
 @property (nonatomic) RACSignal *executing;
-@property (nonatomic) RACSignal *sourceSignals;
+@property (nonatomic) RACSubject *sourceSignals;
 @property (nonatomic, nullable) RACSignal *sourceSignal;
 @property (nonatomic, nullable) RACDisposable *sourceSignalDisposable;
 @property (nonatomic) RACSignal *errors;
@@ -37,18 +37,21 @@ NS_ASSUME_NONNULL_BEGIN
         _executionBlock = [executionBlock copy];
         _executor = executor;
         
-        _sourceSignals = RACObserve(self, sourceSignal);
-
-        _executing = [[[_sourceSignals map:^(RACSignal *signal) {
-            return @(signal != nil);
-        }] distinctUntilChanged] replayLast];
+        _sourceSignals = [RACSubject subject];
         
-        _values = [[[_sourceSignals map:^id(RACSignal *signal) {
+        RACSignal *executionSignal = [[_sourceSignals startWith:nil]
+                                      takeUntil:[self rac_willDeallocSignal]];
+
+        _executing = [[executionSignal map:^(RACSignal *signal) {
+            return @(signal != nil);
+        }] replayLast];
+        
+        _values = [[[executionSignal map:^id(RACSignal *signal) {
             return [signal catchTo:[RACSignal empty]];
         }] replayLast] switchToLatest];
 
         _extraErrors = [RACSubject subject];
-        RACSignal *executionErrors = [[[_sourceSignals map:^id(RACSignal *signal) {
+        RACSignal *executionErrors = [[[executionSignal map:^id(RACSignal *signal) {
             return [[signal ignoreValues] catch:^(NSError *error) {
                 return [RACSignal return:error];
             }];
@@ -102,6 +105,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)cancelWithError:(NSError *)error {
     [_extraErrors sendNext:error];
     [self cancel];
+}
+
+#pragma mark Properties
+
+- (void)setSourceSignal:(nullable RACSignal *)sourceSignal {
+    _sourceSignal = sourceSignal;
+    [_sourceSignals sendNext:sourceSignal];
 }
 
 #pragma mark Private
