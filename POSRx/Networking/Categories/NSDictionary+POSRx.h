@@ -28,6 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// @return Percent escaped query string for URL.
 - (NSString *)posrx_URLQuery;
 
+/// @brief Encodes parameters in query string of &-concatenated key-value pairs.
+- (NSString *)posrx_URLQueryUsingPercentEncoding:(BOOL)usePercentEncoding;
+
 @end
 
 NS_ASSUME_NONNULL_END

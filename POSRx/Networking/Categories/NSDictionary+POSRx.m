@@ -55,11 +55,18 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSString *)posrx_URLQuery {
+    return [self posrx_URLQueryUsingPercentEncoding:YES];
+}
+
+- (NSString *)posrx_URLQueryUsingPercentEncoding:(BOOL)usePercentEncoding {
     NSMutableString *query = [NSMutableString new];
     [self enumerateKeysAndObjectsUsingBlock:^(NSString *key, id value, BOOL *stop) {
         NSString *pairFormat = query.length ? @"&%@=%@" : @"%@=%@";
-        NSString *encodedValue = [[value description] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        [query appendFormat:pairFormat, key, encodedValue];
+        NSString *queryValue = [value description];
+        if (usePercentEncoding) {
+            queryValue = [queryValue stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        }
+        [query appendFormat:pairFormat, key, queryValue];
     }];
     return query;
 }
