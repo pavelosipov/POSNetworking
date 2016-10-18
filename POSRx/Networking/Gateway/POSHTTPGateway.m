@@ -336,7 +336,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     }
 }
 
-- (NSInputStream *)connection:(NSURLConnection *)connection needNewBodyStream:(NSURLRequest *)request {
+- (nullable NSInputStream *)connection:(NSURLConnection *)connection needNewBodyStream:(NSURLRequest *)request {
     if (connection.posrx_bodyStreamBuilder) {
         return connection.posrx_bodyStreamBuilder();
     }
@@ -356,7 +356,8 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     [challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
 }
 
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse {
+- (nullable NSCachedURLResponse *)connection:(NSURLConnection *)connection
+                           willCacheResponse:(NSCachedURLResponse *)cachedResponse {
     return nil;
 }
 
