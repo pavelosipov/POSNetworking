@@ -2,7 +2,7 @@
 //  POSSequentialTaskExecutor.m
 //  POSRx
 //
-//  Created by Osipov on 10/05/16.
+//  Created by Pavel Osipov on 10/05/16.
 //  Copyright © 2016 Pavel Osipov. All rights reserved.
 //
 
@@ -21,7 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface POSSequentialTaskExecutor ()
 @property (nonatomic, readonly) id<POSTaskExecutor> underlyingExecutor;
 @property (nonatomic, readonly) id<POSTaskQueue> pendingTasks;
-@property (nonatomic, readonly) NSMutableArray<id<POSTask>> *executingTasks;
+@property (nonatomic, readonly) NSMutableArray<id<POSTask>> *mutableExecutingTasks;
+@property (nonatomic, readonly) RACSubject *executingTasksCountSubject;
 @end
 
 @implementation POSSequentialTaskExecutor
@@ -39,10 +40,11 @@ NS_ASSUME_NONNULL_BEGIN
     POSRX_CHECK(executor);
     POSRX_CHECK(taskQueue);
     if (self = [super initWithScheduler:executor.scheduler]) {
+        _executingTasksCountSubject = [RACSubject subject];
         _underlyingExecutor = executor;
         _pendingTasks = taskQueue;
-        _maxConcurrentTaskCount = 1;
-        _executingTasks = [NSMutableArray<id<POSTask>> new];
+        _maxExecutingTasksCount = 1;
+        _mutableExecutingTasks = [NSMutableArray array];
     }
     return self;
 }
@@ -78,11 +80,24 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Public
 
-- (void)setMaxConcurrentTaskCount:(NSInteger)count {
-    if (count > _maxConcurrentTaskCount) {
+- (void)setMaxExecutingTasksCount:(NSInteger)count {
+    if (count > _maxExecutingTasksCount) {
         [self p_scheduleProcessPendingTasks];
     }
-    _maxConcurrentTaskCount = count;
+    _maxExecutingTasksCount = count;
+}
+
+- (NSArray *)executingTasks {
+    return [_mutableExecutingTasks copy];
+}
+
+
+- (NSUInteger)executingTasksCount {
+    return [_mutableExecutingTasks count];
+}
+
+- (RACSignal *)executingTasksCountSignal {
+    return [_executingTasksCountSubject takeUntil:self.rac_willDeallocSignal];
 }
 
 #pragma mark Private
@@ -97,13 +112,23 @@ NS_ASSUME_NONNULL_BEGIN
     }];
 }
 
+- (void)p_addExecutingTask:(id<POSTask>)task {
+    [_mutableExecutingTasks addObject:task];
+    [_executingTasksCountSubject sendNext:@(_mutableExecutingTasks.count)];
+}
+
+- (void)p_removeExecutingTask:(id<POSTask>)task {
+    [_mutableExecutingTasks removeObject:task];
+    [_executingTasksCountSubject sendNext:@(_mutableExecutingTasks.count)];
+}
+
 - (void)p_processPendingTasks {
-    while (_executingTasks.count < _maxConcurrentTaskCount) {
+    while (_mutableExecutingTasks.count < _maxExecutingTasksCount) {
         POSTask *task = [_pendingTasks dequeueTopTask];
         if (!task) {
             break;
         }
-        [_executingTasks addObject:task];
+        [self p_addExecutingTask:task];
         id<RACSubscriber> taskSubscriber = task.posrx_subscriber;
         task.posrx_subscriber = nil;
         @weakify(self);
@@ -128,7 +153,7 @@ NS_ASSUME_NONNULL_BEGIN
             @strongify(self);
             @strongify(task);
             task.posrx_reclaimDisposable = nil;
-            [self.executingTasks removeObject:task];
+            [self p_removeExecutingTask:task];
             [self.underlyingExecutor reclaimTask:task];
             [self p_scheduleProcessPendingTasks];
         }]];

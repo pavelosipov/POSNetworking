@@ -2,7 +2,7 @@
 //  POSSequentialTaskExecutor.h
 //  POSRx
 //
-//  Created by Osipov on 10/05/16.
+//  Created by Pavel Osipov on 10/05/16.
 //  Copyright © 2016 Pavel Osipov. All rights reserved.
 //
 
@@ -11,9 +11,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface POSSequentialTaskExecutor : POSSchedulableObject <POSTaskExecutor>
+///
+/// Special executor which executes only limited number of tasks concurrently.
+///
+@interface POSSequentialTaskExecutor<TaskType> : POSSchedulableObject <POSTaskExecutor>
 
-@property (nonatomic) NSInteger maxConcurrentTaskCount;
+/// @brief      Maximum number of tasks which can be executed simultaneously.
+/// @discussion The default value is 1.
+@property (nonatomic) NSInteger maxExecutingTasksCount;
+
+/// @brief      Current number of executing tasks.
+/// @discussion That property is a performant alias for executingTasks.count
+@property (nonatomic, readonly) NSUInteger executingTasksCount;
+
+/// RACSignal of NSNumber which informs about updates of executingTasksCount property.
+@property (nonatomic, readonly) RACSignal *executingTasksCountSignal;
+
+/// Array of currently executing tasks.
+@property (nonatomic, readonly, copy) NSArray<TaskType> *executingTasks;
 
 - (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler
                         taskQueue:(id<POSTaskQueue>)taskQueue;

@@ -154,15 +154,15 @@
 
 - (void)testExecutorShouldExecuteLimitedNumberOfTasks {
     XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
-    NSInteger maxConcurrentTaskCount = 2;
-    _executor.maxConcurrentTaskCount = maxConcurrentTaskCount;
+    NSInteger maxExecutingTasksCount = 2;
+    _executor.maxExecutingTasksCount = maxExecutingTasksCount;
     __block NSInteger taskCount = 20;
     __block NSInteger executionCount = 0;
     __block NSInteger completionCount = 0;
     for (int i = 0; i < taskCount; ++i) {
         [[_executor submitTask:[POSTask createTask:^RACSignal *(id task) {
             ++executionCount;
-            XCTAssertTrue(executionCount <= maxConcurrentTaskCount);
+            XCTAssertTrue(executionCount <= maxExecutingTasksCount);
             return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
                 return [RACScheduler.mainThreadScheduler schedule:^{
                     [subscriber sendCompleted];
@@ -185,14 +185,14 @@
 
 - (void)testExecutorShouldScheduleTaskExecutionAfterLimitIncrement {
     XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
-    _executor.maxConcurrentTaskCount = 0;
+    _executor.maxExecutingTasksCount = 0;
     [[_executor submitTask:[POSTask createTask:^RACSignal *(id task) {
         return [RACSignal empty];
     }]] subscribeCompleted:^{
         [expectation fulfill];
     }];
     [[_executor schedule] subscribeNext:^(POSSequentialTaskExecutor *executor) {
-        executor.maxConcurrentTaskCount = 1;
+        executor.maxExecutingTasksCount = 1;
     }];
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
@@ -239,18 +239,55 @@
     XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
     const NSInteger submisionCount = 10;
     __block NSInteger executeCount = 0;
-    _executor.maxConcurrentTaskCount = submisionCount;
+    __block NSInteger executeEventCount = 0;
+    _executor.maxExecutingTasksCount = submisionCount;
+    [_executor.executingTasksCountSignal subscribeNext:^(NSNumber *executingTasksCount) {
+        ++executeEventCount;
+        executeCount = executingTasksCount.unsignedIntegerValue;
+        XCTAssertTrue(executeEventCount == executeCount);
+    }];
     for (int i = 0; i < submisionCount; ++i) {
         POSTask *task = [POSTask createTask:^RACSignal *(id task) {
-            ++executeCount;
             return [RACSignal never];
         }];
         [_executor submitTask:task];
     }
     [_executor.scheduler schedule:^{ // skip executor processing tasks runloop iteration.
         XCTAssertTrue(executeCount == 10);
+        XCTAssertTrue(executeEventCount == 10);
+        XCTAssertTrue(self.executor.executingTasksCount == 10);
+        XCTAssertTrue(self.executor.executingTasks.count == 10);
         self.executor = nil;
         [expectation fulfill];
+    }];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
+- (void)testExecutorShouldRemoveCanceledTaskFromExecuteTasksArray {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
+    @weakify(self);
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTask *thisTask) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            return [RACDisposable disposableWithBlock:^{
+                @strongify(self);
+                XCTAssertTrue(self.executor.executingTasksCount == 0);
+                XCTAssertTrue(self.executor.executingTasks.count == 0);
+                [expectation fulfill];
+            }];
+        }];
+    } scheduler:_executor.scheduler executor:_executor];
+    __block NSInteger executeCount = 0;
+    [_executor.executingTasksCountSignal subscribeNext:^(NSNumber *executingTasksCount) {
+        executeCount = executingTasksCount.unsignedIntegerValue;
+    }];
+    [_executor submitTask:task];
+    [_executor.scheduler schedule:^{
+        XCTAssertTrue(executeCount == 1);
+        XCTAssertTrue(self.executor.executingTasksCount == 1);
+        XCTAssertTrue(self.executor.executingTasks.count == 1);
+        [task.scheduler schedule:^{
+            [task cancel];
+        }];
     }];
     [self waitForExpectationsWithTimeout:2 handler:nil];
 }
