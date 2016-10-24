@@ -289,7 +289,32 @@
             [task cancel];
         }];
     }];
-    [self waitForExpectationsWithTimeout:2 handler:nil];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
+- (void)testTaskRestart {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
+    __block NSUInteger executeCount = 0;
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTask *thisTask) {
+        if (++executeCount == 1) {
+            return [RACSignal never];
+        } else {
+            return [RACSignal return:@YES];
+        }
+    } scheduler:_executor.scheduler executor:_executor];
+    [task.values subscribeNext:^(NSNumber *result) {
+        XCTAssertTrue(result.boolValue);
+        [expectation fulfill];
+    }];
+    [_executor submitTask:task];
+    [_executor.scheduler schedule:^{
+        XCTAssertTrue(executeCount == 1);
+        XCTAssertTrue(self.executor.executingTasksCount == 1);
+        XCTAssertTrue(self.executor.executingTasks.count == 1);
+        [task cancel];
+        [task execute];
+    }];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
 @end
