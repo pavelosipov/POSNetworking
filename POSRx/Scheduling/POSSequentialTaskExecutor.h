@@ -30,6 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Array of currently executing tasks.
 @property (nonatomic, readonly, copy) NSArray<TaskType> *executingTasks;
 
+/// Tries to execute pending tasks from taskQueue.
+- (void)executePendingTasks;
+
 - (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler
                         taskQueue:(id<POSTaskQueue>)taskQueue;
 

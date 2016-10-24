@@ -100,29 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
     return [_executingTasksCountSubject takeUntil:self.rac_willDeallocSignal];
 }
 
-#pragma mark Private
-
-- (void)p_reclaimTask:(POSTask *)task {
-    [task.posrx_reclaimDisposable dispose];
-}
-
-- (void)p_scheduleProcessPendingTasks {
-    [[self schedule] subscribeNext:^(POSSequentialTaskExecutor *this) {
-        [this p_processPendingTasks];
-    }];
-}
-
-- (void)p_addExecutingTask:(id<POSTask>)task {
-    [_mutableExecutingTasks addObject:task];
-    [_executingTasksCountSubject sendNext:@(_mutableExecutingTasks.count)];
-}
-
-- (void)p_removeExecutingTask:(id<POSTask>)task {
-    [_mutableExecutingTasks removeObject:task];
-    [_executingTasksCountSubject sendNext:@(_mutableExecutingTasks.count)];
-}
-
-- (void)p_processPendingTasks {
+- (void)executePendingTasks {
     while (_mutableExecutingTasks.count < _maxExecutingTasksCount) {
         POSTask *task = [_pendingTasks dequeueTopTask];
         if (!task) {
@@ -136,7 +114,7 @@ NS_ASSUME_NONNULL_BEGIN
         RACCompoundDisposable *reclaimDisposable = [RACCompoundDisposable compoundDisposable];
         RACDisposable *executeDisposable =
         [[[_underlyingExecutor submitTask:task]
-         takeUntil:self.rac_willDeallocSignal]
+          takeUntil:self.rac_willDeallocSignal]
          subscribeNext:^(id value) {
              [taskSubscriber sendNext:value];
          } error:^(NSError *error) {
@@ -159,6 +137,28 @@ NS_ASSUME_NONNULL_BEGIN
         }]];
         task.posrx_reclaimDisposable = reclaimDisposable;
     }
+}
+
+#pragma mark Private
+
+- (void)p_reclaimTask:(POSTask *)task {
+    [task.posrx_reclaimDisposable dispose];
+}
+
+- (void)p_scheduleProcessPendingTasks {
+    [[self schedule] subscribeNext:^(POSSequentialTaskExecutor *this) {
+        [this executePendingTasks];
+    }];
+}
+
+- (void)p_addExecutingTask:(id<POSTask>)task {
+    [_mutableExecutingTasks addObject:task];
+    [_executingTasksCountSubject sendNext:@(_mutableExecutingTasks.count)];
+}
+
+- (void)p_removeExecutingTask:(id<POSTask>)task {
+    [_mutableExecutingTasks removeObject:task];
+    [_executingTasksCountSubject sendNext:@(_mutableExecutingTasks.count)];
 }
 
 @end
