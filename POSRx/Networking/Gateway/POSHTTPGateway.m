@@ -216,6 +216,14 @@ NSInteger const POSHTTPSystemError = 101;
 
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
+willPerformHTTPRedirection:(NSHTTPURLResponse *)response
+        newRequest:(NSURLRequest *)request
+ completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler {
+    completionHandler(nil);
+}
+
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
    didSendBodyData:(int64_t)bytesSent
     totalBytesSent:(int64_t)totalBytesSent
 totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend {
@@ -334,6 +342,12 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     if (connection.posrx_completionHandler) {
         connection.posrx_completionHandler(error);
     }
+}
+
+- (nullable NSURLRequest *)connection:(NSURLConnection *)connection
+                      willSendRequest:(NSURLRequest *)request
+                     redirectResponse:(nullable NSURLResponse *)response {
+    return nil;
 }
 
 - (nullable NSInputStream *)connection:(NSURLConnection *)connection needNewBodyStream:(NSURLRequest *)request {
