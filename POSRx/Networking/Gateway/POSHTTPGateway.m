@@ -344,12 +344,6 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
     }
 }
 
-- (nullable NSURLRequest *)connection:(NSURLConnection *)connection
-                      willSendRequest:(NSURLRequest *)request
-                     redirectResponse:(nullable NSURLResponse *)response {
-    return nil;
-}
-
 - (nullable NSInputStream *)connection:(NSURLConnection *)connection needNewBodyStream:(NSURLRequest *)request {
     if (connection.posrx_bodyStreamBuilder) {
         return connection.posrx_bodyStreamBuilder();
