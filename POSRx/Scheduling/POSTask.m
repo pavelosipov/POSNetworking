@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) RACSubject *sourceSignals;
 @property (nonatomic, nullable) RACSignal *sourceSignal;
 @property (nonatomic, nullable) RACDisposable *sourceSignalDisposable;
+@property (nonatomic, nullable) RACDisposable *sourceSignalCleanupDisposable;
 @property (nonatomic) RACSignal *errors;
 @property (nonatomic) RACSubject *extraErrors;
 @property (nonatomic) RACSignal *values;
@@ -130,7 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
                                takeUntil:self.rac_willDeallocSignal];
     self.sourceSignal = sourceSignal;
     @weakify(self);
-    [self.sourceSignal subscribeError:^(NSError *error) {
+    self.sourceSignalCleanupDisposable = [self.sourceSignal subscribeError:^(NSError *error) {
         @strongify(self);
         self.sourceSignal = nil;
     } completed:^{
@@ -149,6 +150,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)p_cancelNow {
     if ([self isExecuting]) {
         [_sourceSignalDisposable dispose];
+        [_sourceSignalCleanupDisposable dispose];
+        self.sourceSignalCleanupDisposable = nil;
         self.sourceSignalDisposable = nil;
         self.sourceSignal = nil;
     }

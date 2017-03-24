@@ -30,7 +30,7 @@
 - (void)testHTTPGatewayLeaksAbsense {
     self.gateway = [[POSHTTPGateway alloc]
                     initWithScheduler:[RACTargetQueueScheduler pos_mainThreadScheduler]
-                    backgroundSessionIdentifier:@"com.github.pavelosipov.HTTPGatewayTests"];
+                    backgroundSessionIdentifier:nil];
     XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
     const uint8_t bytes[] = { 0xb7, 0xe2, 0x02 };

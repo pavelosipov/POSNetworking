@@ -212,4 +212,38 @@
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
+- (void)testTaskShouldNotLeakDisposablesAfterCancel {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
+    __block NSInteger iterationCount = 0;
+    __block NSInteger disposableCount = 0;
+    POSTask *task = [POSTask createTask:^RACSignal *(POSTask *thatTask) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            uint64_t currentDisposableCount = [POSAllocationTracker instanceCountForClass:RACDisposable.class];
+            if (iterationCount > 1) {
+                XCTAssertTrue(currentDisposableCount == disposableCount);
+            }
+            disposableCount = currentDisposableCount;
+            [subscriber sendNext:@(iterationCount)];
+            ++iterationCount;
+            return nil;
+        }];
+    }];
+    @weakify(task);
+    @weakify(expectation);
+    [task.values subscribeNext:^(NSNumber *iterationCount) {
+        if (iterationCount.integerValue < 9) {
+            @strongify(task);
+            [task cancel];
+            [task execute];
+        } else {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                @strongify(expectation);
+                [expectation fulfill];
+            });
+        }
+    }];
+    [task execute];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
 @end
