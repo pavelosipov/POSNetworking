@@ -165,6 +165,10 @@ NSInteger const POSHTTPSystemError = 101;
 
 - (void)recoverBackgroundUploadRequestsUsingBlock:(void(^)(NSArray *uploadRequests))block {
     POSRX_CHECK(block);
+    if (!_backgroundSession) {
+        block(NSArray.new);
+        return;
+    }
     [_backgroundSession getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
         NSMutableArray *requests = [NSMutableArray new];
         for (NSURLSessionUploadTask *task in uploadTasks) {
