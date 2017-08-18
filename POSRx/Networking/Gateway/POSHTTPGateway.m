@@ -27,6 +27,22 @@ NSInteger const POSHTTPSystemError = 101;
 
 #pragma mark -
 
+@interface NSError (POSHTTPGateway)
+@end
+
+@implementation NSError (POSHTTPGateway)
+
+- (BOOL)posrx_isBackgroundSessionError {
+    return ([self.domain isEqualToString:NSURLErrorDomain] &&
+            (self.code == NSURLErrorBackgroundSessionRequiresSharedContainer ||
+             self.code == NSURLErrorBackgroundSessionInUseByAnotherProcess ||
+             self.code == NSURLErrorBackgroundSessionWasDisconnected));
+}
+
+@end
+
+#pragma mark -
+
 @interface NSOperationQueue (POSHTTPGateway)
 @end
 
@@ -52,7 +68,7 @@ NSInteger const POSHTTPSystemError = 101;
 @property (nonatomic) RACSignal *working;
 @property (nonatomic) NSMutableSet *actualTasks;
 @property (nonatomic) NSURLSession *foregroundSession;
-@property (nonatomic) NSURLSession *backgroundSession;
+@property (nonatomic, nullable) NSURLSession *backgroundSession;
 @end
 
 @implementation POSHTTPGateway {
@@ -215,6 +231,10 @@ NSInteger const POSHTTPSystemError = 101;
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error {
     if (task.posrx_completionHandler) {
         task.posrx_completionHandler(error);
+    }
+    if (error.posrx_isBackgroundSessionError && session == _backgroundSession) {
+        self.backgroundSession = nil;
+        [session finishTasksAndInvalidate];
     }
 }
 
