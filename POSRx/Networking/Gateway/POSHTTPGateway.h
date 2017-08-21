@@ -47,6 +47,9 @@ FOUNDATION_EXTERN NSInteger const POSHTTPSystemError;
 /// @param cancelPendingRequests YES if you want to free all allocated resources ASAP or NO to complete active requests.
 - (RACSignal *)invalidateCancelingRequests:(BOOL)cancelPendingRequests;
 
+/// @brief Asynchronously creates new backgroundSession instance.
+- (void)reconnectToBackgroundSession;
+
 @end
 
 /// Performs network requests.

@@ -64,11 +64,40 @@ NSInteger const POSHTTPSystemError = 101;
 
 #pragma mark -
 
+@interface NSURLSession (POSHTTPGateway)
+@end
+
+@implementation NSURLSession (POSHTTPGateway)
+
++ (instancetype)posrx_newBackgroundSessionWithIdentifier:(NSString *)identifier
+                                                delegate:(nullable id <NSURLSessionDelegate>)delegate
+                                           delegateQueue:(nullable NSOperationQueue *)queue {
+    POSRX_CHECK(identifier);
+    NSURLSessionConfiguration *configuration =
+    [POSSystemInfo isOutdatedOS] ?
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    [NSURLSessionConfiguration backgroundSessionConfiguration:identifier] :
+#pragma clang diagnostic pop
+    [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
+    configuration.URLCache = [NSURLCache posrx_leaksFreeCache];
+    return [NSURLSession
+            sessionWithConfiguration:configuration
+            delegate:delegate
+            delegateQueue:queue];
+}
+
+@end
+
+
+#pragma mark -
+
 @interface POSHTTPGateway () <NSURLSessionDataDelegate, NSURLSessionDownloadDelegate, NSURLConnectionDelegate>
 @property (nonatomic) RACSignal *working;
 @property (nonatomic) NSMutableSet *actualTasks;
 @property (nonatomic) NSURLSession *foregroundSession;
 @property (nonatomic, nullable) NSURLSession *backgroundSession;
+@property (nonatomic, readonly) NSString *backgroundSessionIdentifier;
 @end
 
 @implementation POSHTTPGateway {
@@ -90,16 +119,8 @@ NSInteger const POSHTTPSystemError = 101;
                               delegate:self
                               delegateQueue:operationQueue];
         if (ID) {
-            NSURLSessionConfiguration *backgroundSessionConfiguration =
-            [POSSystemInfo isOutdatedOS] ?
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-            [NSURLSessionConfiguration backgroundSessionConfiguration:ID] :
-#pragma clang diagnostic pop
-            [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:ID];
-            backgroundSessionConfiguration.URLCache = [NSURLCache posrx_leaksFreeCache];
-            _backgroundSession = [NSURLSession
-                                  sessionWithConfiguration:backgroundSessionConfiguration
+            _backgroundSessionIdentifier = [ID copy];
+            _backgroundSession = [NSURLSession posrx_newBackgroundSessionWithIdentifier:ID
                                   delegate:self
                                   delegateQueue:operationQueue];
         }
@@ -107,7 +128,7 @@ NSInteger const POSHTTPSystemError = 101;
     return self;
 }
 
-#pragma mark MRCHTTPGateway
+#pragma mark POSHTTPGateway
 
 - (id<POSTask>)taskForRequest:(id<POSHTTPRequest>)request
                        toHost:(NSURL *)hostURL
@@ -213,6 +234,16 @@ NSInteger const POSHTTPSystemError = 101;
                                   _backgroundSession.posrx_invalidateSubject]];
     } else {
         return _foregroundSession.posrx_invalidateSubject;
+    }
+}
+
+- (void)reconnectToBackgroundSession {
+    if (_backgroundSessionIdentifier) {
+        [_backgroundSession finishTasksAndInvalidate];
+        self.backgroundSession = [NSURLSession
+                                  posrx_newBackgroundSessionWithIdentifier:_backgroundSessionIdentifier
+                                  delegate:self
+                                  delegateQueue:[NSOperationQueue pos_operationQueueForScheduler:self.scheduler]];
     }
 }
 

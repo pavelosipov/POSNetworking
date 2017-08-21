@@ -1,5 +1,5 @@
 //
-//  POSRx.h
+//  POSRxNetworking.h
 //  POSRx
 //
 //  Created by Pavel Osipov on 01.06.15.
