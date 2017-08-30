@@ -18,6 +18,7 @@
 
 - (void)setUp {
     [super setUp];
+    [POSAllocationTracker resetAllCounters];
     self.executor = [[POSDirectTaskExecutor alloc] init];
 }
 
@@ -83,6 +84,19 @@
         }];
     }];
     [self.executor submitTask:task];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
+- (void)testExecutorShouldExecuteBlockWithoutSubscription {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
+    [self.executor submitExecutionBlock:^RACSignal *(POSTask *task) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            [subscriber sendCompleted];
+            return [RACDisposable disposableWithBlock:^{
+                [expectation fulfill];
+            }];
+        }];
+    }];
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 

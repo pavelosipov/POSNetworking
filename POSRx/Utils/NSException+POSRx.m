@@ -19,4 +19,13 @@
     @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:reason userInfo:nil];
 }
 
++ (instancetype)posrx_exceptionWithFormat:(NSString *)format, ... {
+    NSParameterAssert(format);
+    va_list args;
+    va_start(args, format);
+    NSString *reason = [[NSString alloc] initWithFormat:format arguments:args];
+    va_end(args);
+    return [NSException exceptionWithName:NSInternalInconsistencyException reason:reason userInfo:nil];
+}
+
 @end

@@ -28,6 +28,27 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation POSSequentialTaskExecutor
 
 - (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler
+                          options:(nullable POSScheduleProtectionOptions *)options {
+    typedef NSMutableArray<POSTask *> Queue_t;
+    return [self
+            initWithUnderlyingExecutor:[[POSDirectTaskExecutor alloc] initWithScheduler:scheduler]
+            taskQueue:
+            [[POSTaskQueueAdapter<Queue_t *> alloc]
+             initWithScheduler:scheduler
+             container:[Queue_t new]
+             dequeueTopTaskBlock:^POSTask *(Queue_t *queue) {
+                 POSTask *task = queue.lastObject;
+                 [queue removeLastObject];
+                 return task;
+             } dequeueTaskBlock:^(Queue_t *queue, POSTask *task) {
+                 [queue removeObject:task];
+             } enqueueTaskBlock:^(Queue_t *queue, POSTask *task) {
+                 [queue addObject:task];
+             }]
+            options:options];
+}
+
+- (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler
                         taskQueue:(id<POSTaskQueue>)taskQueue {
     POSRX_CHECK(scheduler);
     POSRX_CHECK(taskQueue);
@@ -37,9 +58,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithUnderlyingExecutor:(id<POSTaskExecutor>)executor
                                  taskQueue:(id<POSTaskQueue>)taskQueue {
+    return [self initWithUnderlyingExecutor:executor taskQueue:taskQueue options:nil];
+}
+
+- (instancetype)initWithUnderlyingExecutor:(id<POSTaskExecutor>)executor
+                                 taskQueue:(id<POSTaskQueue>)taskQueue
+                                   options:(nullable POSScheduleProtectionOptions *)options {
     POSRX_CHECK(executor);
     POSRX_CHECK(taskQueue);
-    if (self = [super initWithScheduler:executor.scheduler]) {
+    if (self = [super initWithScheduler:executor.scheduler options:options]) {
         _executingTasksCountSubject = [RACSubject subject];
         _underlyingExecutor = executor;
         _pendingTasks = taskQueue;

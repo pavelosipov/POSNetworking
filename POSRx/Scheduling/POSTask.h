@@ -63,6 +63,8 @@ POSRX_SCHEDULABLE_INIT_RECURSIVELY_UNAVAILABLE;
 
 @end
 
+#pragma mark -
+
 /// Specifies protocol which should be impleme
 @protocol POSTaskExecutor <POSSchedulable>
 
@@ -74,9 +76,24 @@ POSRX_SCHEDULABLE_INIT_RECURSIVELY_UNAVAILABLE;
 
 @end
 
+#pragma mark -
+
+@protocol POSBlockExecutor <POSSchedulable>
+
+/// @return Signal which will emit emits values about task execution.
+- (RACSignal *)submitExecutionBlock:(RACSignal *(^)(id task))executionBlock;
+
+@end
+
+/// Implements submitTaskWithExecutionBlock method.
+@interface POSBlockExecutor : POSSchedulableObject <POSBlockExecutor>
+@end
+
+#pragma mark -
+
 /// The minimal implementation of executors which executes task immediately after push.
 /// This executor should be used as a base class for more complicated executors.
-@interface POSDirectTaskExecutor : POSSchedulableObject <POSTaskExecutor>
+@interface POSDirectTaskExecutor : POSBlockExecutor <POSTaskExecutor>
 @end
 
 NS_ASSUME_NONNULL_END

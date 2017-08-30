@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Special executor which executes only limited number of tasks concurrently.
 ///
-@interface POSSequentialTaskExecutor<TaskType> : POSSchedulableObject <POSTaskExecutor>
+@interface POSSequentialTaskExecutor<TaskType> : POSBlockExecutor <POSTaskExecutor>
 
 /// @brief      Maximum number of tasks which can be executed simultaneously.
 /// @discussion The default value is 1.
@@ -38,9 +38,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithUnderlyingExecutor:(id<POSTaskExecutor>)executor
                                  taskQueue:(id<POSTaskQueue>)taskQueue;
-
-/// Hiding deadly initializers.
-POSRX_SCHEDULABLE_INIT_RECURSIVELY_UNAVAILABLE
 
 @end
 

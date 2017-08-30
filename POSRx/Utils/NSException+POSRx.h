@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Throws NSInternalInconsistencyException with specified message.
 + (void)posrx_throw:(NSString *)format, ...;
 
+/// Creates exception with specified description.
++ (instancetype)posrx_exceptionWithFormat:(NSString *)format, ...;
+
 @end
 
 NS_ASSUME_NONNULL_END
@@ -29,3 +32,6 @@ do { \
 
 #define POSRX_CHECK(condition) \
     POSRX_CHECK_EX(condition, ([NSString stringWithFormat:@"'%s' is false.", #condition]))
+
+#define POSRX_THROW_NOT_IMPLEMENTED \
+    @throw [NSException posrx_exceptionWithFormat:@"Method %@ should be implemeneted in subclass.", NSStringFromSelector(_cmd)]

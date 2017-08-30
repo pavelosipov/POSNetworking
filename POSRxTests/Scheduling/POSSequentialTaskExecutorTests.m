@@ -130,6 +130,19 @@
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
+- (void)testExecutorSubmitMethodShouldExecuteBlockWithoutSubscriptions {
+    XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
+    [_executor submitExecutionBlock:^RACSignal *(POSTask *task) {
+        return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
+            [subscriber sendCompleted];
+            return [RACDisposable disposableWithBlock:^{
+                [expectation fulfill];
+            }];
+        }];
+    }];
+    [self waitForExpectationsWithTimeout:1 handler:nil];
+}
+
 - (void)testExecutorSubmitMethodShouldExecuteSeveralTasksWithoutSubscriptions {
     XCTestExpectation *expectation = [self expectationWithDescription:@"e"];
     POSTask *task1 = [POSTask createTask:^RACSignal *(id task) {
