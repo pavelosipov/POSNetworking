@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol POSHTTPUploadRequest <POSHTTPRequest>
 
 /// Stream for the HTTP request's body.
-@property (nonatomic, readonly, nullable, copy) NSInputStream *(^bodyStreamBuilder)();
+@property (nonatomic, readonly, nullable, copy) NSInputStream *(^bodyStreamBuilder)(void);
 
 @end
 
@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// The designated initializer for foreground upload.
 - (instancetype)initWithMethod:(nullable POSHTTPRequestMethod *)method
-                    bodyStream:(NSInputStream *(^)())bodyStream
+                    bodyStream:(NSInputStream *(^)(void))bodyStream
                       progress:(nullable void (^)(POSProgressValue *progress))progress
                   headerFields:(nullable NSDictionary *)headerFields;
 
@@ -45,7 +45,7 @@ POSRX_HTTPREQUEST_TYPED_INIT_UNAVAILABLE;
 @interface POSMutableHTTPUploadRequest : POSMutableHTTPRequest <POSHTTPUploadRequest>
 
 /// Stream for the HTTP request's body.
-@property (nonatomic, copy, nullable) NSInputStream *(^bodyStreamBuilder)();
+@property (nonatomic, copy, nullable) NSInputStream *(^bodyStreamBuilder)(void);
 
 /// Creates HTTP PUT request without HTTPBody or HTTPBodyStream.
 - (instancetype)init;

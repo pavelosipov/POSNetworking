@@ -6,7 +6,10 @@
 //  Copyright (c) 2015 Pavel Osipov. All rights reserved.
 //
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wstrict-prototypes"
+#   import <ReactiveCocoa/ReactiveCocoa.h>
+#pragma clang diagnostic pop
 
 NS_ASSUME_NONNULL_BEGIN
 

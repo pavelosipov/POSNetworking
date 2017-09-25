@@ -47,13 +47,13 @@
 #pragma mark -
 
 @interface POSHTTPUploadRequest ()
-@property (nonatomic, copy) NSInputStream *(^bodyStreamBuilder)();
+@property (nonatomic, copy) NSInputStream *(^bodyStreamBuilder)(void);
 @end
 
 @implementation POSHTTPUploadRequest
 
 - (instancetype)initWithMethod:(POSHTTPRequestMethod *)method
-                    bodyStream:(NSInputStream *(^)())bodyStream
+                    bodyStream:(NSInputStream *(^)(void))bodyStream
                       progress:(void (^)(POSProgressValue *))progress
                   headerFields:(NSDictionary *)headerFields {
     POSRX_CHECK(bodyStream);

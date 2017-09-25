@@ -9,7 +9,12 @@
 #import "NSObject+POSRx.h"
 #import "NSException+POSRx.h"
 #import <objc/runtime.h>
-#import <ReactiveCocoa/ReactiveCocoa.h>
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wstrict-prototypes"
+#   import <ReactiveCocoa/ReactiveCocoa.h>
+#pragma clang diagnostic pop
+
 
 static char kDownloadProgressHandlerKey;
 static char kUploadProgressHandlerKey;

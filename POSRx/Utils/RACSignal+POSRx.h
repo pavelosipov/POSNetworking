@@ -6,7 +6,10 @@
 //  Copyright © 2016 Pavel Osipov. All rights reserved.
 //
 
-#import <ReactiveCocoa/ReactiveCocoa.h>
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wstrict-prototypes"
+#   import <ReactiveCocoa/ReactiveCocoa.h>
+#pragma clang diagnostic pop
 
 @interface RACSignal (POSRx)
 
