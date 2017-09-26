@@ -121,11 +121,11 @@ static char kURLSessionInvalidateSubject;
     objc_setAssociatedObject(self, &kCompletionHandlerKey, completionHandler, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (NSInputStream *(^)())posrx_bodyStreamBuilder {
+- (NSInputStream *(^)(void))posrx_bodyStreamBuilder {
     return objc_getAssociatedObject(self, &kBodyStreamBuilderKey);
 }
 
-- (void)posrx_setBodyStreamBuilder:(NSInputStream *(^)())bodyStreamBuilder {
+- (void)posrx_setBodyStreamBuilder:(NSInputStream *(^)(void))bodyStreamBuilder {
     objc_setAssociatedObject(self, &kBodyStreamBuilderKey, bodyStreamBuilder, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
