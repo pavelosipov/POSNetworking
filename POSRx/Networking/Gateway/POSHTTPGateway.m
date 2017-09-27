@@ -141,7 +141,7 @@ NSInteger const POSHTTPSystemError = 101;
             }
             NSMutableData *responseData = [NSMutableData new];
             @weakify(sessionTask);
-            if (mergedOptions.HTTP.allowUntrustedSSLCertificates) {
+            if (mergedOptions.HTTP.allowUntrustedSSLCertificates != nil) {
                 sessionTask.posrx_allowUntrustedSSLCertificates = mergedOptions.HTTP.allowUntrustedSSLCertificates;
             }
             if (request.downloadProgressHandler) {

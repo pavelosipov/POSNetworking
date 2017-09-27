@@ -123,7 +123,7 @@ NS_INLINE NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
 - (NSMutableURLRequest *)requestWithURL:(NSURL *)hostURL options:(POSHTTPRequestOptions *)options {
     POSRX_CHECK(hostURL);
     NSURL *fullURL = [hostURL posrx_URLByAppendingMethod:_method withExtraQueryParams:options.queryParameters];
-    NSTimeInterval responseTimeout = options.responseTimeout ? options.responseTimeout.doubleValue : 30.0;
+    NSTimeInterval responseTimeout = options.responseTimeout != nil ? options.responseTimeout.doubleValue : 30.0;
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:fullURL
                                                                 cachePolicy:NSURLRequestReloadIgnoringCacheData
                                                             timeoutInterval:responseTimeout];

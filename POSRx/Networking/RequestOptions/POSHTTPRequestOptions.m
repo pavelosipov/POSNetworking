@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-    if (_allowUntrustedSSLCertificates) {
+    if (_allowUntrustedSSLCertificates != nil) {
         [aCoder encodeObject:_allowUntrustedSSLCertificates forKey:@"allowUntrustedSSLCertificates"];
     }
     if (_headerFields) {
