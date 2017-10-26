@@ -47,7 +47,7 @@
     POSTask *task = [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal empty];
     }];
-    __block BOOL executionValue = @YES;
+    __block BOOL executionValue = YES;
     [task.executing subscribeNext:^(NSNumber *value) {
         executionValue = [value boolValue];
     }];

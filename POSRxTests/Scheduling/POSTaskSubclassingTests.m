@@ -67,16 +67,16 @@
         }];
     }];
     __block BOOL preReceived = NO;
-    [fooTask.preExecSignal subscribeNext:^(id x) {
-        preReceived = @YES;
+    [[fooTask.preExecSignal take:1] subscribeNext:^(id x) {
+        preReceived = YES;
     }];
     __block BOOL execReceived = NO;
-    [fooTask.execSignal subscribeNext:^(id x) {
-        execReceived = @YES;
+    [[fooTask.execSignal take:1] subscribeNext:^(id x) {
+        execReceived = YES;
     }];
     __block BOOL postReceived = NO;
-    [fooTask.preExecSignal subscribeNext:^(id x) {
-        postReceived = @YES;
+    [[fooTask.preExecSignal take:1] subscribeNext:^(id x) {
+        postReceived = YES;
     }];
     [[fooTask execute] subscribeCompleted:^{
         XCTAssertTrue(preReceived);

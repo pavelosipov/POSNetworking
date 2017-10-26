@@ -221,7 +221,7 @@
             }];
         }];
     }]] subscribeCompleted:^{
-        XCTAssertTrue(!@"Task should not be executed.");
+        XCTAssertTrue(NO, @"Task should not be executed.");
     }];
     RACScheduler *scheduler = _executor.scheduler;
     [scheduler schedule:^{ // skip executor processing tasks runloop iteration.
@@ -236,7 +236,7 @@
     RACDisposable *disposable = [[_executor submitTask:[POSTask createTask:^RACSignal *(id task) {
         return [RACSignal never];
     }]] subscribeCompleted:^{
-        XCTAssertTrue(!@"Task should not be executed.");
+        XCTAssertTrue(NO, @"Task should not be executed.");
     }];
     XCTAssertTrue(_executorQueue.count == 1);
     [disposable dispose];

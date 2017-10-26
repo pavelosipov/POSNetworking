@@ -41,8 +41,8 @@
 		21D80EF11CCF5140000AAC32 /* NSString+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D80EEE1CCF5140000AAC32 /* NSString+POSRx.m */; };
 		21D80EF21CCF5140000AAC32 /* NSURL+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = 21D80EF01CCF5140000AAC32 /* NSURL+POSRx.m */; };
 		21F3216D1F4AFBFB00490F32 /* POSHTTPGatewayStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 21F3216C1F4AFBFB00490F32 /* POSHTTPGatewayStub.m */; };
-		2D87085467A761C1BFBAF0C1 /* libPods-POSRx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E05A8406CF61D4750280976 /* libPods-POSRx.a */; };
-		905E05F6505148CD5716C3FB /* libPods-POSRxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFE8C5290A8733EB148D5241 /* libPods-POSRxTests.a */; };
+		AAE8F1BB0AE1ECCD0C8F255C /* libPods-All-POSRxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93194B1E374A7B44C65BC259 /* libPods-All-POSRxTests.a */; };
+		C22BACD67FD80C013B834BC0 /* libPods-All-POSRx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5740EEF86D4B312F1255C712 /* libPods-All-POSRx.a */; };
 		E95EF3381BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E95EF3371BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m */; };
 		E95EF33E1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = E95EF33D1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.m */; };
 		E967368B1D0EF6B8001E84F9 /* POSSignalAwaitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E967368A1D0EF6B8001E84F9 /* POSSignalAwaitTests.m */; };
@@ -73,8 +73,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0BF725B68FA215A2035DBE1E /* Pods-POSRx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRx.release.xcconfig"; path = "Pods/Target Support Files/Pods-POSRx/Pods-POSRx.release.xcconfig"; sourceTree = "<group>"; };
-		0E8A52108E3BF8D20C851461 /* Pods-POSRxTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRxTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests.release.xcconfig"; sourceTree = "<group>"; };
 		210083211CE4714200FF9AB9 /* POSTaskQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTaskQueue.m; sourceTree = "<group>"; };
 		210083281CE5CCFD00FF9AB9 /* POSDirectTaskExecutorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSDirectTaskExecutorTests.m; sourceTree = "<group>"; };
 		211A33461B9D726800D92A27 /* POSTaskTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSTaskTests.m; sourceTree = "<group>"; };
@@ -144,10 +142,12 @@
 		21F3216B1F4AFBFB00490F32 /* POSHTTPGatewayStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPGatewayStub.h; sourceTree = "<group>"; };
 		21F3216C1F4AFBFB00490F32 /* POSHTTPGatewayStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayStub.m; sourceTree = "<group>"; };
 		21F3216E1F4AFC2400490F32 /* POSRxTesting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSRxTesting.h; sourceTree = "<group>"; };
-		3E05A8406CF61D4750280976 /* libPods-POSRx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-POSRx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AE04A7E99F3C205C8BBD0CD0 /* Pods-POSRx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-POSRx/Pods-POSRx.debug.xcconfig"; sourceTree = "<group>"; };
-		CFE8C5290A8733EB148D5241 /* libPods-POSRxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-POSRxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D840311248F3BFAA73075F6B /* Pods-POSRxTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-POSRxTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3C9C9E99D4C88C9B229D75CF /* Pods-All-POSRx.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSRx.debug.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSRx/Pods-All-POSRx.debug.xcconfig"; sourceTree = "<group>"; };
+		5740EEF86D4B312F1255C712 /* libPods-All-POSRx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-All-POSRx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D0FC867F5C02573D9C9A476 /* Pods-All-POSRxTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSRxTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSRxTests/Pods-All-POSRxTests.debug.xcconfig"; sourceTree = "<group>"; };
+		93194B1E374A7B44C65BC259 /* libPods-All-POSRxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-All-POSRxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9A54E7D3F5F87B0DE72FC15 /* Pods-All-POSRx.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSRx.release.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSRx/Pods-All-POSRx.release.xcconfig"; sourceTree = "<group>"; };
+		C608D600758B4A2E617753EF /* Pods-All-POSRxTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSRxTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSRxTests/Pods-All-POSRxTests.release.xcconfig"; sourceTree = "<group>"; };
 		E91B8A211C56666000DD9626 /* POSContracts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSContracts.h; sourceTree = "<group>"; };
 		E95EF3371BE0C3A700FBBB19 /* POSHTTPRequestExecutionOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestExecutionOptionsTests.m; sourceTree = "<group>"; };
 		E95EF33C1BE1780300FBBB19 /* RACTargetQueueScheduler+POSRx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RACTargetQueueScheduler+POSRx.h"; sourceTree = "<group>"; };
@@ -163,7 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D87085467A761C1BFBAF0C1 /* libPods-POSRx.a in Frameworks */,
+				C22BACD67FD80C013B834BC0 /* libPods-All-POSRx.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,7 +171,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				905E05F6505148CD5716C3FB /* libPods-POSRxTests.a in Frameworks */,
+				AAE8F1BB0AE1ECCD0C8F255C /* libPods-All-POSRxTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,8 +195,8 @@
 				212B41D41B85BBB200B59E48 /* POSRx */,
 				212B41C91B85B89300B59E48 /* POSRxTests */,
 				212B41BB1B85B89300B59E48 /* Products */,
-				7B65736E1830B1F7C1F214DA /* Pods */,
-				F00B9E7BFF2926553CDE265E /* Frameworks */,
+				4F66985E84F58D7AEBF6F45F /* Pods */,
+				E30386DC5254006A17B23A62 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -399,22 +399,22 @@
 			path = Testing;
 			sourceTree = "<group>";
 		};
-		7B65736E1830B1F7C1F214DA /* Pods */ = {
+		4F66985E84F58D7AEBF6F45F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				AE04A7E99F3C205C8BBD0CD0 /* Pods-POSRx.debug.xcconfig */,
-				0BF725B68FA215A2035DBE1E /* Pods-POSRx.release.xcconfig */,
-				D840311248F3BFAA73075F6B /* Pods-POSRxTests.debug.xcconfig */,
-				0E8A52108E3BF8D20C851461 /* Pods-POSRxTests.release.xcconfig */,
+				3C9C9E99D4C88C9B229D75CF /* Pods-All-POSRx.debug.xcconfig */,
+				B9A54E7D3F5F87B0DE72FC15 /* Pods-All-POSRx.release.xcconfig */,
+				5D0FC867F5C02573D9C9A476 /* Pods-All-POSRxTests.debug.xcconfig */,
+				C608D600758B4A2E617753EF /* Pods-All-POSRxTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		F00B9E7BFF2926553CDE265E /* Frameworks */ = {
+		E30386DC5254006A17B23A62 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3E05A8406CF61D4750280976 /* libPods-POSRx.a */,
-				CFE8C5290A8733EB148D5241 /* libPods-POSRxTests.a */,
+				5740EEF86D4B312F1255C712 /* libPods-All-POSRx.a */,
+				93194B1E374A7B44C65BC259 /* libPods-All-POSRxTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -426,11 +426,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 212B41CE1B85B89300B59E48 /* Build configuration list for PBXNativeTarget "POSRx" */;
 			buildPhases = (
-				C9D397401D6F9A614026E32A /* [CP] Check Pods Manifest.lock */,
+				FD82392521586F7D1308CCF6 /* [CP] Check Pods Manifest.lock */,
 				212B41B61B85B89300B59E48 /* Sources */,
 				212B41B71B85B89300B59E48 /* Frameworks */,
 				212B41B81B85B89300B59E48 /* CopyFiles */,
-				BD2B94CE69A3B9ABF00964EF /* [CP] Copy Pods Resources */,
+				A1038744A9AA8077A786666B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -445,12 +445,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 212B41D11B85B89300B59E48 /* Build configuration list for PBXNativeTarget "POSRxTests" */;
 			buildPhases = (
-				3A2591B29CC894D523043DCE /* [CP] Check Pods Manifest.lock */,
+				2D227DC5C595C248B1157A7D /* [CP] Check Pods Manifest.lock */,
 				212B41C11B85B89300B59E48 /* Sources */,
 				212B41C21B85B89300B59E48 /* Frameworks */,
 				212B41C31B85B89300B59E48 /* Resources */,
-				E0792031F8A570AD9FBCBFF1 /* [CP] Embed Pods Frameworks */,
-				A3C8C4E36664BB8BF7D1F5E6 /* [CP] Copy Pods Resources */,
+				FB6BCA5604F22D09FDDB23AB /* [CP] Embed Pods Frameworks */,
+				136E379ADCBEEF753853E85E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -468,7 +468,7 @@
 		212B41B21B85B89300B59E48 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Pavel Osipov";
 				TargetAttributes = {
 					212B41B91B85B89300B59E48 = {
@@ -508,22 +508,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3A2591B29CC894D523043DCE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		A3C8C4E36664BB8BF7D1F5E6 /* [CP] Copy Pods Resources */ = {
+		136E379ADCBEEF753853E85E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -535,10 +520,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-All-POSRxTests/Pods-All-POSRxTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BD2B94CE69A3B9ABF00964EF /* [CP] Copy Pods Resources */ = {
+		2D227DC5C595C248B1157A7D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-All-POSRxTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A1038744A9AA8077A786666B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -550,25 +553,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-POSRx/Pods-POSRx-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-All-POSRx/Pods-All-POSRx-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C9D397401D6F9A614026E32A /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		E0792031F8A570AD9FBCBFF1 /* [CP] Embed Pods Frameworks */ = {
+		FB6BCA5604F22D09FDDB23AB /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -580,7 +568,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-POSRxTests/Pods-POSRxTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-All-POSRxTests/Pods-All-POSRxTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FD82392521586F7D1308CCF6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-All-POSRx-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -658,13 +664,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -686,7 +700,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -701,13 +715,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
@@ -722,7 +744,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -731,7 +753,7 @@
 		};
 		212B41CF1B85B89300B59E48 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AE04A7E99F3C205C8BBD0CD0 /* Pods-POSRx.debug.xcconfig */;
+			baseConfigurationReference = 3C9C9E99D4C88C9B229D75CF /* Pods-All-POSRx.debug.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -745,7 +767,7 @@
 		};
 		212B41D01B85B89300B59E48 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0BF725B68FA215A2035DBE1E /* Pods-POSRx.release.xcconfig */;
+			baseConfigurationReference = B9A54E7D3F5F87B0DE72FC15 /* Pods-All-POSRx.release.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -759,7 +781,7 @@
 		};
 		212B41D21B85B89300B59E48 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D840311248F3BFAA73075F6B /* Pods-POSRxTests.debug.xcconfig */;
+			baseConfigurationReference = 5D0FC867F5C02573D9C9A476 /* Pods-All-POSRxTests.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -775,7 +797,7 @@
 		};
 		212B41D31B85B89300B59E48 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0E8A52108E3BF8D20C851461 /* Pods-POSRxTests.release.xcconfig */;
+			baseConfigurationReference = C608D600758B4A2E617753EF /* Pods-All-POSRxTests.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = POSRxTests/Info.plist;

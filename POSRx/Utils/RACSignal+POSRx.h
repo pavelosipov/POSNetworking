@@ -8,7 +8,7 @@
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wstrict-prototypes"
-#   import <ReactiveCocoa/ReactiveCocoa.h>
+#   import <ReactiveObjC/ReactiveObjC.h>
 #pragma clang diagnostic pop
 
 @interface RACSignal (POSRx)
