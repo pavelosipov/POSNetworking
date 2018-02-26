@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'POSRx'
-  s.version      = '0.20.0'
+  s.version      = '0.20.1'
   s.license      = 'MIT'
   s.summary      = 'Utilities around ReactiveCocoa.'
   s.homepage     = 'https://github.com/pavelosipov/POSRx'

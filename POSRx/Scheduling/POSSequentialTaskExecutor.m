@@ -37,8 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
              initWithScheduler:scheduler
              container:[Queue_t new]
              dequeueTopTaskBlock:^POSTask *(Queue_t *queue) {
-                 POSTask *task = queue.lastObject;
-                 [queue removeLastObject];
+                 POSTask *task = queue.firstObject;
+                 [queue removeObject:task];
                  return task;
              } dequeueTaskBlock:^(Queue_t *queue, POSTask *task) {
                  [queue removeObject:task];
