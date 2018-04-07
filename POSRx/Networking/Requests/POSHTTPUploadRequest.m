@@ -10,7 +10,6 @@
 #import "POSHTTPGateway.h"
 #import "NSException+POSRx.h"
 #import "NSObject+POSRx.h"
-#import "POSSystemInfo.h"
 
 #pragma mark -
 
@@ -32,12 +31,12 @@
     NSMutableURLRequest *request = [self requestWithURL:hostURL options:options];
     request.HTTPBodyStream = self.bodyStreamBuilder();
     id<POSURLSessionTask> task;
-    if ([POSSystemInfo isOutdatedOS]) {
+    if (@available(iOS 8, *)) {
+        task = [gateway.foregroundSession uploadTaskWithStreamedRequest:request];
+    } else {
         task = [[NSURLConnection alloc] initWithRequest:request
                                                delegate:gateway
                                        startImmediately:NO];
-    } else {
-        task = [gateway.foregroundSession uploadTaskWithStreamedRequest:request];
     }
     return task;
 }

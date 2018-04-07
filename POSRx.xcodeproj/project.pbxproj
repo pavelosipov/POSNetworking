@@ -32,7 +32,6 @@
 		217D28C41BD0E9C8005C38C9 /* POSHTTPUploadRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28A01BD0E9C7005C38C9 /* POSHTTPUploadRequest.m */; };
 		217D28C51BD0E9C8005C38C9 /* POSHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28A31BD0E9C7005C38C9 /* POSHTTPResponse.m */; };
 		217D28C61BD0E9C8005C38C9 /* POSHTTPBackgroundUploadDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28A61BD0E9C7005C38C9 /* POSHTTPBackgroundUploadDescription.m */; };
-		217D28C71BD0E9C8005C38C9 /* POSSystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28A81BD0E9C7005C38C9 /* POSSystemInfo.m */; };
 		217D28C81BD0E9C8005C38C9 /* POSSchedulableObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28AE1BD0E9C7005C38C9 /* POSSchedulableObject.m */; };
 		217D28C91BD0E9C8005C38C9 /* POSTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28B01BD0E9C7005C38C9 /* POSTask.m */; };
 		217D28CA1BD0E9C8005C38C9 /* NSException+POSRx.m in Sources */ = {isa = PBXBuildFile; fileRef = 217D28B31BD0E9C7005C38C9 /* NSException+POSRx.m */; };
@@ -430,7 +429,6 @@
 				212B41B61B85B89300B59E48 /* Sources */,
 				212B41B71B85B89300B59E48 /* Frameworks */,
 				212B41B81B85B89300B59E48 /* CopyFiles */,
-				A1038744A9AA8077A786666B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -449,8 +447,6 @@
 				212B41C11B85B89300B59E48 /* Sources */,
 				212B41C21B85B89300B59E48 /* Frameworks */,
 				212B41C31B85B89300B59E48 /* Resources */,
-				FB6BCA5604F22D09FDDB23AB /* [CP] Embed Pods Frameworks */,
-				136E379ADCBEEF753853E85E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -508,21 +504,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		136E379ADCBEEF753853E85E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-All-POSRxTests/Pods-All-POSRxTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2D227DC5C595C248B1157A7D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -539,36 +520,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A1038744A9AA8077A786666B /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-All-POSRx/Pods-All-POSRx-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FB6BCA5604F22D09FDDB23AB /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-All-POSRxTests/Pods-All-POSRxTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD82392521586F7D1308CCF6 /* [CP] Check Pods Manifest.lock */ = {
@@ -604,7 +555,6 @@
 				210083221CE4714200FF9AB9 /* POSTaskQueue.m in Sources */,
 				214D30591CE1D7CD005820D2 /* POSSequentialTaskExecutor.m in Sources */,
 				217D28BE1BD0E9C7005C38C9 /* POSHTTPRequestExecutionOptions.m in Sources */,
-				217D28C71BD0E9C8005C38C9 /* POSSystemInfo.m in Sources */,
 				217D28B61BD0E9C7005C38C9 /* NSError+POSRx.m in Sources */,
 				217D28C81BD0E9C8005C38C9 /* POSSchedulableObject.m in Sources */,
 				217D28BB1BD0E9C7005C38C9 /* POSHTTPGateway.m in Sources */,

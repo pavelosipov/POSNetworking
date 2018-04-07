@@ -14,7 +14,6 @@
 #import "POSHTTPResponse.h"
 #import "POSProgressValue.h"
 #import "POSTask.h"
-#import "POSSystemInfo.h"
 #import "NSObject+POSRx.h"
 #import "NSError+POSRx.h"
 #import "NSException+POSRx.h"
@@ -33,7 +32,7 @@ NSInteger const POSHTTPSystemError = 101;
 @implementation NSOperationQueue (POSHTTPGateway)
 
 + (NSOperationQueue *)pos_operationQueueForScheduler:(RACTargetQueueScheduler *)scheduler {
-    if (![POSSystemInfo isOutdatedOS]) {
+    if (@available(iOS 8, *)) {
         NSOperationQueue *operationQueue = [NSOperationQueue new];
         operationQueue.underlyingQueue = scheduler.queue;
         return operationQueue;
@@ -57,13 +56,15 @@ NSInteger const POSHTTPSystemError = 101;
                                                 delegate:(nullable id <NSURLSessionDelegate>)delegate
                                            delegateQueue:(nullable NSOperationQueue *)queue {
     POSRX_CHECK(identifier);
-    NSURLSessionConfiguration *configuration =
-    [POSSystemInfo isOutdatedOS] ?
+    NSURLSessionConfiguration *configuration = nil;
+    if (@available(iOS 8, *)) {
+        configuration = [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
+    } else {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    [NSURLSessionConfiguration backgroundSessionConfiguration:identifier] :
+        configuration = [NSURLSessionConfiguration backgroundSessionConfiguration:identifier];
 #pragma clang diagnostic pop
-    [NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:identifier];
+    }
     configuration.URLCache = [NSURLCache posrx_leaksFreeCache];
     return [NSURLSession
             sessionWithConfiguration:configuration
