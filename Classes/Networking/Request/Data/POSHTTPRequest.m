@@ -16,46 +16,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class POSHTTPRequest;
 
+uint64_t const POSProgressValueUnknownUnitsCount = UINT64_MAX;
+
 typedef NSURLSessionTask * _Nullable (^POSURLSessionTaskBuilder)(
-    POSHTTPRequest *request,
     NSURL *hostURL,
     id<POSHTTPGateway> gateway,
     POSHTTPRequestPacketOptions * _Nullable options,
     NSError **error);
 
-@interface POSHTTPRequest : NSObject <POSHTTPRequest>
+typedef NSMutableURLRequest * _Nullable (^POSURLRequestBuilder)(
+    NSURL *hostURL,
+    POSHTTPRequestPacketOptions * _Nullable options);
 
-@property (nonatomic, readonly) NSString *HTTPMethodName;
+@interface POSHTTPRequest ()
+
 @property (nonatomic, readonly, copy) POSURLSessionTaskBuilder taskBuilder;
-
-POS_INIT_UNAVAILABLE
 
 @end
 
 @implementation POSHTTPRequest
 
-@synthesize method = _method;
-@synthesize body = _body;
-@synthesize headerFields = _headerFields;
-@synthesize downloadProgress = _downloadProgress;
-@synthesize uploadProgress = _uploadProgress;
-
-- (instancetype)initWithHTTPMethodName:(NSString *)HTTPMethodName
-                                method:(nullable POSHTTPRequestMethod *)method
-                                  body:(nullable NSData *)body
-                          headerFields:(nullable NSDictionary<NSString *, NSString *> *)headerFields
-                      downloadProgress:(void (^ _Nullable)(POSProgressValue progress))downloadProgress
-                        uploadProgress:(void (^ _Nullable)(POSProgressValue progress))uploadProgress
-                           taskBuilder:(POSURLSessionTaskBuilder)taskBuilder {
-    POS_CHECK(HTTPMethodName);
+- (instancetype)initWithTaskBuilder:(POSURLSessionTaskBuilder)taskBuilder {
     POS_CHECK(taskBuilder);
     if (self = [super init]) {
-        _HTTPMethodName = [HTTPMethodName copy];
-        _method = method;
-        _body = body;
-        _headerFields = [headerFields copy];
-        _downloadProgress = [downloadProgress copy];
-        _uploadProgress = [uploadProgress copy];
         _taskBuilder = [taskBuilder copy];
     }
     return self;
@@ -69,33 +52,7 @@ POS_INIT_UNAVAILABLE
                                      error:(NSError **)error {
     POS_CHECK(hostURL);
     POS_CHECK(gateway);
-    return _taskBuilder(self, hostURL, gateway, options, error);
-}
-
-#pragma mark - Private
-
-- (NSMutableURLRequest *)p_requestWithURL:(NSURL *)hostURL options:(POSHTTPRequestPacketOptions *)options {
-    NSURL *fullURL = [hostURL pos_URLByAppendingMethod:_method withExtraURLQuery:options.URLQuery];
-    NSTimeInterval responseTimeout = options.responseTimeout != nil ? options.responseTimeout.doubleValue : 30.0;
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:fullURL
-                                                                cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                                            timeoutInterval:responseTimeout];
-    request.HTTPMethod = _HTTPMethodName;
-    NSDictionary *allHeaderFields;
-    if (!_headerFields) {
-        allHeaderFields = options.headerFields;
-    } else {
-        NSMutableDictionary *headerFields = [_headerFields mutableCopy];
-        [headerFields addEntriesFromDictionary:options.headerFields];
-        allHeaderFields = headerFields;
-    }
-    if (allHeaderFields) {
-        request.allHTTPHeaderFields = allHeaderFields;
-    }
-    if (_body) {
-        request.HTTPBody = _body;
-    }
-    return request;
+    return _taskBuilder(hostURL, gateway, options, error);
 }
 
 @end
@@ -104,11 +61,12 @@ POS_INIT_UNAVAILABLE
 
 @interface POSHTTPRequestBuilder ()
 
-@property (nonatomic, readonly) NSString *methodName;
+@property (nonatomic, readonly) NSString *HTTPMethodName;
 @property (nonatomic, readonly) POSURLSessionTaskBuilder taskBuilder;
 @property (nonatomic, nullable) POSHTTPRequestMethod *method;
 @property (nonatomic, nullable) NSData *body;
 @property (nonatomic, nullable) NSDictionary<NSString *, NSString *> *headerFields;
+@property (nonatomic, nullable, copy) void (^fileHandler)(NSURL *fileLocation);
 @property (nonatomic, nullable, copy) void (^downloadProgress)(POSProgressValue progress);
 @property (nonatomic, nullable, copy) void (^uploadProgress)(POSProgressValue progress);
 
@@ -117,29 +75,11 @@ POS_INIT_UNAVAILABLE
 @implementation POSHTTPRequestBuilder
 
 - (POSHTTPRequest *)build {
-    return [[POSHTTPRequest alloc]
-        initWithHTTPMethodName:self.methodName
-        method:_method
-        body:_body
-        headerFields:_headerFields
-        downloadProgress:_downloadProgress
-        uploadProgress:_uploadProgress
-        taskBuilder:self.taskBuilder];
+    return [[POSHTTPRequest alloc] initWithTaskBuilder:self.taskBuilder];
 }
 
-- (NSString *)methodName {
+- (NSString *)HTTPMethodName {
     return @"GET";
-}
-
-- (POSURLSessionTaskBuilder)taskBuilder {
-    return ^NSURLSessionTask * _Nullable(POSHTTPRequest *request,
-                                         NSURL *hostURL,
-                                         id<POSHTTPGateway> gateway,
-                                         POSHTTPRequestPacketOptions * _Nullable options,
-                                         NSError **error) {
-        NSURLRequest *URLRequest = [request p_requestWithURL:hostURL options:options];
-        return [gateway.foregroundSession dataTaskWithRequest:URLRequest];
-    };
 }
 
 - (instancetype)withMethod:(nullable POSHTTPRequestMethod *)method {
@@ -157,21 +97,51 @@ POS_INIT_UNAVAILABLE
     return self;
 }
 
-@end
+- (POSURLRequestBuilder)requestBuilder {
+    __auto_type URIMethod = self.method;
+    __auto_type HTTPMethodName = self.HTTPMethodName;
+    __auto_type requestHeaderFields = self.headerFields;
+    __auto_type body = self.body;
+    return ^NSMutableURLRequest * _Nullable (NSURL *hostURL, POSHTTPRequestPacketOptions * _Nullable options) {
+        NSURL *fullURL = [hostURL pos_URLByAppendingMethod:URIMethod withExtraURLQuery:options.URLQuery];
+        NSTimeInterval responseTimeout = options.responseTimeout != nil ? options.responseTimeout.doubleValue : 30.0;
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:fullURL
+                                                                    cachePolicy:NSURLRequestReloadIgnoringCacheData
+                                                                timeoutInterval:responseTimeout];
+        request.HTTPMethod = HTTPMethodName;
+        NSDictionary *allHeaderFields = options.headerFields;
+        if (requestHeaderFields) {
+            NSMutableDictionary *headerFields = [requestHeaderFields mutableCopy];
+            [headerFields addEntriesFromDictionary:options.headerFields];
+            allHeaderFields = headerFields;
+        }
+        request.allHTTPHeaderFields = allHeaderFields;
+        request.HTTPBody = body;
+        return request;
+    };
+}
 
-#pragma mark -
-
-@implementation POSHTTPHEAD
-
-- (NSString *)methodName {
-    return @"HEAD";
+- (POSURLSessionTaskBuilder)taskBuilder {
+    POSURLRequestBuilder requestBuilder = [[self requestBuilder] copy];
+    return ^NSURLSessionTask * _Nullable(NSURL *hostURL,
+                                         id<POSHTTPGateway> gateway,
+                                         POSHTTPRequestPacketOptions * _Nullable options,
+                                         NSError **error) {
+        NSURLRequest *request = requestBuilder(hostURL, options);
+        return [gateway.foregroundSession dataTaskWithRequest:request];
+    };
 }
 
 @end
 
 #pragma mark -
 
-@implementation POSHTTPGET
+@implementation POSHTTPHEAD
+
+- (NSString *)HTTPMethodName {
+    return @"HEAD";
+}
+
 @end
 
 #pragma mark -
@@ -183,20 +153,47 @@ POS_INIT_UNAVAILABLE
     return self;
 }
 
+- (instancetype)withFileHandler:(void (^ _Nullable)(NSURL *fileLocation))fileHandler {
+    self.fileHandler = fileHandler;
+    return self;
+}
+
+- (POSURLSessionTaskBuilder)taskBuilder {
+    POSURLRequestBuilder requestBuilder = [[self requestBuilder] copy];
+    return ^NSURLSessionTask * _Nullable(NSURL *hostURL,
+                                         id<POSHTTPGateway> gateway,
+                                         POSHTTPRequestPacketOptions * _Nullable options,
+                                         NSError **error) {
+        NSURLRequest *request = requestBuilder(hostURL, options);
+        return [gateway.foregroundSession downloadTaskWithRequest:request];
+    };
+}
+
 @end
 
+#pragma mark -
 
-/*
-NSString *POSStringFromHTTPRequestType(POSHTTPRequestType type) {
-    switch (type) {
-        case POSHTTPRequestTypeGET:  return @"GET";
-        case POSHTTPRequestTypeHEAD: return @"HEAD";
-        case POSHTTPRequestTypePOST: return @"POST";
-        case POSHTTPRequestTypePUT:  return @"PUT";
-    }
+@implementation POSHTTPPOST
+
+- (NSString *)HTTPMethodName {
+    return @"POST";
 }
-*/
 
-uint64_t const POSProgressValueUnknownUnitsCount = UINT64_MAX;
+@end
+
+#pragma mark -
+
+@implementation POSHTTPPUT
+
+- (NSString *)HTTPMethodName {
+    return @"PUT";
+}
+
+- (instancetype)withUploadProgress:(void (^ _Nullable)(POSProgressValue))uploadProgress {
+    self.uploadProgress = uploadProgress;
+    return self;
+}
+
+@end
 
 NS_ASSUME_NONNULL_END

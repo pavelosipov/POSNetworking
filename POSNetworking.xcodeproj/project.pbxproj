@@ -92,7 +92,7 @@
 		68AFBB9C20E546B3009549C5 /* POSHTTPRequestExecutionOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestExecutionOptionsTests.m; sourceTree = "<group>"; };
 		68AFBB9D20E546B3009549C5 /* POSHTTPGatewayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayTests.m; sourceTree = "<group>"; };
 		68AFBB9E20E546B3009549C5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		68AFBBA420E54A15009549C5 /* POSNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = POSNetworking.h; path = Networking/POSNetworking.h; sourceTree = "<group>"; };
+		68AFBBA420E54A15009549C5 /* POSNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSNetworking.h; sourceTree = "<group>"; };
 		68AFBBAE20E62C06009549C5 /* POSStaticHost.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POSStaticHost.m; sourceTree = "<group>"; };
 		68AFBBAF20E62C06009549C5 /* POSHost.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POSHost.m; sourceTree = "<group>"; };
 		68AFBBB020E62C06009549C5 /* POSStaticHost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSStaticHost.h; sourceTree = "<group>"; };
@@ -166,7 +166,6 @@
 			isa = PBXGroup;
 			children = (
 				68AFBB5320E5465C009549C5 /* Networking */,
-				68AFBBA420E54A15009549C5 /* POSNetworking.h */,
 				68AFBB8120E5465C009549C5 /* Testing */,
 			);
 			path = Classes;
@@ -181,6 +180,7 @@
 				68AFBB5420E5465C009549C5 /* RequestOptions */,
 				68AFBB5B20E5465C009549C5 /* Response */,
 				68AFBB7120E5465C009549C5 /* Categories */,
+				68AFBBA420E54A15009549C5 /* POSNetworking.h */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
