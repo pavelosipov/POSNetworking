@@ -20,7 +20,6 @@ static char kDataHandlerKey;
 static char kResponseHandlerKey;
 static char kBodyStreamBuilderKey;
 static char kDownloadCompletionHandlerKey;
-static char kResponse;
 
 @implementation NSURLSessionTask (POSNetworking)
 

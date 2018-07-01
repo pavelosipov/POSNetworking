@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol POSHTTPRequest;
 @protocol POSTask;
 
-@class POSRequestOptions;
+@class POSHTTPRequestOptions;
 
 /// Performs network requests.
 @protocol POSHTTPGateway <POSSchedulable>

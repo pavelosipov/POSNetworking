@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation NSURL (POSHTTPRequestMethod)
 
 - (NSURL *)pos_URLByAppendingMethod:(nullable POSHTTPRequestMethod *)method {
-    return [self pos_URLByAppendingMethod:method withExtraQueryParams:nil];
+    return [self pos_URLByAppendingMethod:method withExtraURLQuery:nil];
 }
 
 - (NSURL *)pos_URLByAppendingMethod:(nullable POSHTTPRequestMethod *)method
