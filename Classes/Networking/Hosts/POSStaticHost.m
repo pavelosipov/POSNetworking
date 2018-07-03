@@ -16,11 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithID:(NSString *)ID
                    gateway:(id<POSHTTPGateway>)gateway
+                   options:(nullable POSHTTPGatewayOptions *)options
                        URL:(NSURL *)URL {
     POS_CHECK(ID);
     POS_CHECK(gateway);
     POS_CHECK(URL);
-    if (self = [super initWithID:ID gateway:gateway]) {
+    if (self = [super initWithID:ID gateway:gateway options:options]) {
         _URL = URL;
     }
     return self;

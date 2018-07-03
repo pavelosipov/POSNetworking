@@ -8,6 +8,7 @@
 
 #import "POSHost.h"
 #import "POSHTTPGateway.h"
+#import "POSHTTPGatewayOptions.h"
 #import "POSHTTPRequest.h"
 #import "POSHTTPResponse.h"
 #import "NSError+POSNetworking.h"
@@ -23,12 +24,15 @@ NS_ASSUME_NONNULL_BEGIN
 @synthesize ID = _ID;
 @synthesize options = _options;
 
-- (instancetype)initWithID:(NSString *)ID gateway:(id<POSHTTPGateway>)gateway {
+- (instancetype)initWithID:(NSString *)ID
+                   gateway:(id<POSHTTPGateway>)gateway
+                   options:(nullable POSHTTPGatewayOptions *)options {
     POS_CHECK(ID.length > 0);
     POS_CHECK(gateway);
     if (self = [super initWithScheduler:gateway.scheduler safetyPredicate:nil]) {
         _ID = [ID copy];
         _gateway = gateway;
+        _options = options;
     }
     return self;
 }
@@ -51,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
     POS_CHECK(self.URL);
     @weakify(self);
     return [[[[[_gateway
-        taskForRequest:request toHost:self.URL options:options]
+        taskForRequest:request toHost:self.URL options:[POSHTTPGatewayOptions merge:_options with:options]]
         execute]
         takeUntil:self.rac_willDeallocSignal]
         flattenMap:^RACSignal *(POSHTTPResponse *response) {

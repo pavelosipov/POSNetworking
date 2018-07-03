@@ -17,9 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithID:(NSString *)ID
                    gateway:(id<POSHTTPGateway>)gateway
+                   options:(nullable POSHTTPGatewayOptions *)options
                        URL:(NSURL *)URL NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)initWithID:(NSString *)ID gateway:(id<POSHTTPGateway>)gateway NS_UNAVAILABLE;
+- (instancetype)initWithID:(NSString *)ID
+                   gateway:(id<POSHTTPGateway>)gateway
+                   options:(nullable POSHTTPGatewayOptions *)options NS_UNAVAILABLE;
 
 @end
 

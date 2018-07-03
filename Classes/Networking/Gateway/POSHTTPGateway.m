@@ -59,6 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
     POS_CHECK(request);
     POS_CHECK(hostURL);
     POSHTTPGatewayOptions *mergedOptions = [POSHTTPGatewayOptions merge:_options with:options];
+    mergedOptions = [POSHTTPGatewayOptions merge:mergedOptions withRequestOptions:request.options];
     return [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             NSError *error = nil;

@@ -51,7 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface POSHost : POSSchedulableObject <POSHost>
 
 - (instancetype)initWithID:(NSString *)ID
-                   gateway:(id<POSHTTPGateway>)gateway NS_DESIGNATED_INITIALIZER;
+                   gateway:(id<POSHTTPGateway>)gateway
+                   options:(nullable POSHTTPGatewayOptions *)options NS_DESIGNATED_INITIALIZER;
 
 POS_SCHEDULABLE_INIT_RECURSIVELY_UNAVAILABLE;
 
