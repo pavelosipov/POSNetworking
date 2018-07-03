@@ -7,21 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		68AFBB9220E5465C009549C5 /* NSDictionary+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB7620E5465C009549C5 /* NSDictionary+POSNetworking.m */; };
 		68AFBBA120E546B3009549C5 /* POSHTTPRequestExecutionOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB9C20E546B3009549C5 /* POSHTTPRequestExecutionOptionsTests.m */; };
 		68AFBBA320E546B3009549C5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68AFBB9E20E546B3009549C5 /* Info.plist */; };
-		68AFBBB820E63F20009549C5 /* NSURLCache+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB7220E5465C009549C5 /* NSURLCache+POSNetworking.m */; };
-		68AFBBB920E64163009549C5 /* NSString+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB7420E5465C009549C5 /* NSString+POSNetworking.m */; };
-		68AFBBBA20E645D1009549C5 /* NSURL+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB7A20E5465C009549C5 /* NSURL+POSNetworking.m */; };
-		68AFBBBB20E64779009549C5 /* NSError+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB7820E5465C009549C5 /* NSError+POSNetworking.m */; };
-		68AFBBBC20E64947009549C5 /* POSHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB5D20E5465C009549C5 /* POSHTTPResponse.m */; };
-		68AFBBBD20E654EA009549C5 /* POSHTTPRequestSimulationOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB5720E5465C009549C5 /* POSHTTPRequestSimulationOptions.m */; };
-		68AFBBBE20E65CC1009549C5 /* POSHTTPRequestPacketOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB5A20E5465C009549C5 /* POSHTTPRequestPacketOptions.m */; };
-		68AFBBBF20E662C4009549C5 /* POSHTTPRequestOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB5620E5465C009549C5 /* POSHTTPRequestOptions.m */; };
-		68AFBBC120E66E10009549C5 /* POSHTTPRequestMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB6720E5465C009549C5 /* POSHTTPRequestMethod.m */; };
-		68AFBBC220E67085009549C5 /* POSHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB6520E5465C009549C5 /* POSHTTPRequest.m */; };
-		68AFBBC520E67F31009549C5 /* NSURLSessionTask+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBBC420E67F31009549C5 /* NSURLSessionTask+POSNetworking.m */; };
-		68AFBBCC20E69F02009549C5 /* NSURLSession+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBBCB20E69F02009549C5 /* NSURLSession+POSNetworking.m */; };
+		68EDC21F20EBAC010088EF8A /* POSHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC21620EBAC000088EF8A /* POSHTTPRequest.m */; };
+		68EDC22020EBAC010088EF8A /* POSHTTPRequestOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC21820EBAC000088EF8A /* POSHTTPRequestOptions.m */; };
+		68EDC22120EBAC010088EF8A /* POSHTTPResponseOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC21B20EBAC010088EF8A /* POSHTTPResponseOptions.m */; };
+		68EDC22220EBAC010088EF8A /* POSHTTPResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC21E20EBAC010088EF8A /* POSHTTPResponse.m */; };
+		68EDC23320EBAC3B0088EF8A /* NSError+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC22720EBAC3A0088EF8A /* NSError+POSNetworking.m */; };
+		68EDC23420EBAC3B0088EF8A /* NSDictionary+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC22920EBAC3A0088EF8A /* NSDictionary+POSNetworking.m */; };
+		68EDC23520EBAC3B0088EF8A /* NSHTTPURLResponse+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC22A20EBAC3A0088EF8A /* NSHTTPURLResponse+POSNetworking.m */; };
+		68EDC23620EBAC3B0088EF8A /* NSURLSession+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC22B20EBAC3A0088EF8A /* NSURLSession+POSNetworking.m */; };
+		68EDC23720EBAC3B0088EF8A /* NSURLCache+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC22E20EBAC3A0088EF8A /* NSURLCache+POSNetworking.m */; };
+		68EDC23820EBAC3B0088EF8A /* NSURL+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC22F20EBAC3B0088EF8A /* NSURL+POSNetworking.m */; };
+		68EDC23920EBAC3B0088EF8A /* NSString+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC23020EBAC3B0088EF8A /* NSString+POSNetworking.m */; };
+		68EDC23A20EBAC3B0088EF8A /* NSURLSessionTask+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC23220EBAC3B0088EF8A /* NSURLSessionTask+POSNetworking.m */; };
+		68EDC23D20EBAC7D0088EF8A /* POSHTTPGatewayOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC23C20EBAC7D0088EF8A /* POSHTTPGatewayOptions.m */; };
+		68EDC24020EBB0CC0088EF8A /* POSHTTPRequestBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC23F20EBB0CC0088EF8A /* POSHTTPRequestBuilder.m */; };
+		68EDC25620EBEAC40088EF8A /* POSHTTPGET.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC24F20EBEAC40088EF8A /* POSHTTPGET.m */; };
+		68EDC25720EBEAC40088EF8A /* POSHTTPPUT.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC25320EBEAC40088EF8A /* POSHTTPPUT.m */; };
+		68EDC25820EBEAC40088EF8A /* POSHTTPHEAD.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC25420EBEAC40088EF8A /* POSHTTPHEAD.m */; };
+		68EDC25920EBEAC40088EF8A /* POSHTTPPOST.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC25520EBEAC40088EF8A /* POSHTTPPOST.m */; };
+		68EDC25A20EBECBB0088EF8A /* POSHTTPGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB8020E5465C009549C5 /* POSHTTPGateway.m */; };
+		68EDC25B20EBF9330088EF8A /* POSHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBBAF20E62C06009549C5 /* POSHost.m */; };
+		68EDC25C20EBFEFA0088EF8A /* POSStaticHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBBAE20E62C06009549C5 /* POSStaticHost.m */; };
 		693894054DEF9FF6F314B1C7 /* libPods-All-POSNetworkingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AFE476D4CF036B2D844EAA /* libPods-All-POSNetworkingTests.a */; };
 		F9ABCF34F638B393659F05A4 /* libPods-All-POSNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9A09350182F5122550DFE7 /* libPods-All-POSNetworking.a */; };
 /* End PBXBuildFile section */
@@ -54,34 +62,6 @@
 		33AFE476D4CF036B2D844EAA /* libPods-All-POSNetworkingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-All-POSNetworkingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		36F36B4527C62AE6E4BF2B4F /* Pods-All-POSNetworkingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSNetworkingTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSNetworkingTests/Pods-All-POSNetworkingTests.debug.xcconfig"; sourceTree = "<group>"; };
 		664F95DCE4B68AF0B845535F /* Pods-All-POSNetworking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSNetworking.release.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSNetworking/Pods-All-POSNetworking.release.xcconfig"; sourceTree = "<group>"; };
-		68AFBB5520E5465C009549C5 /* POSHTTPRequestPacketOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestPacketOptions.h; sourceTree = "<group>"; };
-		68AFBB5620E5465C009549C5 /* POSHTTPRequestOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestOptions.m; sourceTree = "<group>"; };
-		68AFBB5720E5465C009549C5 /* POSHTTPRequestSimulationOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestSimulationOptions.m; sourceTree = "<group>"; };
-		68AFBB5820E5465C009549C5 /* POSHTTPRequestSimulationOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestSimulationOptions.h; sourceTree = "<group>"; };
-		68AFBB5920E5465C009549C5 /* POSHTTPRequestOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestOptions.h; sourceTree = "<group>"; };
-		68AFBB5A20E5465C009549C5 /* POSHTTPRequestPacketOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestPacketOptions.m; sourceTree = "<group>"; };
-		68AFBB5C20E5465C009549C5 /* POSHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPResponse.h; sourceTree = "<group>"; };
-		68AFBB5D20E5465C009549C5 /* POSHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPResponse.m; sourceTree = "<group>"; };
-		68AFBB6120E5465C009549C5 /* POSHTTPDownloadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPDownloadRequest.h; sourceTree = "<group>"; };
-		68AFBB6220E5465C009549C5 /* POSHTTPDownloadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPDownloadRequest.m; sourceTree = "<group>"; };
-		68AFBB6420E5465C009549C5 /* POSHTTPRequestMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestMethod.h; sourceTree = "<group>"; };
-		68AFBB6520E5465C009549C5 /* POSHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequest.m; sourceTree = "<group>"; };
-		68AFBB6720E5465C009549C5 /* POSHTTPRequestMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestMethod.m; sourceTree = "<group>"; };
-		68AFBB6820E5465C009549C5 /* POSHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequest.h; sourceTree = "<group>"; };
-		68AFBB6B20E5465C009549C5 /* POSHTTPBackgroundUploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPBackgroundUploadRequest.h; sourceTree = "<group>"; };
-		68AFBB6C20E5465C009549C5 /* POSHTTPUploadRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPUploadRequest.h; sourceTree = "<group>"; };
-		68AFBB6E20E5465C009549C5 /* POSHTTPUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPUploadRequest.m; sourceTree = "<group>"; };
-		68AFBB6F20E5465C009549C5 /* POSHTTPBackgroundUploadRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPBackgroundUploadRequest.m; sourceTree = "<group>"; };
-		68AFBB7220E5465C009549C5 /* NSURLCache+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLCache+POSNetworking.m"; sourceTree = "<group>"; };
-		68AFBB7320E5465C009549C5 /* NSError+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+POSNetworking.h"; sourceTree = "<group>"; };
-		68AFBB7420E5465C009549C5 /* NSString+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+POSNetworking.m"; sourceTree = "<group>"; };
-		68AFBB7520E5465C009549C5 /* NSURL+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+POSNetworking.h"; sourceTree = "<group>"; };
-		68AFBB7620E5465C009549C5 /* NSDictionary+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+POSNetworking.m"; sourceTree = "<group>"; };
-		68AFBB7720E5465C009549C5 /* NSURLCache+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLCache+POSNetworking.h"; sourceTree = "<group>"; };
-		68AFBB7820E5465C009549C5 /* NSError+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+POSNetworking.m"; sourceTree = "<group>"; };
-		68AFBB7920E5465C009549C5 /* NSDictionary+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+POSNetworking.h"; sourceTree = "<group>"; };
-		68AFBB7A20E5465C009549C5 /* NSURL+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+POSNetworking.m"; sourceTree = "<group>"; };
-		68AFBB7B20E5465C009549C5 /* NSString+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+POSNetworking.h"; sourceTree = "<group>"; };
 		68AFBB7E20E5465C009549C5 /* POSHTTPGateway.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPGateway.h; sourceTree = "<group>"; };
 		68AFBB8020E5465C009549C5 /* POSHTTPGateway.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGateway.m; sourceTree = "<group>"; };
 		68AFBB8220E5465C009549C5 /* POSHTTPGatewayStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPGatewayStub.h; sourceTree = "<group>"; };
@@ -97,17 +77,43 @@
 		68AFBBAF20E62C06009549C5 /* POSHost.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POSHost.m; sourceTree = "<group>"; };
 		68AFBBB020E62C06009549C5 /* POSStaticHost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSStaticHost.h; sourceTree = "<group>"; };
 		68AFBBB120E62C06009549C5 /* POSHost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSHost.h; sourceTree = "<group>"; };
-		68AFBBB220E62CA8009549C5 /* POSHTTPRequest+POSNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "POSHTTPRequest+POSNetworking.h"; sourceTree = "<group>"; };
-		68AFBBB320E62CA8009549C5 /* POSHTTPRequest+POSNetworking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "POSHTTPRequest+POSNetworking.m"; sourceTree = "<group>"; };
-		68AFBBB420E62CB6009549C5 /* POSHTTPPOST.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POSHTTPPOST.m; sourceTree = "<group>"; };
-		68AFBBB520E62CB6009549C5 /* POSHTTPPOST.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSHTTPPOST.h; sourceTree = "<group>"; };
-		68AFBBB620E62CB6009549C5 /* POSHTTPGET.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSHTTPGET.h; sourceTree = "<group>"; };
-		68AFBBB720E62CB6009549C5 /* POSHTTPGET.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGET.m; sourceTree = "<group>"; };
-		68AFBBC320E67F31009549C5 /* NSURLSessionTask+POSNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionTask+POSNetworking.h"; sourceTree = "<group>"; };
-		68AFBBC420E67F31009549C5 /* NSURLSessionTask+POSNetworking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURLSessionTask+POSNetworking.m"; sourceTree = "<group>"; };
-		68AFBBC720E68209009549C5 /* POSProgressValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSProgressValue.h; sourceTree = "<group>"; };
-		68AFBBCA20E69F02009549C5 /* NSURLSession+POSNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+POSNetworking.h"; sourceTree = "<group>"; };
-		68AFBBCB20E69F02009549C5 /* NSURLSession+POSNetworking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+POSNetworking.m"; sourceTree = "<group>"; };
+		68EDC21520EBAC000088EF8A /* POSHTTPRequestOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestOptions.h; sourceTree = "<group>"; };
+		68EDC21620EBAC000088EF8A /* POSHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequest.m; sourceTree = "<group>"; };
+		68EDC21720EBAC000088EF8A /* POSHTTPRequestProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestProgress.h; sourceTree = "<group>"; };
+		68EDC21820EBAC000088EF8A /* POSHTTPRequestOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestOptions.m; sourceTree = "<group>"; };
+		68EDC21920EBAC000088EF8A /* POSHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequest.h; sourceTree = "<group>"; };
+		68EDC21B20EBAC010088EF8A /* POSHTTPResponseOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPResponseOptions.m; sourceTree = "<group>"; };
+		68EDC21C20EBAC010088EF8A /* POSHTTPResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPResponse.h; sourceTree = "<group>"; };
+		68EDC21D20EBAC010088EF8A /* POSHTTPResponseOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPResponseOptions.h; sourceTree = "<group>"; };
+		68EDC21E20EBAC010088EF8A /* POSHTTPResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPResponse.m; sourceTree = "<group>"; };
+		68EDC22320EBAC3A0088EF8A /* NSURLSessionTask+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionTask+POSNetworking.h"; sourceTree = "<group>"; };
+		68EDC22420EBAC3A0088EF8A /* NSURLSession+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSession+POSNetworking.h"; sourceTree = "<group>"; };
+		68EDC22520EBAC3A0088EF8A /* NSError+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+POSNetworking.h"; sourceTree = "<group>"; };
+		68EDC22620EBAC3A0088EF8A /* NSURLCache+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLCache+POSNetworking.h"; sourceTree = "<group>"; };
+		68EDC22720EBAC3A0088EF8A /* NSError+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+POSNetworking.m"; sourceTree = "<group>"; };
+		68EDC22820EBAC3A0088EF8A /* NSDictionary+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+POSNetworking.h"; sourceTree = "<group>"; };
+		68EDC22920EBAC3A0088EF8A /* NSDictionary+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+POSNetworking.m"; sourceTree = "<group>"; };
+		68EDC22A20EBAC3A0088EF8A /* NSHTTPURLResponse+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSHTTPURLResponse+POSNetworking.m"; sourceTree = "<group>"; };
+		68EDC22B20EBAC3A0088EF8A /* NSURLSession+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSession+POSNetworking.m"; sourceTree = "<group>"; };
+		68EDC22C20EBAC3A0088EF8A /* NSHTTPURLResponse+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSHTTPURLResponse+POSNetworking.h"; sourceTree = "<group>"; };
+		68EDC22D20EBAC3A0088EF8A /* NSString+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+POSNetworking.h"; sourceTree = "<group>"; };
+		68EDC22E20EBAC3A0088EF8A /* NSURLCache+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLCache+POSNetworking.m"; sourceTree = "<group>"; };
+		68EDC22F20EBAC3B0088EF8A /* NSURL+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+POSNetworking.m"; sourceTree = "<group>"; };
+		68EDC23020EBAC3B0088EF8A /* NSString+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+POSNetworking.m"; sourceTree = "<group>"; };
+		68EDC23120EBAC3B0088EF8A /* NSURL+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+POSNetworking.h"; sourceTree = "<group>"; };
+		68EDC23220EBAC3B0088EF8A /* NSURLSessionTask+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSessionTask+POSNetworking.m"; sourceTree = "<group>"; };
+		68EDC23B20EBAC7D0088EF8A /* POSHTTPGatewayOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPGatewayOptions.h; sourceTree = "<group>"; };
+		68EDC23C20EBAC7D0088EF8A /* POSHTTPGatewayOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayOptions.m; sourceTree = "<group>"; };
+		68EDC23E20EBB0CC0088EF8A /* POSHTTPRequestBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestBuilder.h; sourceTree = "<group>"; };
+		68EDC23F20EBB0CC0088EF8A /* POSHTTPRequestBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestBuilder.m; sourceTree = "<group>"; };
+		68EDC24E20EBEAC40088EF8A /* POSHTTPPUT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPPUT.h; sourceTree = "<group>"; };
+		68EDC24F20EBEAC40088EF8A /* POSHTTPGET.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGET.m; sourceTree = "<group>"; };
+		68EDC25020EBEAC40088EF8A /* POSHTTPPOST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPPOST.h; sourceTree = "<group>"; };
+		68EDC25120EBEAC40088EF8A /* POSHTTPHEAD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPHEAD.h; sourceTree = "<group>"; };
+		68EDC25220EBEAC40088EF8A /* POSHTTPGET.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPGET.h; sourceTree = "<group>"; };
+		68EDC25320EBEAC40088EF8A /* POSHTTPPUT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPPUT.m; sourceTree = "<group>"; };
+		68EDC25420EBEAC40088EF8A /* POSHTTPHEAD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPHEAD.m; sourceTree = "<group>"; };
+		68EDC25520EBEAC40088EF8A /* POSHTTPPOST.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPPOST.m; sourceTree = "<group>"; };
 		A6ED25F461A5027F42E9C31D /* Pods-All-POSNetworkingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSNetworkingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSNetworkingTests/Pods-All-POSNetworkingTests.release.xcconfig"; sourceTree = "<group>"; };
 		B03DDB3C96938F8D775A5D19 /* Pods-All-POSNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSNetworking/Pods-All-POSNetworking.debug.xcconfig"; sourceTree = "<group>"; };
 		FA9A09350182F5122550DFE7 /* libPods-All-POSNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-All-POSNetworking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,102 +182,34 @@
 			children = (
 				68AFBB7C20E5465C009549C5 /* Gateway */,
 				68AFBBAD20E62C06009549C5 /* Hosts */,
-				68AFBB5F20E5465C009549C5 /* Request */,
-				68AFBB5420E5465C009549C5 /* RequestOptions */,
-				68AFBB5B20E5465C009549C5 /* Response */,
+				68EDC24D20EBEAC40088EF8A /* HTTPRequests */,
+				68EDC21420EBAC000088EF8A /* Request */,
+				68EDC21A20EBAC010088EF8A /* Response */,
 				68AFBB7120E5465C009549C5 /* Categories */,
 				68AFBBA420E54A15009549C5 /* POSNetworking.h */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
 		};
-		68AFBB5420E5465C009549C5 /* RequestOptions */ = {
-			isa = PBXGroup;
-			children = (
-				68AFBB5920E5465C009549C5 /* POSHTTPRequestOptions.h */,
-				68AFBB5620E5465C009549C5 /* POSHTTPRequestOptions.m */,
-				68AFBB5520E5465C009549C5 /* POSHTTPRequestPacketOptions.h */,
-				68AFBB5A20E5465C009549C5 /* POSHTTPRequestPacketOptions.m */,
-				68AFBB5820E5465C009549C5 /* POSHTTPRequestSimulationOptions.h */,
-				68AFBB5720E5465C009549C5 /* POSHTTPRequestSimulationOptions.m */,
-			);
-			path = RequestOptions;
-			sourceTree = "<group>";
-		};
-		68AFBB5B20E5465C009549C5 /* Response */ = {
-			isa = PBXGroup;
-			children = (
-				68AFBB5C20E5465C009549C5 /* POSHTTPResponse.h */,
-				68AFBB5D20E5465C009549C5 /* POSHTTPResponse.m */,
-			);
-			path = Response;
-			sourceTree = "<group>";
-		};
-		68AFBB5F20E5465C009549C5 /* Request */ = {
-			isa = PBXGroup;
-			children = (
-				68AFBB6320E5465C009549C5 /* Data */,
-				68AFBB6020E5465C009549C5 /* Download */,
-				68AFBB6A20E5465C009549C5 /* Upload */,
-			);
-			path = Request;
-			sourceTree = "<group>";
-		};
-		68AFBB6020E5465C009549C5 /* Download */ = {
-			isa = PBXGroup;
-			children = (
-				68AFBB6120E5465C009549C5 /* POSHTTPDownloadRequest.h */,
-				68AFBB6220E5465C009549C5 /* POSHTTPDownloadRequest.m */,
-			);
-			path = Download;
-			sourceTree = "<group>";
-		};
-		68AFBB6320E5465C009549C5 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				68AFBB6820E5465C009549C5 /* POSHTTPRequest.h */,
-				68AFBB6520E5465C009549C5 /* POSHTTPRequest.m */,
-				68AFBBB220E62CA8009549C5 /* POSHTTPRequest+POSNetworking.h */,
-				68AFBBB320E62CA8009549C5 /* POSHTTPRequest+POSNetworking.m */,
-				68AFBB6420E5465C009549C5 /* POSHTTPRequestMethod.h */,
-				68AFBB6720E5465C009549C5 /* POSHTTPRequestMethod.m */,
-				68AFBBB620E62CB6009549C5 /* POSHTTPGET.h */,
-				68AFBBB720E62CB6009549C5 /* POSHTTPGET.m */,
-				68AFBBB520E62CB6009549C5 /* POSHTTPPOST.h */,
-				68AFBBB420E62CB6009549C5 /* POSHTTPPOST.m */,
-				68AFBBC720E68209009549C5 /* POSProgressValue.h */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
-		68AFBB6A20E5465C009549C5 /* Upload */ = {
-			isa = PBXGroup;
-			children = (
-				68AFBB6C20E5465C009549C5 /* POSHTTPUploadRequest.h */,
-				68AFBB6E20E5465C009549C5 /* POSHTTPUploadRequest.m */,
-				68AFBB6B20E5465C009549C5 /* POSHTTPBackgroundUploadRequest.h */,
-				68AFBB6F20E5465C009549C5 /* POSHTTPBackgroundUploadRequest.m */,
-			);
-			path = Upload;
-			sourceTree = "<group>";
-		};
 		68AFBB7120E5465C009549C5 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				68AFBB7320E5465C009549C5 /* NSError+POSNetworking.h */,
-				68AFBB7820E5465C009549C5 /* NSError+POSNetworking.m */,
-				68AFBB7920E5465C009549C5 /* NSDictionary+POSNetworking.h */,
-				68AFBB7620E5465C009549C5 /* NSDictionary+POSNetworking.m */,
-				68AFBB7B20E5465C009549C5 /* NSString+POSNetworking.h */,
-				68AFBB7420E5465C009549C5 /* NSString+POSNetworking.m */,
-				68AFBB7520E5465C009549C5 /* NSURL+POSNetworking.h */,
-				68AFBB7A20E5465C009549C5 /* NSURL+POSNetworking.m */,
-				68AFBB7720E5465C009549C5 /* NSURLCache+POSNetworking.h */,
-				68AFBB7220E5465C009549C5 /* NSURLCache+POSNetworking.m */,
-				68AFBBC320E67F31009549C5 /* NSURLSessionTask+POSNetworking.h */,
-				68AFBBC420E67F31009549C5 /* NSURLSessionTask+POSNetworking.m */,
-				68AFBBCA20E69F02009549C5 /* NSURLSession+POSNetworking.h */,
-				68AFBBCB20E69F02009549C5 /* NSURLSession+POSNetworking.m */,
+				68EDC22820EBAC3A0088EF8A /* NSDictionary+POSNetworking.h */,
+				68EDC22920EBAC3A0088EF8A /* NSDictionary+POSNetworking.m */,
+				68EDC22520EBAC3A0088EF8A /* NSError+POSNetworking.h */,
+				68EDC22720EBAC3A0088EF8A /* NSError+POSNetworking.m */,
+				68EDC22C20EBAC3A0088EF8A /* NSHTTPURLResponse+POSNetworking.h */,
+				68EDC22A20EBAC3A0088EF8A /* NSHTTPURLResponse+POSNetworking.m */,
+				68EDC22D20EBAC3A0088EF8A /* NSString+POSNetworking.h */,
+				68EDC23020EBAC3B0088EF8A /* NSString+POSNetworking.m */,
+				68EDC23120EBAC3B0088EF8A /* NSURL+POSNetworking.h */,
+				68EDC22F20EBAC3B0088EF8A /* NSURL+POSNetworking.m */,
+				68EDC22620EBAC3A0088EF8A /* NSURLCache+POSNetworking.h */,
+				68EDC22E20EBAC3A0088EF8A /* NSURLCache+POSNetworking.m */,
+				68EDC22420EBAC3A0088EF8A /* NSURLSession+POSNetworking.h */,
+				68EDC22B20EBAC3A0088EF8A /* NSURLSession+POSNetworking.m */,
+				68EDC22320EBAC3A0088EF8A /* NSURLSessionTask+POSNetworking.h */,
+				68EDC23220EBAC3B0088EF8A /* NSURLSessionTask+POSNetworking.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -281,6 +219,8 @@
 			children = (
 				68AFBB7E20E5465C009549C5 /* POSHTTPGateway.h */,
 				68AFBB8020E5465C009549C5 /* POSHTTPGateway.m */,
+				68EDC23B20EBAC7D0088EF8A /* POSHTTPGatewayOptions.h */,
+				68EDC23C20EBAC7D0088EF8A /* POSHTTPGatewayOptions.m */,
 			);
 			path = Gateway;
 			sourceTree = "<group>";
@@ -316,6 +256,46 @@
 				68AFBBAE20E62C06009549C5 /* POSStaticHost.m */,
 			);
 			path = Hosts;
+			sourceTree = "<group>";
+		};
+		68EDC21420EBAC000088EF8A /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				68EDC21920EBAC000088EF8A /* POSHTTPRequest.h */,
+				68EDC21620EBAC000088EF8A /* POSHTTPRequest.m */,
+				68EDC23E20EBB0CC0088EF8A /* POSHTTPRequestBuilder.h */,
+				68EDC23F20EBB0CC0088EF8A /* POSHTTPRequestBuilder.m */,
+				68EDC21520EBAC000088EF8A /* POSHTTPRequestOptions.h */,
+				68EDC21820EBAC000088EF8A /* POSHTTPRequestOptions.m */,
+				68EDC21720EBAC000088EF8A /* POSHTTPRequestProgress.h */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		68EDC21A20EBAC010088EF8A /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				68EDC21C20EBAC010088EF8A /* POSHTTPResponse.h */,
+				68EDC21E20EBAC010088EF8A /* POSHTTPResponse.m */,
+				68EDC21D20EBAC010088EF8A /* POSHTTPResponseOptions.h */,
+				68EDC21B20EBAC010088EF8A /* POSHTTPResponseOptions.m */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		68EDC24D20EBEAC40088EF8A /* HTTPRequests */ = {
+			isa = PBXGroup;
+			children = (
+				68EDC25220EBEAC40088EF8A /* POSHTTPGET.h */,
+				68EDC24F20EBEAC40088EF8A /* POSHTTPGET.m */,
+				68EDC25120EBEAC40088EF8A /* POSHTTPHEAD.h */,
+				68EDC25420EBEAC40088EF8A /* POSHTTPHEAD.m */,
+				68EDC25020EBEAC40088EF8A /* POSHTTPPOST.h */,
+				68EDC25520EBEAC40088EF8A /* POSHTTPPOST.m */,
+				68EDC24E20EBEAC40088EF8A /* POSHTTPPUT.h */,
+				68EDC25320EBEAC40088EF8A /* POSHTTPPUT.m */,
+			);
+			path = HTTPRequests;
 			sourceTree = "<group>";
 		};
 		D9168CBA10E071E973E4E5F7 /* Pods */ = {
@@ -459,19 +439,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68AFBBBF20E662C4009549C5 /* POSHTTPRequestOptions.m in Sources */,
-				68AFBBB920E64163009549C5 /* NSString+POSNetworking.m in Sources */,
-				68AFBBBE20E65CC1009549C5 /* POSHTTPRequestPacketOptions.m in Sources */,
-				68AFBBCC20E69F02009549C5 /* NSURLSession+POSNetworking.m in Sources */,
-				68AFBBC220E67085009549C5 /* POSHTTPRequest.m in Sources */,
-				68AFBBC120E66E10009549C5 /* POSHTTPRequestMethod.m in Sources */,
-				68AFBBBA20E645D1009549C5 /* NSURL+POSNetworking.m in Sources */,
-				68AFBBB820E63F20009549C5 /* NSURLCache+POSNetworking.m in Sources */,
-				68AFBBBD20E654EA009549C5 /* POSHTTPRequestSimulationOptions.m in Sources */,
-				68AFBBBB20E64779009549C5 /* NSError+POSNetworking.m in Sources */,
-				68AFBBC520E67F31009549C5 /* NSURLSessionTask+POSNetworking.m in Sources */,
-				68AFBB9220E5465C009549C5 /* NSDictionary+POSNetworking.m in Sources */,
-				68AFBBBC20E64947009549C5 /* POSHTTPResponse.m in Sources */,
+				68EDC25C20EBFEFA0088EF8A /* POSStaticHost.m in Sources */,
+				68EDC21F20EBAC010088EF8A /* POSHTTPRequest.m in Sources */,
+				68EDC23420EBAC3B0088EF8A /* NSDictionary+POSNetworking.m in Sources */,
+				68EDC25720EBEAC40088EF8A /* POSHTTPPUT.m in Sources */,
+				68EDC23720EBAC3B0088EF8A /* NSURLCache+POSNetworking.m in Sources */,
+				68EDC23820EBAC3B0088EF8A /* NSURL+POSNetworking.m in Sources */,
+				68EDC23520EBAC3B0088EF8A /* NSHTTPURLResponse+POSNetworking.m in Sources */,
+				68EDC22220EBAC010088EF8A /* POSHTTPResponse.m in Sources */,
+				68EDC25820EBEAC40088EF8A /* POSHTTPHEAD.m in Sources */,
+				68EDC25B20EBF9330088EF8A /* POSHost.m in Sources */,
+				68EDC23A20EBAC3B0088EF8A /* NSURLSessionTask+POSNetworking.m in Sources */,
+				68EDC23620EBAC3B0088EF8A /* NSURLSession+POSNetworking.m in Sources */,
+				68EDC22020EBAC010088EF8A /* POSHTTPRequestOptions.m in Sources */,
+				68EDC23320EBAC3B0088EF8A /* NSError+POSNetworking.m in Sources */,
+				68EDC23920EBAC3B0088EF8A /* NSString+POSNetworking.m in Sources */,
+				68EDC22120EBAC010088EF8A /* POSHTTPResponseOptions.m in Sources */,
+				68EDC25620EBEAC40088EF8A /* POSHTTPGET.m in Sources */,
+				68EDC24020EBB0CC0088EF8A /* POSHTTPRequestBuilder.m in Sources */,
+				68EDC25920EBEAC40088EF8A /* POSHTTPPOST.m in Sources */,
+				68EDC25A20EBECBB0088EF8A /* POSHTTPGateway.m in Sources */,
+				68EDC23D20EBAC7D0088EF8A /* POSHTTPGatewayOptions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

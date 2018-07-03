@@ -1,5 +1,5 @@
 //
-//  POSHTTPRequestSimulationOptions.h
+//  POSHTTPResponseOptions.h
 //  POSNetworking
 //
 //  Created by Pavel Osipov on 07.09.15.
@@ -14,10 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 @class POSHTTPResponse;
 
 /// Factory block for simulating response for specified request.
-typedef POSHTTPResponse * _Nullable (^POSHTTPResponseSimulator)(id<POSHTTPRequest> request);
+typedef POSHTTPResponse * _Nullable (^POSHTTPResponseSimulator)(id<POSHTTPRequest> request, NSURL *URL);
 
 /// Options to simulate responses from server.
-@interface POSHTTPRequestSimulationOptions : NSObject
+@interface POSHTTPResponseOptions : NSObject
 
 ///
 /// @brief   Value in [0..100] range which spicifies probability percent of the falure simulation.
@@ -35,7 +35,7 @@ typedef POSHTTPResponse * _Nullable (^POSHTTPResponseSimulator)(id<POSHTTPReques
 /// @code
 /// [[POSHTTPRequestSimulationOptions alloc]
 ///  initWithRate:100
-///  responseSimulator:^POSHTTPResponse *(id<POSHTTPRequest> request) {
+///  responseSimulator:^POSHTTPResponse *(id<POSHTTPRequest> request, NSURL *URL) {
 ///      uint32_t probe = arc4random() % 20;
 ///      if (probe < 19) return [[POSHTTPResponse alloc] initWithStatusCode:500];
 ///      return [[POSHTTPResponse alloc] initWithStatusCode:403];
@@ -48,7 +48,7 @@ typedef POSHTTPResponse * _Nullable (^POSHTTPResponseSimulator)(id<POSHTTPReques
 ///
 /// @return Response if it is time to simulate according to 'rate' parameter or nil in other case.
 ///
-- (nullable POSHTTPResponse *)probeSimulationForRequest:(id<POSHTTPRequest>)request;
+- (nullable POSHTTPResponse *)probeSimulationForRequest:(id<POSHTTPRequest>)request URL:(NSURL *)URL;
 
 ///
 /// @brief  The designated initializer
@@ -58,7 +58,7 @@ typedef POSHTTPResponse * _Nullable (^POSHTTPResponseSimulator)(id<POSHTTPReques
 ///                           It may return nil to skip simulation.
 ///
 - (instancetype)initWithRate:(NSUInteger)rate
-           responseSimulator:(POSHTTPResponse * _Nullable (^)(id<POSHTTPRequest> request))simulator NS_DESIGNATED_INITIALIZER;
+           responseSimulator:(POSHTTPResponseSimulator)simulator NS_DESIGNATED_INITIALIZER;
 
 POS_INIT_UNAVAILABLE
 

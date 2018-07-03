@@ -1,20 +1,23 @@
 //
-//  MRCHost.h
-//  MRCloudSDK
+//  POSHost.h
+//  POSNetworking
 //
 //  Created by Pavel Osipov on 22.09.15.
-//  Copyright (c) 2015 Mail.Ru Group. All rights reserved.
+//  Copyright © 2015 Pavel Osipov. All rights reserved.
 //
 
-#import <POSRx/POSRx.h>
+#import <POSScheduling/POSScheduling.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol MRCTracker;
-@class MRCHostMetadata;
+@protocol POSHTTPGateway;
+@protocol POSHTTPRequest;
+
+@class POSHTTPGatewayOptions;
+@class POSHTTPRequestOptions;
 
 /// Base host implementation.
-@protocol MRCHost <POSSchedulable>
+@protocol POSHost <POSSchedulable>
 
 /// Host unique identifier.
 @property (nonatomic, readonly) NSString *ID;
@@ -22,52 +25,42 @@ NS_ASSUME_NONNULL_BEGIN
 /// URL of the host. May be nil.
 @property (nonatomic, readonly, nullable) NSURL *URL;
 
-/// @return Signal of nonnull NSURL.
-- (RACSignal *)fetchURL;
+/// Shared options for all requests performing by that host.
+@property (nonatomic, readonly, nullable) POSHTTPGatewayOptions *options;
 
-/// @return Signal of nonnull NSURL.
-- (RACSignal *)fetchURLWithMethod:(nullable POSHTTPRequestMethod *)method;
+/// Provides possibility to fetch NSURL if corresponding URL property is nil.
+- (RACSignal<NSURL *> *)fetchURL;
 
 /// @brief Sends request.
 /// @param request Sending request.
 /// @return Signal of response handling result.
-- (RACSignal *)pushRequest:(POSHTTPRequest *)request;
+- (RACSignal<id> *)pushRequest:(id<POSHTTPRequest>)request;
 
 /// @brief Sends request.
 /// @param request Sending request.
 /// @param options Custom options which will override host-specific options.
 /// @return Signal of response handling result.
-- (RACSignal *)pushRequest:(POSHTTPRequest *)request
-                   options:(nullable POSHTTPRequestExecutionOptions *)options;
-
-@end
-
-/// Base implementation for MRCHost protocol.
-@interface MRCHost : POSSchedulableObject <MRCHost>
-
-/// @brief The designated initializer.
-/// @param ID Host identifier.
-/// @param gateway Mandatory gateway.
-/// @tracker Optional service for tracking host-specific events.
-/// @return Host instance with static URL.
-- (instancetype)initWithID:(NSString *)ID
-                   gateway:(id<POSHTTPGateway>)gateway
-                   tracker:(nullable id<MRCTracker>)tracker;
-
-/// Hiding deadly initializers.
-POSRX_SCHEDULABLE_INIT_RECURSIVELY_UNAVAILABLE;
+- (RACSignal<id> *)pushRequest:(id<POSHTTPRequest>)request
+                       options:(nullable POSHTTPRequestOptions *)options;
 
 @end
 
 #pragma mark -
 
-@interface NSError (MRCHost)
+/// Base implementation for POSHost protocol.
+@interface POSHost : POSSchedulableObject <POSHost>
 
-@property (nonatomic, readonly, class) NSString *mrc_hostErrorCategory;
+- (instancetype)initWithID:(NSString *)ID
+                   gateway:(id<POSHTTPGateway>)gateway NS_DESIGNATED_INITIALIZER;
 
-+ (NSError *)mrc_hostErrorWithHostID:(NSString *)hostID
-                             hostURL:(nullable NSURL *)hostURL
-                              reason:(nullable NSError *)reason;
+POS_SCHEDULABLE_INIT_RECURSIVELY_UNAVAILABLE;
+
+@end
+
+@interface POSHost (Protected)
+
+/// Hook for performing host-specific logic for tracking errors.
+- (void)handleError:(NSError *)error;
 
 @end
 

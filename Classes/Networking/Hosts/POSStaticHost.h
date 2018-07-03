@@ -1,28 +1,25 @@
 //
-//  MRCStaticHost.h
-//  MRCloudSDK
+//  POSStaticHost.h
+//  POSNetworking
 //
 //  Created by Pavel Osipov on 11/04/16.
-//  Copyright © 2016 Mail.Ru Group. All rights reserved.
+//  Copyright © 2016 Pavel Osipov. All rights reserved.
 //
 
-#import "MRCHost.h"
+#import "POSHost.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Host which URL will not change during its lifetime.
-@interface MRCStaticHost : MRCHost
+@interface POSStaticHost : POSHost
 
-/// Th designated initializer.
+@property (nonatomic, readonly) NSURL *URL;
+
 - (instancetype)initWithID:(NSString *)ID
                    gateway:(id<POSHTTPGateway>)gateway
-                   tracker:(nullable id<MRCTracker>)tracker
-                       URL:(NSURL *)URL;
+                       URL:(NSURL *)URL NS_DESIGNATED_INITIALIZER;
 
-/// Hidden initializer of the super class.
-- (instancetype)initWithID:(NSString *)ID
-                   gateway:(id<POSHTTPGateway>)gateway
-                   tracker:(nullable id<MRCTracker>)tracker NS_UNAVAILABLE;
+- (instancetype)initWithID:(NSString *)ID gateway:(id<POSHTTPGateway>)gateway NS_UNAVAILABLE;
 
 @end
 

@@ -7,6 +7,8 @@
 //
 
 #import "NSURL+POSNetworking.h"
+#import "NSDictionary+POSNetworking.h"
+#import <POSErrorHandling/POSErrorHandling.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -36,9 +38,24 @@ NS_ASSUME_NONNULL_BEGIN
     }
     NSString *URLString = [[NSString alloc] initWithFormat:@"%@%@%@",
                            self.absoluteString,
-                           [self query] ? @"&" : @"?",
-                           queryString];
+                           self.query ? @"&" : @"?", queryString];
     return [NSURL URLWithString:URLString];
+}
+
+- (instancetype)pos_URLByAppendingPath:(nullable NSString *)path
+                                 query:(nullable NSDictionary<NSString *, id<NSObject>> *)query {
+    NSURL *fullURL = self;
+    if (path) {
+        POS_CHECK(!fullURL.query);
+        fullURL = [fullURL pos_URLByAppendingEscapedPathComponent:
+                   [path stringByAddingPercentEncodingWithAllowedCharacters:
+                    NSCharacterSet.URLPathAllowedCharacterSet]];
+    }
+    if (query) {
+        POS_CHECK(!fullURL.fragment);
+        fullURL = [fullURL pos_URLByAppendingQueryString:[query pos_URLQuery]];
+    }
+    return fullURL;
 }
 
 @end

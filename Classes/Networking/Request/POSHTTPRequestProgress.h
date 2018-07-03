@@ -1,5 +1,5 @@
 //
-//  POSProgressValue.h
+//  POSHTTPRequestProgress.h
 //  POSNetworking
 //
 //  Created by Pavel Osipov on 29/06/2018.
@@ -17,6 +17,6 @@ FOUNDATION_EXTERN uint64_t const POSProgressValueUnknownUnitsCount;
 typedef struct {
     uint64_t ready;
     uint64_t total;
-} POSProgressValue;
+} POSHTTPRequestProgress;
 
 NS_ASSUME_NONNULL_END

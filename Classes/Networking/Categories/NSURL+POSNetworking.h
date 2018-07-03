@@ -18,6 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSURL *)pos_URLByAppendingQueryString:(nullable NSString *)queryString;
 
+- (instancetype)pos_URLByAppendingPath:(nullable NSString *)path
+                                 query:(nullable NSDictionary<NSString *, id<NSObject>> *)query;
+
 @end
 
 NS_ASSUME_NONNULL_END

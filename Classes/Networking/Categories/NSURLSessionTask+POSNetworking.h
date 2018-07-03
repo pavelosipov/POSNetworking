@@ -6,33 +6,30 @@
 //  Copyright © 2018 Pavel Osipov. All rights reserved.
 //
 
-#import "POSProgressValue.h"
+#import "POSHTTPRequestProgress.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSURLSessionTask (POSNetworking)
 
-@property (nonatomic, setter = pos_setAllowUntrustedSSLCertificates:) NSNumber *pos_allowUntrustedSSLCertificates;
+@property (nonatomic, nullable, setter = pos_setAllowUntrustedSSLCertificates:) NSNumber *pos_allowUntrustedSSLCertificates;
 
-@property (nonatomic, copy, setter = pos_setUploadProgress:)
-void (^pos_uploadProgress)(POSProgressValue progress);
+@property (nonatomic, nullable, copy, setter = pos_setUploadProgress:)
+void (^pos_uploadProgress)(POSHTTPRequestProgress progress);
 
-@property (nonatomic, copy, setter = pos_setCompletionHandler:)
+@property (nonatomic, nullable, copy, setter = pos_setCompletionHandler:)
 void (^pos_completionHandler)(NSError *error);
 
-@property (nonatomic, copy, setter = pos_setBodyStreamBuilder:)
-NSInputStream *(^pos_bodyStreamBuilder)(void);
+@property (nonatomic, nullable, copy, setter = pos_setBodyStreamBuilder:)
+NSInputStream * _Nullable (^pos_bodyStreamBuilder)(void);
 
-@property (nonatomic, copy, setter = pos_setResponseHandler:)
-NSURLSessionResponseDisposition (^pos_responseHandler)(NSURLResponse *response);
-
-@property (nonatomic, copy, setter = pos_setDataHandler:)
+@property (nonatomic, nullable, copy, setter = pos_setDataHandler:)
 void (^pos_dataHandler)(NSData *data);
 
-@property (nonatomic, copy, setter = pos_setDownloadProgress:)
-void (^pos_downloadProgress)(POSProgressValue progress);
+@property (nonatomic, nullable, copy, setter = pos_setDownloadProgress:)
+void (^pos_downloadProgress)(POSHTTPRequestProgress progress);
 
-@property (nonatomic, copy, setter = pos_setDownloadCompletionHandler:)
+@property (nonatomic, nullable, copy, setter = pos_setDownloadCompletionHandler:)
 void (^pos_downloadCompletionHandler)(NSURL *fileLocation);
 
 - (void)pos_start;

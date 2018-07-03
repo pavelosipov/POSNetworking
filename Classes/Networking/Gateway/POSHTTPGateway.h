@@ -11,20 +11,14 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol POSHTTPRequest;
-@protocol POSTask;
 
-@class POSHTTPRequestOptions;
+@class POSHTTPGatewayOptions;
 
 /// Performs network requests.
 @protocol POSHTTPGateway <POSSchedulable>
 
-/// Default options for request execution.
-@property (nonatomic, nullable) POSHTTPRequestOptions *options;
-
-/// Session, which manages foreground requests.
+@property (nonatomic, nullable) POSHTTPGatewayOptions *options;
 @property (nonatomic, readonly) NSURLSession *foregroundSession;
-
-/// Session, which manages background requests.
 @property (nonatomic, readonly, nullable) NSURLSession *backgroundSession;
 
 ///
@@ -36,11 +30,14 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 - (id<POSTask>)taskForRequest:(id<POSHTTPRequest>)request
                        toHost:(NSURL *)hostURL
-                      options:(nullable POSHTTPRequestOptions *)options;
+                      options:(nullable POSHTTPGatewayOptions *)options;
 
 /// @brief Invalidates all sessions, which is mandatory requirement to free memory allocated by HTTPGateway.
 /// @param forced YES if you want to free all allocated resources ASAP or NO to wait for completion of active requests.
 - (RACSignal *)invalidateForced:(BOOL)forced;
+
+/// Cancels all background tasks.
+- (void)invalidateBackgroundTasksWithCompletionHandler:(dispatch_block_t)completionHandler;
 
 @end
 
