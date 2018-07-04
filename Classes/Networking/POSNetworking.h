@@ -21,3 +21,8 @@
 
 #import "POSHTTPResponse.h"
 #import "POSHTTPResponseOptions.h"
+
+#import "NSDictionary+POSNetworking.h"
+#import "NSError+POSNetworking.h"
+#import "NSString+POSNetworking.h"
+#import "NSURL+POSNetworking.h"

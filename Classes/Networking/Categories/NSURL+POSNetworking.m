@@ -18,6 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
     if (!pathComponent) {
         return self;
     }
+    if ([pathComponent hasPrefix:@"/"]) {
+        pathComponent = [pathComponent substringFromIndex:1];
+    }
     NSString *absoluteString = self.absoluteString;
     if (![absoluteString hasSuffix:@"/"]) {
         absoluteString = [absoluteString stringByAppendingString:@"/"];
