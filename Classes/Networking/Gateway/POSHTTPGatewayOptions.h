@@ -47,4 +47,15 @@ POS_INIT_UNAVAILABLE
 
 @end
 
+#pragma mark -
+
+@interface POSHTTPGatewayOptionsBuilder : NSObject
+
+- (POSHTTPGatewayOptions *)build;
+
+- (instancetype)withRequestOptions:(nullable POSHTTPRequestOptions *)requestOptions;
+- (instancetype)withResponseOptions:(nullable POSHTTPResponseOptions *)responseOptions;
+
+@end
+
 NS_ASSUME_NONNULL_END

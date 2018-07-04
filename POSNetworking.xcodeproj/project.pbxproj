@@ -34,7 +34,8 @@
 		68EDC26320ECE9730088EF8A /* POSHTTPGatewayLeakTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB9A20E546B3009549C5 /* POSHTTPGatewayLeakTests.m */; };
 		68EDC26420ECF0A10088EF8A /* POSHTTPGatewayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB9D20E546B3009549C5 /* POSHTTPGatewayTests.m */; };
 		693894054DEF9FF6F314B1C7 /* libPods-All-POSNetworkingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AFE476D4CF036B2D844EAA /* libPods-All-POSNetworkingTests.a */; };
-		E986A4BB20ED4B7D008E71E0 /* POSOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB9C20E546B3009549C5 /* POSOptionsTests.m */; };
+		E986A4BB20ED4B7D008E71E0 /* POSHTTPRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB9C20E546B3009549C5 /* POSHTTPRequestTests.m */; };
+		E986A4BD20ED5E24008E71E0 /* POSHTTPGatewayOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E986A4BC20ED5E24008E71E0 /* POSHTTPGatewayOptionsTests.m */; };
 		F9ABCF34F638B393659F05A4 /* libPods-All-POSNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9A09350182F5122550DFE7 /* libPods-All-POSNetworking.a */; };
 /* End PBXBuildFile section */
 
@@ -73,7 +74,7 @@
 		68AFBB8420E5465C009549C5 /* POSTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSTesting.h; sourceTree = "<group>"; };
 		68AFBB9A20E546B3009549C5 /* POSHTTPGatewayLeakTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayLeakTests.m; sourceTree = "<group>"; };
 		68AFBB9B20E546B3009549C5 /* NSCategoriesTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSCategoriesTests.m; sourceTree = "<group>"; };
-		68AFBB9C20E546B3009549C5 /* POSOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSOptionsTests.m; sourceTree = "<group>"; };
+		68AFBB9C20E546B3009549C5 /* POSHTTPRequestTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestTests.m; sourceTree = "<group>"; };
 		68AFBB9D20E546B3009549C5 /* POSHTTPGatewayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayTests.m; sourceTree = "<group>"; };
 		68AFBB9E20E546B3009549C5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68AFBBA420E54A15009549C5 /* POSNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSNetworking.h; sourceTree = "<group>"; };
@@ -122,6 +123,7 @@
 		68EDC26020ECDB4C0088EF8A /* POSHostStub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POSHostStub.m; sourceTree = "<group>"; };
 		A6ED25F461A5027F42E9C31D /* Pods-All-POSNetworkingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSNetworkingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSNetworkingTests/Pods-All-POSNetworkingTests.release.xcconfig"; sourceTree = "<group>"; };
 		B03DDB3C96938F8D775A5D19 /* Pods-All-POSNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSNetworking/Pods-All-POSNetworking.debug.xcconfig"; sourceTree = "<group>"; };
+		E986A4BC20ED5E24008E71E0 /* POSHTTPGatewayOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayOptionsTests.m; sourceTree = "<group>"; };
 		FA9A09350182F5122550DFE7 /* libPods-All-POSNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-All-POSNetworking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -248,8 +250,9 @@
 			children = (
 				68AFBB9D20E546B3009549C5 /* POSHTTPGatewayTests.m */,
 				68AFBB9A20E546B3009549C5 /* POSHTTPGatewayLeakTests.m */,
+				E986A4BC20ED5E24008E71E0 /* POSHTTPGatewayOptionsTests.m */,
+				68AFBB9C20E546B3009549C5 /* POSHTTPRequestTests.m */,
 				68AFBB9B20E546B3009549C5 /* NSCategoriesTests.m */,
-				68AFBB9C20E546B3009549C5 /* POSOptionsTests.m */,
 				68AFBB9E20E546B3009549C5 /* Info.plist */,
 			);
 			path = Tests;
@@ -477,9 +480,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				68E799CF20ECF7C900DB02A3 /* NSCategoriesTests.m in Sources */,
-				E986A4BB20ED4B7D008E71E0 /* POSOptionsTests.m in Sources */,
+				E986A4BB20ED4B7D008E71E0 /* POSHTTPRequestTests.m in Sources */,
 				68EDC26320ECE9730088EF8A /* POSHTTPGatewayLeakTests.m in Sources */,
 				68EDC26420ECF0A10088EF8A /* POSHTTPGatewayTests.m in Sources */,
+				E986A4BD20ED5E24008E71E0 /* POSHTTPGatewayOptionsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

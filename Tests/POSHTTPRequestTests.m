@@ -1,5 +1,5 @@
 //
-//  POSOptionsTests.m
+//  POSHTTPRequestTests.m
 //  POSNetworking
 //
 //  Created by Pavel Osipov on 28.10.15.
@@ -9,11 +9,11 @@
 #import <POSNetworking/POSNetworking.h>
 #import <XCTest/XCTest.h>
 
-@interface POSOptionsTests : XCTestCase
+@interface POSHTTPRequestTests : XCTestCase
 
 @end
 
-@implementation POSOptionsTests
+@implementation POSHTTPRequestTests
 
 - (void)testMergeRequestOptionsAllowUntrustedSSLCertificates {
     POSHTTPRequestOptions *source, *target, *merged;

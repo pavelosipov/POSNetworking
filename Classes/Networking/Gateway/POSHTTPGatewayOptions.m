@@ -55,4 +55,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark -
+
+@interface POSHTTPGatewayOptionsBuilder ()
+@property (nonatomic, nullable) POSHTTPRequestOptions *requestOptions;
+@property (nonatomic, nullable) POSHTTPResponseOptions *responseOptions;
+@end
+
+@implementation POSHTTPGatewayOptionsBuilder
+
+- (POSHTTPGatewayOptions *)build {
+    return [[POSHTTPGatewayOptions alloc] initWithRequestOptions:_requestOptions responseOptions:_responseOptions];
+}
+
+- (instancetype)withRequestOptions:(nullable POSHTTPRequestOptions *)requestOptions {
+    self.requestOptions = requestOptions;
+    return self;
+}
+
+- (instancetype)withResponseOptions:(nullable POSHTTPResponseOptions *)responseOptions {
+    self.responseOptions = responseOptions;
+    return self;
+}
+
+@end
+
 NS_ASSUME_NONNULL_END
