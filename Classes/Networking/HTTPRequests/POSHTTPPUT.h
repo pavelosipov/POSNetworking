@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Notifies how many bytes were sent to remote host.
 - (instancetype)withUploadProgress:(void (^ _Nullable)(POSHTTPRequestProgress progress))uploadProgress;
 
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithHTTPMethod:(NSString *)HTTPMethod NS_UNAVAILABLE;
+
 @end
 
 #pragma mark -

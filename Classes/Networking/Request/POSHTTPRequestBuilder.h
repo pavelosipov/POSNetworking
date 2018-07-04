@@ -59,12 +59,6 @@ typedef BOOL (^POSHTTPCustomMetadataHandler)(
 ///
 typedef id _Nullable (^POSHTTPDataHandler)(NSData *responseData, NSError **error);
 
-/// Factory block for building request-specific NSURLSessionTask.
-typedef NSURLSessionTask * _Nullable (^POSURLSessionTaskFactory)(
-    NSURLRequest *request,
-    id<POSHTTPGateway> gateway,
-    NSError **error);
-
 #pragma mark -
 
 ///
@@ -93,6 +87,11 @@ typedef NSURLSessionTask * _Nullable (^POSURLSessionTaskFactory)(
 /// Block for handling both data and metadata in the response from NSURLSessionTask.
 /// @see POSHTTPResponseHandler description for details.
 - (instancetype)withResponseHandler:(nullable POSHTTPCustomResponseHandler)handler;
+
+/// @param HTTPMethod the name of HTTP method which will be assigned to NSURLRequest.
+- (instancetype)initWithHTTPMethod:(NSString *)HTTPMethod NS_DESIGNATED_INITIALIZER;
+
+POS_INIT_UNAVAILABLE
 
 @end
 

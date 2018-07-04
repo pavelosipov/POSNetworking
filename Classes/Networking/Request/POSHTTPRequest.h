@@ -17,10 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 @class POSHTTPRequestOptions;
 
 /// Factory block for creating NSURLSessionTask with specified parameters.
-typedef NSURLSessionTask * _Nullable (^POSHTTPRequestTaskFactory)(
-    NSURL *hostURL,
+/// Factory block for building request-specific NSURLSessionTask.
+typedef NSURLSessionTask * _Nullable (^POSURLSessionTaskFactory)(
+    NSURLRequest *request,
     id<POSHTTPGateway> gateway,
-    POSHTTPRequestOptions * _Nullable options,
     NSError **error);
 
 /// Block for handling incomming responses from previously created NSURLSessionTask.
@@ -29,9 +29,14 @@ typedef id _Nullable (^POSHTTPResponseHandler)(POSHTTPResponse *response, NSErro
 /// Represents repeatable request to remote server.
 @protocol POSHTTPRequest <NSObject>
 
-@property (nonatomic, readonly) POSHTTPRequestTaskFactory taskFactory;
 @property (nonatomic, readonly) POSHTTPResponseHandler responseHandler;
 @property (nonatomic, readonly, nullable) POSHTTPRequestOptions *options;
+
+/// Creates network task using one of NSURLSessions inside POSHTTPGateway.
+- (nullable NSURLSessionTask *)taskWithURL:(NSURL *)hostURL
+                                forGateway:(id<POSHTTPGateway>)gateway
+                                   options:(nullable POSHTTPRequestOptions *)options
+                                     error:(NSError **)error;
 
 @end
 
@@ -39,9 +44,10 @@ typedef id _Nullable (^POSHTTPResponseHandler)(POSHTTPResponse *response, NSErro
 
 @interface POSHTTPRequest : NSObject <POSHTTPRequest>
 
-- (instancetype)initWithTaskFactory:(POSHTTPRequestTaskFactory)taskFactory
-                    responseHandler:(POSHTTPResponseHandler)responseHandler
-                            options:(nullable POSHTTPRequestOptions *)options NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithHTTPMethod:(NSString *)HTTPMethod
+                       taskFactory:(POSURLSessionTaskFactory)taskFactory
+                   responseHandler:(POSHTTPResponseHandler)responseHandler
+                           options:(nullable POSHTTPRequestOptions *)options NS_DESIGNATED_INITIALIZER;
 
 POS_INIT_UNAVAILABLE
 

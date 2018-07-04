@@ -18,8 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation POSHTTPPUT
 
-- (NSString *)HTTPMethodName {
-    return @"PUT";
+- (instancetype)init {
+    return [super initWithHTTPMethod:@"PUT"];
 }
 
 - (instancetype)withUploadProgress:(void (^ _Nullable)(POSHTTPRequestProgress))uploadProgress {

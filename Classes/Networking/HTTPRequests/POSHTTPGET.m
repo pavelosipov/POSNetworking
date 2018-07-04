@@ -12,6 +12,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@implementation POSHTTPGET
+
+- (instancetype)init {
+    return [super initWithHTTPMethod:@"GET"];
+}
+
+@end
+
 @interface POSHTTPGETFile ()
 @property (nonatomic, nullable, copy) void (^downloadProgress)(POSHTTPRequestProgress progress);
 @property (nonatomic, nullable, copy) void (^fileHandler)(NSURL *fileLocation);

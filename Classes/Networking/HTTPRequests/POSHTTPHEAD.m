@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation POSHTTPHEAD
 
-- (NSString *)HTTPMethodName {
-    return @"HEAD";
+- (instancetype)init {
+    return [super initWithHTTPMethod:@"HEAD"];
 }
 
 @end

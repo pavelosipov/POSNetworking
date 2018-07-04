@@ -15,7 +15,6 @@
 #import "NSError+POSNetworking.h"
 #import "NSHTTPURLResponse+POSNetworking.h"
 #import "NSDictionary+POSNetworking.h"
-#import "NSURL+POSNetworking.h"
 #import "NSURLSessionTask+POSNetworking.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -24,8 +23,7 @@ typedef NSURLRequest * _Nullable (^POSURLRequestFactory)(NSURL *hostURL, POSHTTP
 
 @interface POSHTTPRequestBuilder ()
 
-@property (nonatomic, readonly) NSString *HTTPMethodName;
-@property (nonatomic, nullable) NSData *body;
+@property (nonatomic, readonly) NSString *HTTPMethod;
 @property (nonatomic, nullable) POSHTTPRequestOptions *requestOptions;
 @property (nonatomic, nullable, copy) POSHTTPCustomResponseHandler customResponseHandler;
 @property (nonatomic, nullable, copy) POSHTTPCustomMetadataHandler customMetadataHandler;
@@ -35,25 +33,20 @@ typedef NSURLRequest * _Nullable (^POSURLRequestFactory)(NSURL *hostURL, POSHTTP
 
 @implementation POSHTTPRequestBuilder
 
-- (POSHTTPRequest *)build {
-    POSURLRequestFactory requestFactory = self.requestFactory;
-    POSURLSessionTaskFactory taskFactory = self.URLSessionTaskFactory;
-    __auto_type requestTaskFactory = ^NSURLSessionTask * _Nullable(NSURL *hostURL,
-                                                                   id<POSHTTPGateway> gateway,
-                                                                   POSHTTPRequestOptions * _Nullable options,
-                                                                   NSError **error) {
-        NSURLRequest *request = requestFactory(hostURL, options);
-        NSURLSessionTask *task = taskFactory(request, gateway, error);
-        return task;
-    };
-    return [[POSHTTPRequest alloc]
-        initWithTaskFactory:requestTaskFactory
-        responseHandler:self.responseHandler
-        options:_requestOptions];
+- (instancetype)initWithHTTPMethod:(NSString *)HTTPMethod {
+    POS_CHECK(HTTPMethod);
+    if (self = [super init]) {
+        _HTTPMethod = HTTPMethod;
+    }
+    return self;
 }
 
-- (NSString *)HTTPMethodName {
-    return @"GET";
+- (POSHTTPRequest *)build {
+    return [[POSHTTPRequest alloc]
+        initWithHTTPMethod:_HTTPMethod
+        taskFactory:self.URLSessionTaskFactory
+        responseHandler:self.responseHandler
+        options:_requestOptions];
 }
 
 - (POSHTTPResponseHandler)responseHandler {
@@ -97,30 +90,9 @@ typedef NSURLRequest * _Nullable (^POSURLRequestFactory)(NSURL *hostURL, POSHTTP
     };
 }
 
-- (instancetype)withBody:(nullable NSData *)body {
-    self.body = body;
-    return self;
-}
-
 - (instancetype)withOptions:(nullable POSHTTPRequestOptions *)options {
     self.requestOptions = options;
     return self;
-}
-
-- (POSURLRequestFactory)requestFactory {
-    __auto_type HTTPMethodName = self.HTTPMethodName;
-    __auto_type body = self.body;
-    return ^NSMutableURLRequest * _Nullable (NSURL *hostURL, POSHTTPRequestOptions * _Nullable options) {
-        NSURL *fullURL = [hostURL pos_URLByAppendingPath:options.URLPath query:options.URLQuery];
-        NSTimeInterval responseTimeout = options.responseTimeout != nil ? options.responseTimeout.doubleValue : 30.0;
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:fullURL
-                                                                    cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                                                timeoutInterval:responseTimeout];
-        request.HTTPMethod = HTTPMethodName;
-        request.allHTTPHeaderFields = options.headerFields;
-        request.HTTPBody = body;
-        return request;
-    };
 }
 
 - (instancetype)withResponseHandler:(nullable POSHTTPCustomResponseHandler)handler {

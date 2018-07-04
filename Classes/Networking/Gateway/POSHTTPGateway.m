@@ -63,7 +63,10 @@ NS_ASSUME_NONNULL_BEGIN
     return [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             NSError *error = nil;
-            NSURLSessionTask *sessionTask = request.taskFactory(hostURL, self, mergedOptions.requestOptions, &error);
+            NSURLSessionTask *sessionTask = [request taskWithURL:hostURL
+                                                      forGateway:self
+                                                         options:mergedOptions.requestOptions
+                                                           error:&error];
             if (!sessionTask) {
                 [subscriber sendError:error];
                 [subscriber sendCompleted];

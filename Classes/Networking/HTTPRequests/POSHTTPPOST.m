@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation POSHTTPPOST
 
-- (NSString *)HTTPMethodName {
-    return @"POST";
+- (instancetype)init {
+    return [super initWithHTTPMethod:@"POST"];
 }
 
 @end
