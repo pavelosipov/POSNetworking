@@ -117,12 +117,6 @@ typedef NSURLRequest * _Nullable (^POSURLRequestFactory)(NSURL *hostURL, POSHTTP
                                                                     cachePolicy:NSURLRequestReloadIgnoringCacheData
                                                                 timeoutInterval:responseTimeout];
         request.HTTPMethod = HTTPMethodName;
-        //        NSDictionary *allHeaderFields = options.headerFields;
-        //        if (requestHeaderFields) {
-        //            NSMutableDictionary *headerFields = [requestHeaderFields mutableCopy];
-        //            [headerFields addEntriesFromDictionary:options.headerFields];
-        //            allHeaderFields = headerFields;
-        //        }
         request.allHTTPHeaderFields = options.headerFields;
         request.HTTPBody = body;
         return request;

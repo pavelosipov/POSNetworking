@@ -13,17 +13,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation POSHTTPRequestOptions
 
-- (instancetype)initWithAllowedUntrustedSSLCertificates:(nullable NSNumber *)allowed
-                                        responseTimeout:(nullable NSNumber *)responseTimeout
-                                           headerFields:(nullable NSDictionary<NSString *,NSString *> *)headerFields
-                                               URLQuery:(nullable NSDictionary<NSString *,id<NSObject>> *)URLQuery
-                                                URLPath:(nullable NSString *)URLPath {
+- (instancetype)initWithURLPath:(nullable NSString *)URLPath
+                       URLQuery:(nullable NSDictionary<NSString *,id<NSObject>> *)URLQuery
+                           body:(nullable NSData *)body
+                   headerFields:(nullable NSDictionary<NSString *,NSString *> *)headerFields
+                responseTimeout:(nullable NSNumber *)responseTimeout
+allowedUntrustedSSLCertificates:(nullable NSNumber *)allowed {
     if (self = [super init]) {
         _allowUntrustedSSLCertificates = allowed;
         _responseTimeout = responseTimeout;
         _headerFields = [headerFields copy];
         _URLQuery = [URLQuery copy];
         _URLPath = [URLPath copy];
+        _body = body;
     }
     return self;
 }
@@ -46,12 +48,13 @@ NS_ASSUME_NONNULL_BEGIN
         URLPath = source.URLPath ?: target.URLPath;
     }
     return [[POSHTTPRequestOptions alloc]
-        initWithAllowedUntrustedSSLCertificates:(target.allowUntrustedSSLCertificates ?:
-                                                     source.allowUntrustedSSLCertificates)
-        responseTimeout:(target.responseTimeout ?: source.responseTimeout)
-        headerFields:[NSDictionary pos_merge:source->_headerFields with:target->_headerFields]
+        initWithURLPath:URLPath
         URLQuery:[NSDictionary pos_merge:source->_URLQuery with:target->_URLQuery]
-        URLPath:URLPath];
+        body:(target.body ?: source.body)
+        headerFields:[NSDictionary pos_merge:source->_headerFields with:target->_headerFields]
+        responseTimeout:(target.responseTimeout ?: source.responseTimeout)
+        allowedUntrustedSSLCertificates:(target.allowUntrustedSSLCertificates ?:
+                                         source.allowUntrustedSSLCertificates)];
 }
 
 @end
@@ -65,6 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, nullable) NSDictionary<NSString *, NSString *> *headerFields;
 @property (nonatomic, nullable) NSDictionary<NSString *, id<NSObject>> *URLQuery;
 @property (nonatomic, nullable) NSString *URLPath;
+@property (nonatomic, nullable) NSData *body;
 
 @end
 
@@ -72,11 +76,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (POSHTTPRequestOptions *)build {
     return [[POSHTTPRequestOptions alloc]
-        initWithAllowedUntrustedSSLCertificates:_allowUntrustedSSLCertificates
-        responseTimeout:_responseTimeout
-        headerFields:_headerFields
+        initWithURLPath:_URLPath
         URLQuery:_URLQuery
-        URLPath:_URLPath];
+        body:_body
+        headerFields:_headerFields
+        responseTimeout:_responseTimeout
+        allowedUntrustedSSLCertificates:_allowUntrustedSSLCertificates];
 }
 
 - (instancetype)withPath:(nullable NSString *)URLPath {
@@ -91,6 +96,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)withQuery:(nullable NSDictionary<NSString *, id<NSObject>> *)URLQuery {
     self.URLQuery = URLQuery;
+    return self;
+}
+
+- (instancetype)withBody:(nullable NSData *)body {
+    self.body = body;
     return self;
 }
 

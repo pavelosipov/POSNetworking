@@ -82,9 +82,6 @@ typedef NSURLSessionTask * _Nullable (^POSURLSessionTaskFactory)(
 /// Path part of the URL, which will be appended to host's base URL and host's URLPathPrefix if such option exists.
 - (instancetype)withOptions:(nullable POSHTTPRequestOptions *)options;
 
-/// Request's body.
-- (instancetype)withBody:(nullable NSData *)body;
-
 /// Block for handling metadata in the response from NSURLSessionTask.
 /// @see POSHTTPMetadataHandler description for details.
 - (instancetype)withMetadataHandler:(nullable POSHTTPCustomMetadataHandler)handler;
