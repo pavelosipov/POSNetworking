@@ -2,7 +2,7 @@
 //  POSHTTPPUT.m
 //  POSNetworking
 //
-//  Created by p.osipov on 03/07/2018.
+//  Created by Pavel Osipov on 03/07/2018.
 //  Copyright © 2018 Pavel Osipov. All rights reserved.
 //
 
