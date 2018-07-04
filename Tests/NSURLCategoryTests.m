@@ -1,5 +1,5 @@
 //
-//  POSHTTPRequestTests.m
+//  NSURLCategoryTests.m
 //  POSNetworking
 //
 //  Created by Pavel Osipov on 06.10.15.

@@ -72,7 +72,7 @@
 		68AFBB8420E5465C009549C5 /* POSTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSTesting.h; sourceTree = "<group>"; };
 		68AFBB9A20E546B3009549C5 /* POSHTTPGatewayLeakTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayLeakTests.m; sourceTree = "<group>"; };
 		68AFBB9B20E546B3009549C5 /* NSURLCategoryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSURLCategoryTests.m; sourceTree = "<group>"; };
-		68AFBB9C20E546B3009549C5 /* POSHTTPRequestExecutionOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequestExecutionOptionsTests.m; sourceTree = "<group>"; };
+		68AFBB9C20E546B3009549C5 /* POSOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSOptionsTests.m; sourceTree = "<group>"; };
 		68AFBB9D20E546B3009549C5 /* POSHTTPGatewayTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayTests.m; sourceTree = "<group>"; };
 		68AFBB9E20E546B3009549C5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		68AFBBA420E54A15009549C5 /* POSNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSNetworking.h; sourceTree = "<group>"; };
@@ -248,7 +248,7 @@
 				68AFBB9D20E546B3009549C5 /* POSHTTPGatewayTests.m */,
 				68AFBB9A20E546B3009549C5 /* POSHTTPGatewayLeakTests.m */,
 				68AFBB9B20E546B3009549C5 /* NSURLCategoryTests.m */,
-				68AFBB9C20E546B3009549C5 /* POSHTTPRequestExecutionOptionsTests.m */,
+				68AFBB9C20E546B3009549C5 /* POSOptionsTests.m */,
 				68AFBB9E20E546B3009549C5 /* Info.plist */,
 			);
 			path = Tests;

@@ -1,19 +1,19 @@
 //
-//  POSHTTPRequestExecutionOptionsTests.m
+//  POSOptionsTests.m
 //  POSNetworking
 //
 //  Created by Pavel Osipov on 28.10.15.
 //  Copyright © 2015 Pavel Osipov. All rights reserved.
 //
 
-#import <POSNetworking/POSHTTPRequestSimulationOptions.h>
+#import <POSNetworking/POSNetworking.h>
 #import <XCTest/XCTest.h>
 
-@interface POSHTTPRequestExecutionOptionsTests : XCTestCase
+@interface POSOptionsTests : XCTestCase
 
 @end
 
-@implementation POSHTTPRequestExecutionOptionsTests
+@implementation POSOptionsTests
 
 /*
 - (void)testExecutionOptionsMerge1 {
