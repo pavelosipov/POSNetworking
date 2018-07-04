@@ -30,6 +30,8 @@
 		68EDC25A20EBECBB0088EF8A /* POSHTTPGateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB8020E5465C009549C5 /* POSHTTPGateway.m */; };
 		68EDC25B20EBF9330088EF8A /* POSHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBBAF20E62C06009549C5 /* POSHost.m */; };
 		68EDC25C20EBFEFA0088EF8A /* POSStaticHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBBAE20E62C06009549C5 /* POSStaticHost.m */; };
+		68EDC26120ECDB810088EF8A /* POSHTTPGatewayStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB8320E5465C009549C5 /* POSHTTPGatewayStub.m */; };
+		68EDC26220ECDE1C0088EF8A /* POSHostStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC26020ECDB4C0088EF8A /* POSHostStub.m */; };
 		693894054DEF9FF6F314B1C7 /* libPods-All-POSNetworkingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AFE476D4CF036B2D844EAA /* libPods-All-POSNetworkingTests.a */; };
 		F9ABCF34F638B393659F05A4 /* libPods-All-POSNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9A09350182F5122550DFE7 /* libPods-All-POSNetworking.a */; };
 /* End PBXBuildFile section */
@@ -114,6 +116,8 @@
 		68EDC25320EBEAC40088EF8A /* POSHTTPPUT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPPUT.m; sourceTree = "<group>"; };
 		68EDC25420EBEAC40088EF8A /* POSHTTPHEAD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPHEAD.m; sourceTree = "<group>"; };
 		68EDC25520EBEAC40088EF8A /* POSHTTPPOST.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPPOST.m; sourceTree = "<group>"; };
+		68EDC25F20ECDB4C0088EF8A /* POSHostStub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSHostStub.h; sourceTree = "<group>"; };
+		68EDC26020ECDB4C0088EF8A /* POSHostStub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POSHostStub.m; sourceTree = "<group>"; };
 		A6ED25F461A5027F42E9C31D /* Pods-All-POSNetworkingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSNetworkingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSNetworkingTests/Pods-All-POSNetworkingTests.release.xcconfig"; sourceTree = "<group>"; };
 		B03DDB3C96938F8D775A5D19 /* Pods-All-POSNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSNetworking/Pods-All-POSNetworking.debug.xcconfig"; sourceTree = "<group>"; };
 		FA9A09350182F5122550DFE7 /* libPods-All-POSNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-All-POSNetworking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -228,6 +232,8 @@
 		68AFBB8120E5465C009549C5 /* Testing */ = {
 			isa = PBXGroup;
 			children = (
+				68EDC25F20ECDB4C0088EF8A /* POSHostStub.h */,
+				68EDC26020ECDB4C0088EF8A /* POSHostStub.m */,
 				68AFBB8220E5465C009549C5 /* POSHTTPGatewayStub.h */,
 				68AFBB8320E5465C009549C5 /* POSHTTPGatewayStub.m */,
 				68AFBB8420E5465C009549C5 /* POSTesting.h */,
@@ -442,10 +448,12 @@
 				68EDC25C20EBFEFA0088EF8A /* POSStaticHost.m in Sources */,
 				68EDC21F20EBAC010088EF8A /* POSHTTPRequest.m in Sources */,
 				68EDC23420EBAC3B0088EF8A /* NSDictionary+POSNetworking.m in Sources */,
+				68EDC26220ECDE1C0088EF8A /* POSHostStub.m in Sources */,
 				68EDC25720EBEAC40088EF8A /* POSHTTPPUT.m in Sources */,
 				68EDC23720EBAC3B0088EF8A /* NSURLCache+POSNetworking.m in Sources */,
 				68EDC23820EBAC3B0088EF8A /* NSURL+POSNetworking.m in Sources */,
 				68EDC23520EBAC3B0088EF8A /* NSHTTPURLResponse+POSNetworking.m in Sources */,
+				68EDC26120ECDB810088EF8A /* POSHTTPGatewayStub.m in Sources */,
 				68EDC22220EBAC010088EF8A /* POSHTTPResponse.m in Sources */,
 				68EDC25820EBEAC40088EF8A /* POSHTTPHEAD.m in Sources */,
 				68EDC25B20EBF9330088EF8A /* POSHost.m in Sources */,

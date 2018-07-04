@@ -22,12 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
     return self;
 }
 
-- (nullable POSHTTPResponse *)probeSimulationForRequest:(id<POSHTTPRequest>)request URL:(NSURL *)URL {
+- (nullable POSHTTPResponse *)probeSimulationForRequest:(id<POSHTTPRequest>)request
+                                                hostURL:(NSURL *)hostURL
+                                                options:(nullable POSHTTPRequestOptions *)options {
     POS_CHECK(request);
     if ((arc4random() % 100) > _rate) {
         return nil;
     }
-    return _responseSimulator(request, URL);
+    return _responseSimulator(request, hostURL, options);
 }
 
 @end

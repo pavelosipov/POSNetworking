@@ -72,8 +72,10 @@ NS_ASSUME_NONNULL_BEGIN
                 [subscriber sendCompleted];
                 return nil;
             }
-            POSHTTPResponse *simulatedResponse = [mergedOptions.responseOptions probeSimulationForRequest:request
-                                                                                                      URL:hostURL];
+            POSHTTPResponse *simulatedResponse = [mergedOptions.responseOptions
+                                                  probeSimulationForRequest:request
+                                                  hostURL:hostURL
+                                                  options:mergedOptions.requestOptions];
             if (simulatedResponse) {
                 [subscriber sendNext:simulatedResponse];
                 [subscriber sendCompleted];

@@ -11,10 +11,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol POSHTTPRequest;
+
 @class POSHTTPResponse;
+@class POSHTTPRequestOptions;
 
 /// Factory block for simulating response for specified request.
-typedef POSHTTPResponse * _Nullable (^POSHTTPResponseSimulator)(id<POSHTTPRequest> request, NSURL *URL);
+typedef POSHTTPResponse * _Nullable (^POSHTTPResponseSimulator)(
+    id<POSHTTPRequest> request,
+    NSURL *hostURL,
+    POSHTTPRequestOptions * _Nullable options);
 
 /// Options to simulate responses from server.
 @interface POSHTTPResponseOptions : NSObject
@@ -48,7 +53,9 @@ typedef POSHTTPResponse * _Nullable (^POSHTTPResponseSimulator)(id<POSHTTPReques
 ///
 /// @return Response if it is time to simulate according to 'rate' parameter or nil in other case.
 ///
-- (nullable POSHTTPResponse *)probeSimulationForRequest:(id<POSHTTPRequest>)request URL:(NSURL *)URL;
+- (nullable POSHTTPResponse *)probeSimulationForRequest:(id<POSHTTPRequest>)request
+                                                hostURL:(NSURL *)hostURL
+                                                options:(nullable POSHTTPRequestOptions *)options;
 
 ///
 /// @brief  The designated initializer

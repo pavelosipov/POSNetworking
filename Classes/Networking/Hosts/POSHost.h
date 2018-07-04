@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param options Custom options which will override host-specific options.
 /// @return Signal of response handling result.
 - (RACSignal<id> *)pushRequest:(id<POSHTTPRequest>)request
-                       options:(nullable POSHTTPRequestOptions *)options;
+                       options:(nullable POSHTTPGatewayOptions *)options;
 
 @end
 

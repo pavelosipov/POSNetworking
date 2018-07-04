@@ -11,17 +11,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface POSHTTPGatewayStub ()
-@property (nonatomic, copy) RACSignal *(^requestHandler)(id<POSHTTPRequest> request, NSURL *hostURL);
+@property (nonatomic, copy) POSHTTPGatewayStubRequestHandler requestHandler;
 @end
 
-@implementation POSHTTPGatewayStub {
-    POSHTTPRequestExecutionOptions * __nullable _options;
-}
+@implementation POSHTTPGatewayStub
+
 @synthesize options = _options;
 
-- (instancetype)initWithRequestHandler:(RACSignal *(^)(id<POSHTTPRequest>, NSURL *))requestHandler {
-    POSRX_CHECK(requestHandler);
-    if (self = [super initWithScheduler:RACTargetQueueScheduler.pos_mainThreadScheduler]) {
+- (instancetype)initWithRequestHandler:(POSHTTPGatewayStubRequestHandler)requestHandler {
+    POS_CHECK(requestHandler);
+    if (self = [super initWithScheduler:RACTargetQueueScheduler.pos_mainThreadScheduler safetyPredicate:nil]) {
         _requestHandler = [requestHandler copy];
     }
     return self;
@@ -30,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark POSHTTPGateway
 
 - (NSURLSession *)foregroundSession {
-    POSRX_CHECK(!"Not supported");
+    POS_CHECK(!"Not supported");
     return nil;
 }
 
@@ -40,25 +39,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id<POSTask>)taskForRequest:(id<POSHTTPRequest>)request
                        toHost:(NSURL *)hostURL
-                      options:(nullable POSHTTPRequestExecutionOptions *)options {
+                      options:(nullable POSHTTPGatewayOptions *)options {
     @weakify(self)
     return [POSTask createTask:^RACSignal * _Nonnull(POSTask *task) {
         @strongify(self);
-        return [self.requestHandler(request, hostURL) takeUntil:self.rac_willDeallocSignal];
+        return [self.requestHandler(request, hostURL, options) takeUntil:self.rac_willDeallocSignal];
     } scheduler:self.scheduler];
 }
 
-- (void)recoverBackgroundUploadRequestsUsingBlock:(void(^)(NSArray *uploadRequests))block {
-    if (block) {
-        block(NSArray.new);
-    }
+- (void)invalidateBackgroundTasksWithCompletionHandler:(dispatch_block_t)completionHandler {
+    POS_CHECK(completionHandler);
+    completionHandler();
 }
 
-- (RACSignal *)invalidateCancelingRequests:(BOOL)cancelPendingRequests {
+- (RACSignal *)invalidateForced:(BOOL)forced {
     return [RACSignal empty];
-}
-
-- (void)reconnectToBackgroundSession {
 }
 
 @end
