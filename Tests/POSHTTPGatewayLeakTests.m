@@ -6,7 +6,7 @@
 //  Copyright © 2015 Pavel Osipov. All rights reserved.
 //
 
-#import <POSRx/POSRx.h>
+#import <POSNetworking/POSNetworking.h>
 #import <POSAllocationTracker/POSAllocationTracker.h>
 #import <XCTest/XCTest.h>
 
@@ -35,20 +35,24 @@
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
     const uint8_t bytes[] = { 0xb7, 0xe2, 0x02 };
     NSData *responseData = [NSData dataWithBytes:bytes length:sizeof(bytes)];
-    POSHTTPRequestExecutionOptions *options =
-    [[POSHTTPRequestExecutionOptions alloc]
-     initWithHTTPOptions:nil
-     simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
-                        initWithRate:1.0f
-                        responses:@{[[POSHTTPResponse alloc] initWithData:responseData]: @(1)}]];
-    [[[_gateway taskForRequest:[POSHTTPRequest new] toHost:hostURL options:options] execute] subscribeCompleted:^{
-        [[_gateway invalidateCancelingRequests:YES] subscribeCompleted:^{
-            self.gateway = nil;
-            [[RACScheduler mainThreadScheduler] afterDelay:0.01 schedule:^{
-                [expectation fulfill];
+    POSHTTPGatewayOptions *options = [[POSHTTPGatewayOptions alloc]
+        initWithRequestOptions:nil
+        responseOptions:[[POSHTTPResponseOptions alloc]
+            initWithRate:100
+            responseSimulator:^POSHTTPResponse * (id<POSHTTPRequest> request, NSURL *URL, POSHTTPRequestOptions *_) {
+                return [[POSHTTPResponse alloc] initWithData:responseData];
+            }]];
+    [[[_gateway
+        taskForRequest:[POSHTTPGET build] toHost:hostURL options:options]
+        execute]
+        subscribeCompleted:^{
+            [[self.gateway invalidateForced:YES] subscribeCompleted:^{
+                self.gateway = nil;
+                [[RACScheduler mainThreadScheduler] afterDelay:0.01 schedule:^{
+                    [expectation fulfill];
+                }];
             }];
         }];
-    }];
     [self waitForExpectationsWithTimeout:5 handler:nil];
 }
 

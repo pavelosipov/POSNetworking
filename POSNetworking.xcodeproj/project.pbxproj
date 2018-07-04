@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		68AFBBA120E546B3009549C5 /* POSHTTPRequestExecutionOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB9C20E546B3009549C5 /* POSHTTPRequestExecutionOptionsTests.m */; };
-		68AFBBA320E546B3009549C5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68AFBB9E20E546B3009549C5 /* Info.plist */; };
 		68EDC21F20EBAC010088EF8A /* POSHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC21620EBAC000088EF8A /* POSHTTPRequest.m */; };
 		68EDC22020EBAC010088EF8A /* POSHTTPRequestOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC21820EBAC000088EF8A /* POSHTTPRequestOptions.m */; };
 		68EDC22120EBAC010088EF8A /* POSHTTPResponseOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC21B20EBAC010088EF8A /* POSHTTPResponseOptions.m */; };
@@ -32,6 +30,8 @@
 		68EDC25C20EBFEFA0088EF8A /* POSStaticHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBBAE20E62C06009549C5 /* POSStaticHost.m */; };
 		68EDC26120ECDB810088EF8A /* POSHTTPGatewayStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB8320E5465C009549C5 /* POSHTTPGatewayStub.m */; };
 		68EDC26220ECDE1C0088EF8A /* POSHostStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC26020ECDB4C0088EF8A /* POSHostStub.m */; };
+		68EDC26320ECE9730088EF8A /* POSHTTPGatewayLeakTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB9A20E546B3009549C5 /* POSHTTPGatewayLeakTests.m */; };
+		68EDC26420ECF0A10088EF8A /* POSHTTPGatewayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB9D20E546B3009549C5 /* POSHTTPGatewayTests.m */; };
 		693894054DEF9FF6F314B1C7 /* libPods-All-POSNetworkingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AFE476D4CF036B2D844EAA /* libPods-All-POSNetworkingTests.a */; };
 		F9ABCF34F638B393659F05A4 /* libPods-All-POSNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9A09350182F5122550DFE7 /* libPods-All-POSNetworking.a */; };
 /* End PBXBuildFile section */
@@ -244,10 +244,10 @@
 		68AFBB9920E546B3009549C5 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				68AFBB9D20E546B3009549C5 /* POSHTTPGatewayTests.m */,
 				68AFBB9A20E546B3009549C5 /* POSHTTPGatewayLeakTests.m */,
 				68AFBB9B20E546B3009549C5 /* POSHTTPRequestMethodTests.m */,
 				68AFBB9C20E546B3009549C5 /* POSHTTPRequestExecutionOptionsTests.m */,
-				68AFBB9D20E546B3009549C5 /* POSHTTPGatewayTests.m */,
 				68AFBB9E20E546B3009549C5 /* Info.plist */,
 			);
 			path = Tests;
@@ -395,7 +395,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68AFBBA320E546B3009549C5 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,7 +474,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68AFBBA120E546B3009549C5 /* POSHTTPRequestExecutionOptionsTests.m in Sources */,
+				68EDC26320ECE9730088EF8A /* POSHTTPGatewayLeakTests.m in Sources */,
+				68EDC26420ECF0A10088EF8A /* POSHTTPGatewayTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,7 +626,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = POSRxTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.pavelosipov.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -638,7 +638,7 @@
 			baseConfigurationReference = A6ED25F461A5027F42E9C31D /* Pods-All-POSNetworkingTests.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				INFOPLIST_FILE = POSRxTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.pavelosipov.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

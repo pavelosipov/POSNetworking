@@ -6,6 +6,18 @@
 //  Copyright © 2015 Pavel Osipov. All rights reserved.
 //
 
-#import <POSRx/POSRxNetworking.h>
-#import <POSRx/POSRxScheduling.h>
-#import <POSRx/POSRxUtils.h>
+#import "POSHTTPGateway.h"
+#import "POSHTTPGatewayOptions.h"
+
+#import "POSStaticHost.h"
+
+#import "POSHTTPGET.h"
+#import "POSHTTPHEAD.h"
+#import "POSHTTPPOST.h"
+#import "POSHTTPPUT.h"
+
+#import "POSHTTPRequest.h"
+#import "POSHTTPRequestOptions.h"
+
+#import "POSHTTPResponse.h"
+#import "POSHTTPResponseOptions.h"

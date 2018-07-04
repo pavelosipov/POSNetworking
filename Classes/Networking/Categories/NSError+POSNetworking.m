@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 static NSString * const kPOSHTTPStatusCodeErrorKey = @"HTTPStatusCode";
 
+NSString * const kPOSNetworkErrorCategory = @"Network";
+NSString * const kPOSNetworkCancelErrorCategory = @"Cancel";
+NSString * const kPOSServerErrorCategory = @"Server";
+
 @implementation NSError (POSNetworking)
 
 - (BOOL)pos_issuedBySSL {

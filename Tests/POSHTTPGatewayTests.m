@@ -6,7 +6,7 @@
 //  Copyright © 2015 Pavel Osipov. All rights reserved.
 //
 
-#import <POSRx/POSRx.h>
+#import <POSNetworking/POSNetworking.h>
 #import <POSAllocationTracker/POSAllocationTracker.h>
 #import <OHHTTPStubs/OHHTTPStubs.h>
 #import <XCTest/XCTest.h>
@@ -38,18 +38,28 @@
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
     const uint8_t bytes[] = { 0xb7, 0xe2, 0x02 };
     NSData *responseData = [NSData dataWithBytes:bytes length:sizeof(bytes)];
-    POSHTTPRequestExecutionOptions *options =
-    [[POSHTTPRequestExecutionOptions alloc]
-     initWithHTTPOptions:nil
-     simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
-                        initWithRate:1.0f
-                        responses:@{[[POSHTTPResponse alloc] initWithData:responseData]: @(1)}]];
-    [[[_gateway taskForRequest:[POSHTTPRequest new] toHost:hostURL options:options] execute] subscribeNext:^(POSHTTPResponse *response) {
-        XCTAssertTrue(response.metadata.statusCode == 200);
-        XCTAssertEqualObjects(response.metadata.URL, hostURL);
-        XCTAssertEqualObjects(response.data, responseData);
-        [expectation fulfill];
-    }];
+    POSHTTPGatewayOptions *options = [[POSHTTPGatewayOptions alloc]
+        initWithRequestOptions:[[[[POSHTTPRequestOptionsBuilder alloc] init]
+            withBody:responseData]
+            build]
+        responseOptions:[[POSHTTPResponseOptions alloc]
+            initWithRate:100
+            responseSimulator:^POSHTTPResponse * (id<POSHTTPRequest> request,
+                                                  NSURL *URL,
+                                                  POSHTTPRequestOptions * _Nullable options) {
+                XCTAssertEqualObjects(URL, hostURL);
+                return [[POSHTTPResponse alloc]
+                    initWithData:options.body
+                    metadata:[[NSHTTPURLResponse alloc] initWithURL:URL statusCode:200 HTTPVersion:@"1.1" headerFields:nil]];
+            }]];
+    [[[_gateway
+        taskForRequest:[POSHTTPGET build] toHost:hostURL options:options]
+        execute]
+        subscribeNext:^(POSHTTPResponse *response) {
+            XCTAssertTrue(response.metadata.statusCode == 200);
+            XCTAssertEqualObjects(response.data, responseData);
+            [expectation fulfill];
+        }];
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
@@ -63,12 +73,15 @@
     }];
     XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
-    [[[_gateway taskForRequest:[POSHTTPRequest new] toHost:hostURL options:nil] execute] subscribeNext:^(POSHTTPResponse *response) {
-        XCTAssertTrue(response.metadata.statusCode == 201);
-        XCTAssertEqualObjects(response.metadata.URL, hostURL);
-        XCTAssertEqualObjects(response.data, responseData);
-        [expectation fulfill];
-    }];
+    [[[_gateway
+        taskForRequest:[POSHTTPGET build] toHost:hostURL options:nil]
+        execute]
+        subscribeNext:^(POSHTTPResponse *response) {
+            XCTAssertTrue(response.metadata.statusCode == 201);
+            XCTAssertEqualObjects(response.metadata.URL, hostURL);
+            XCTAssertEqualObjects(response.data, responseData);
+            [expectation fulfill];
+        }];
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
@@ -84,10 +97,13 @@
     }];
     XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
-    [[[_gateway taskForRequest:[POSHTTPRequest new] toHost:[hostURL copy] options:nil] execute] subscribeError:^(NSError *error) {
-        XCTAssertEqualObjects(error.userInfo[NSURLErrorKey], hostURL);
-        [expectation fulfill];
-    }];
+    [[[_gateway
+        taskForRequest:[POSHTTPGET build] toHost:[hostURL copy] options:nil]
+        execute]
+        subscribeError:^(NSError *error) {
+            XCTAssertEqualObjects(error.userInfo[NSURLErrorKey], hostURL);
+            [expectation fulfill];
+        }];
     [self waitForExpectationsWithTimeout:1 handler:nil];
 }
 
@@ -101,7 +117,7 @@
         return [OHHTTPStubsResponse responseWithData:[responseData copy] statusCode:201 headers:nil];
     }];
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
-    POSTask *task = [_gateway taskForRequest:[POSHTTPRequest new] toHost:hostURL options:nil];
+    POSTask *task = [_gateway taskForRequest:[POSHTTPGET build] toHost:hostURL options:nil];
     [task.values subscribeNext:^(POSHTTPResponse *response) {
         XCTAssertTrue(response.metadata.statusCode == 201);
         [expectation fulfill];

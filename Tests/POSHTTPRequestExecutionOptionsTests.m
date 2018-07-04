@@ -26,7 +26,7 @@
                               allowUntrustedSSLCertificates:@(YES)
                               responseTimeout:@(30.0)]
          simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
-                            initWithRate:1.0f
+                            initWithRate:100
                             responses:@{[[POSHTTPResponse alloc] initWithStatusCode:200]: @(1)}]];
     POSHTTPRequestExecutionOptions *targetOptions =
         [[POSHTTPRequestExecutionOptions alloc]
@@ -37,7 +37,7 @@
                               allowUntrustedSSLCertificates:@(NO)
                               responseTimeout:@(45.0)]
          simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
-                            initWithRate:0.5f
+                            initWithRate:50
                             responses:@{[[POSHTTPResponse alloc] initWithStatusCode:500]: @(1)}]];
     POSHTTPRequestExecutionOptions *mergedOptions = [POSHTTPRequestExecutionOptions
                                                      merge:sourceOptions
@@ -64,7 +64,7 @@
                           allowUntrustedSSLCertificates:@(NO)
                           responseTimeout:@(50.0)]
      simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
-                        initWithRate:0.5f
+                        initWithRate:50
                         responses:@{[[POSHTTPResponse alloc] initWithStatusCode:500]: @(1)}]];
     POSHTTPRequestExecutionOptions *mergedOptions = [POSHTTPRequestExecutionOptions
                                                      merge:nil
@@ -87,7 +87,7 @@
                           allowUntrustedSSLCertificates:@(YES)
                           responseTimeout:@(60.0)]
      simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
-                        initWithRate:1.0f
+                        initWithRate:100
                         responses:@{[[POSHTTPResponse alloc] initWithStatusCode:200]: @(1)}]];
     POSHTTPRequestExecutionOptions *mergedOptions = [POSHTTPRequestExecutionOptions
                                                      merge:sourceOptions
@@ -109,7 +109,7 @@
                           allowUntrustedSSLCertificates:nil
                           responseTimeout:nil]
      simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
-                        initWithRate:1.0f
+                        initWithRate:100
                         responses:@{[[POSHTTPResponse alloc] initWithStatusCode:200]: @(1)}]];
     POSHTTPRequestExecutionOptions *targetOptions =
     [[POSHTTPRequestExecutionOptions alloc]
@@ -151,7 +151,7 @@
                           allowUntrustedSSLCertificates:nil
                           responseTimeout:nil]
      simulationOptions:[[POSHTTPRequestSimulationOptions alloc]
-                        initWithRate:0.5f
+                        initWithRate:50
                         responses:@{[[POSHTTPResponse alloc] initWithStatusCode:500]: @(1)}]];
     POSHTTPRequestExecutionOptions *mergedOptions = [POSHTTPRequestExecutionOptions
                                                      merge:sourceOptions

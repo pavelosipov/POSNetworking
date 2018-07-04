@@ -61,7 +61,7 @@ typedef POSHTTPResponse * _Nullable (^POSHTTPResponseSimulator)(
 /// @brief  The designated initializer
 ///
 /// @param  rate Value in [0..100] range which spicifies probability percent of the falure simulation.
-/// @param  responseSimulator Returns approprite response for specified request when its time to do that.
+/// @param  simulator Returns approprite response for specified request when its time to do that.
 ///                           It may return nil to skip simulation.
 ///
 - (instancetype)initWithRate:(NSUInteger)rate
