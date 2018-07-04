@@ -21,16 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation POSHost
 
-@synthesize ID = _ID;
 @synthesize options = _options;
 
-- (instancetype)initWithID:(NSString *)ID
-                   gateway:(id<POSHTTPGateway>)gateway
-                   options:(nullable POSHTTPGatewayOptions *)options {
-    POS_CHECK(ID.length > 0);
+- (instancetype)initWithGateway:(id<POSHTTPGateway>)gateway
+                        options:(nullable POSHTTPGatewayOptions *)options {
     POS_CHECK(gateway);
     if (self = [super initWithScheduler:gateway.scheduler safetyPredicate:nil]) {
-        _ID = [ID copy];
         _gateway = gateway;
         _options = options;
     }
@@ -53,8 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (RACSignal *)pushRequest:(id<POSHTTPRequest>)request options:(nullable POSHTTPGatewayOptions *)options {
     POS_CHECK(request);
     POS_CHECK(self.URL);
-    @weakify(self);
-    return [[[[[_gateway
+    return [[[[_gateway
         taskForRequest:request toHost:self.URL options:[POSHTTPGatewayOptions merge:_options with:options]]
         execute]
         takeUntil:self.rac_willDeallocSignal]
@@ -72,10 +67,6 @@ NS_ASSUME_NONNULL_BEGIN
             } @catch (NSException *exception) {
                 return [RACSignal error:[NSError pos_serverErrorWithTag:@"exception" format:exception.reason]];
             }
-        }]
-        doError:^(NSError *error) {
-            @strongify(self);
-            [self handleError:error];
         }];
 }
 

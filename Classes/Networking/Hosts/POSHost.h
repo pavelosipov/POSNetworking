@@ -19,9 +19,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Base host implementation.
 @protocol POSHost <POSSchedulable>
 
-/// Host unique identifier.
-@property (nonatomic, readonly) NSString *ID;
-
 /// URL of the host. May be nil.
 @property (nonatomic, readonly, nullable) NSURL *URL;
 
@@ -50,18 +47,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// Base implementation for POSHost protocol.
 @interface POSHost : POSSchedulableObject <POSHost>
 
-- (instancetype)initWithID:(NSString *)ID
-                   gateway:(id<POSHTTPGateway>)gateway
-                   options:(nullable POSHTTPGatewayOptions *)options NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithGateway:(id<POSHTTPGateway>)gateway
+                        options:(nullable POSHTTPGatewayOptions *)options NS_DESIGNATED_INITIALIZER;
 
 POS_SCHEDULABLE_INIT_RECURSIVELY_UNAVAILABLE;
-
-@end
-
-@interface POSHost (Protected)
-
-/// Hook for performing host-specific logic for tracking errors.
-- (void)handleError:(NSError *)error;
 
 @end
 

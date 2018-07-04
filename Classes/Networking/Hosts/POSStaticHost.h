@@ -15,14 +15,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) NSURL *URL;
 
-- (instancetype)initWithID:(NSString *)ID
-                   gateway:(id<POSHTTPGateway>)gateway
-                   options:(nullable POSHTTPGatewayOptions *)options
-                       URL:(NSURL *)URL NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithURL:(NSURL *)URL
+                    gateway:(id<POSHTTPGateway>)gateway
+                    options:(nullable POSHTTPGatewayOptions *)options NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)initWithID:(NSString *)ID
-                   gateway:(id<POSHTTPGateway>)gateway
-                   options:(nullable POSHTTPGatewayOptions *)options NS_UNAVAILABLE;
+- (instancetype)initWithGateway:(id<POSHTTPGateway>)gateway
+                        options:(nullable POSHTTPGatewayOptions *)options NS_UNAVAILABLE;
 
 @end
 
