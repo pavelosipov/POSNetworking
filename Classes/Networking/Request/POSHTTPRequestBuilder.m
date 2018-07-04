@@ -49,6 +49,12 @@ typedef NSURLRequest * _Nullable (^POSURLRequestFactory)(NSURL *hostURL, POSHTTP
         options:_requestOptions];
 }
 
+- (POSURLSessionTaskFactory)URLSessionTaskFactory {
+    return ^NSURLSessionTask * _Nullable(NSURLRequest *request, id<POSHTTPGateway> gateway, NSError **error) {
+        return [gateway.foregroundSession dataTaskWithRequest:request];
+    };
+}
+
 - (POSHTTPResponseHandler)responseHandler {
     POSHTTPDataHandler dataHandler = _dataHandler;
     POSHTTPMetadataHandler metadataHandler = self.metadataHandler;
@@ -108,12 +114,6 @@ typedef NSURLRequest * _Nullable (^POSURLRequestFactory)(NSURL *hostURL, POSHTTP
 - (instancetype)withDataHandler:(nullable POSHTTPDataHandler)handler {
     self.dataHandler = [handler copy];
     return self;
-}
-
-- (POSURLSessionTaskFactory)URLSessionTaskFactory {
-    return ^NSURLSessionTask * _Nullable(NSURLRequest *request, id<POSHTTPGateway> gateway, NSError **error) {
-        return [gateway.foregroundSession dataTaskWithRequest:request];
-    };
 }
 
 @end
