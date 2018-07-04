@@ -7,7 +7,9 @@
 //
 
 #import "POSHTTPRequestOptions.h"
+
 #import "NSDictionary+POSNetworking.h"
+#import "NSString+POSNetworking.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -43,7 +45,7 @@ allowedUntrustedSSLCertificates:(nullable NSNumber *)allowed {
     }
     NSString *URLPath;
     if (source.URLPath && target.URLPath) {
-        URLPath = [target.URLPath hasPrefix:@"/"] ? [target.URLPath substringFromIndex:1] : target.URLPath;
+        URLPath = [NSString stringWithFormat:@"%@/%@", [source.URLPath pos_trimSymbol:@"/"], [target.URLPath pos_trimSymbol:@"/"]] ;
     } else {
         URLPath = source.URLPath ?: target.URLPath;
     }

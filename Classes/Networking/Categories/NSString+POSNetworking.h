@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)pos_URLEncoded;
 
+- (NSString *)pos_trimSymbol:(NSString *)symbol;
+
 @end
 
 NS_ASSUME_NONNULL_END

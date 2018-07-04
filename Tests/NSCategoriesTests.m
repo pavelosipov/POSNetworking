@@ -9,10 +9,10 @@
 #import <POSNetworking/POSNetworking.h>
 #import <XCTest/XCTest.h>
 
-@interface NSURLCategoryTests : XCTestCase
+@interface NSCategoriesTests : XCTestCase
 @end
 
-@implementation NSURLCategoryTests
+@implementation NSCategoriesTests
 
 #pragma mark - Path Tests
 
@@ -82,6 +82,19 @@
     NSURL *fullURL = [partialURL pos_URLByAppendingPath:@"/pavelosipov/"
                                                   query:@{@"number": @0, @"string": @"s", @"boolean": @NO}];
     XCTAssertEqualObjects(fullURL, [@"https://github.com/pavelosipov/?number=0&string=s&boolean=0" pos_URL]);
+}
+
+#pragma mark - NSString
+
+- (void)testStringTrimming {
+    XCTAssertEqualObjects(@"asdfg", [@"123asdfg123" pos_trimSymbol:@"123"]);
+    XCTAssertEqualObjects(@"asdfg", [@"123asdfg" pos_trimSymbol:@"123"]);
+    XCTAssertEqualObjects(@"asdfg", [@"asdfg123" pos_trimSymbol:@"123"]);
+    XCTAssertEqualObjects(@"asdfg", [@"/asdfg/" pos_trimSymbol:@"/"]);
+    XCTAssertEqualObjects(@"asdfg", [@"asdfg/" pos_trimSymbol:@"/"]);
+    XCTAssertEqualObjects(@"asdfg", [@"/asdfg" pos_trimSymbol:@"/"]);
+    XCTAssertEqualObjects(@"asdfg", [@"asdfg" pos_trimSymbol:@"123"]);
+    XCTAssertEqualObjects(@"asdfg", [@"asdfg" pos_trimSymbol:@"/"]);
 }
 
 /*
