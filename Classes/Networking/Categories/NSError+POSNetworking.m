@@ -40,6 +40,19 @@ static NSString * const kPOSHTTPStatusCodeErrorKey = @"HTTPStatusCode";
         kPOSTrackableTagsKey: @[@"badcode", @(statusCode).stringValue]}];
 }
 
++ (NSError *)pos_serverErrorWithReason:(nullable NSError *)reason format:(nullable NSString *)format, ... {
+    NSMutableDictionary *userInfo = [NSMutableDictionary new];
+    if (format) {
+        va_list args;
+        va_start(args, format);
+        userInfo[kPOSTrackableDescriptionKey] = [[NSString alloc] initWithFormat:format arguments:args];
+        va_end(args);
+    }
+    userInfo[kPOSTrackableTagsKey] = @[@"response", @"unknown"];
+    userInfo[NSUnderlyingErrorKey] = reason;
+    return [self pos_errorWithCategory:kPOSServerErrorCategory userInfo:userInfo];
+}
+
 + (NSError *)pos_serverErrorWithTag:(NSString *)tag format:(nullable NSString *)format, ... {
     POS_CHECK(tag);
     NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];

@@ -26,6 +26,9 @@ FOUNDATION_EXTERN NSString * const kPOSServerErrorCategory;
 /// Factory method for errors issued by some unexpected server behaviour.
 + (NSError *)pos_serverErrorWithTag:(NSString *)tag format:(nullable NSString *)format, ...;
 
+/// Factory method for errors issued by some unexpected server behaviour.
++ (NSError *)pos_serverErrorWithReason:(nullable NSError *)reason format:(nullable NSString *)format, ...;
+
 /// Factory method for errors issued by bad responses from API endpoints.
 + (NSError *)pos_serverErrorWithHTTPStatusCode:(NSInteger)statusCode;
 
