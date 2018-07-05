@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation POSHTTPGET
 
-+ (id<POSHTTPRequest>)build {
++ (id<POSHTTPRequest>)request {
     return [[[POSHTTPGET alloc] init] build];
 }
 

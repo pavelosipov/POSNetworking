@@ -44,7 +44,7 @@
                 return [[POSHTTPResponse alloc] initWithData:responseData];
             }]];
     [[[_gateway
-        taskForRequest:[POSHTTPGET build] toHost:hostURL hostOptions:nil extraOptions:options]
+        taskForRequest:[POSHTTPGET request] toHost:hostURL hostOptions:nil extraOptions:options]
         execute]
         subscribeCompleted:^{
             [[self.gateway invalidateForced:YES] subscribeCompleted:^{

@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSUInteger responseCount = 0;
     for (NSUInteger i = 0; i < 10000; ++i) {
         POSHTTPResponse *response = [options
-                                     probeSimulationForRequest:[POSHTTPGET build]
+                                     probeSimulationForRequest:[POSHTTPGET request]
                                      hostURL:[@"https://github.com" pos_URL]
                                      options:nil];
         if (response) {
@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
                                                            POSHTTPRequestOptions * _Nullable options) {
                                             return [[POSHTTPResponse alloc] initWithStatusCode:20];
                                         }];
-    POSHTTPRequest *request = [POSHTTPGET build];
+    POSHTTPRequest *request = [POSHTTPGET request];
     NSURL *URL = [@"https://github.com" pos_URL];
     
     source = [[[[POSHTTPGatewayOptionsBuilder alloc] init] withResponseOptions:nil] build];

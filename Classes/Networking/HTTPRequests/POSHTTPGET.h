@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface POSHTTPGET : POSHTTPRequestBuilder
 
-+ (id<POSHTTPRequest>)build;
++ (id<POSHTTPRequest>)request;
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithHTTPMethod:(NSString *)HTTPMethod NS_UNAVAILABLE;

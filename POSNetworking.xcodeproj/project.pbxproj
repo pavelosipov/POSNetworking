@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		68E799CF20ECF7C900DB02A3 /* NSCategoriesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB9B20E546B3009549C5 /* NSCategoriesTests.m */; };
+		68E799D220EE2EF600DB02A3 /* POSStaticHostTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68E799D120EE2EF600DB02A3 /* POSStaticHostTests.m */; };
 		68EDC21F20EBAC010088EF8A /* POSHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC21620EBAC000088EF8A /* POSHTTPRequest.m */; };
 		68EDC22020EBAC010088EF8A /* POSHTTPRequestOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC21820EBAC000088EF8A /* POSHTTPRequestOptions.m */; };
 		68EDC22120EBAC010088EF8A /* POSHTTPResponseOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 68EDC21B20EBAC010088EF8A /* POSHTTPResponseOptions.m */; };
@@ -82,6 +83,7 @@
 		68AFBBAF20E62C06009549C5 /* POSHost.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = POSHost.m; sourceTree = "<group>"; };
 		68AFBBB020E62C06009549C5 /* POSStaticHost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSStaticHost.h; sourceTree = "<group>"; };
 		68AFBBB120E62C06009549C5 /* POSHost.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = POSHost.h; sourceTree = "<group>"; };
+		68E799D120EE2EF600DB02A3 /* POSStaticHostTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSStaticHostTests.m; sourceTree = "<group>"; };
 		68EDC21520EBAC000088EF8A /* POSHTTPRequestOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestOptions.h; sourceTree = "<group>"; };
 		68EDC21620EBAC000088EF8A /* POSHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPRequest.m; sourceTree = "<group>"; };
 		68EDC21720EBAC000088EF8A /* POSHTTPRequestProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POSHTTPRequestProgress.h; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				68AFBB9D20E546B3009549C5 /* POSHTTPGatewayTests.m */,
 				68AFBB9A20E546B3009549C5 /* POSHTTPGatewayLeakTests.m */,
 				E986A4BC20ED5E24008E71E0 /* POSHTTPGatewayOptionsTests.m */,
+				68E799D120EE2EF600DB02A3 /* POSStaticHostTests.m */,
 				68AFBB9C20E546B3009549C5 /* POSHTTPRequestTests.m */,
 				68AFBB9B20E546B3009549C5 /* NSCategoriesTests.m */,
 				68AFBB9E20E546B3009549C5 /* Info.plist */,
@@ -479,6 +482,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68E799D220EE2EF600DB02A3 /* POSStaticHostTests.m in Sources */,
 				68E799CF20ECF7C900DB02A3 /* NSCategoriesTests.m in Sources */,
 				E986A4BB20ED4B7D008E71E0 /* POSHTTPRequestTests.m in Sources */,
 				68EDC26320ECE9730088EF8A /* POSHTTPGatewayLeakTests.m in Sources */,

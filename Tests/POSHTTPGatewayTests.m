@@ -60,7 +60,7 @@
                     metadata:[[NSHTTPURLResponse alloc] initWithURL:URL statusCode:200 HTTPVersion:@"1.1" headerFields:nil]];
             }]];
     [[[_gateway
-        taskForRequest:[POSHTTPGET build] toHost:hostURL hostOptions:nil extraOptions:options]
+        taskForRequest:[POSHTTPGET request] toHost:hostURL hostOptions:nil extraOptions:options]
         execute]
         subscribeNext:^(POSHTTPResponse *response) {
             XCTAssertTrue(response.metadata.statusCode == 200);
@@ -81,7 +81,7 @@
     XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
     [[[_gateway
-        taskForRequest:[POSHTTPGET build] toHost:hostURL hostOptions:nil extraOptions:nil]
+        taskForRequest:[POSHTTPGET request] toHost:hostURL hostOptions:nil extraOptions:nil]
         execute]
         subscribeNext:^(POSHTTPResponse *response) {
             XCTAssertTrue(response.metadata.statusCode == 201);
@@ -105,7 +105,7 @@
     XCTestExpectation *expectation = [self expectationWithDescription:@"task completion"];
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
     [[[_gateway
-        taskForRequest:[POSHTTPGET build] toHost:[hostURL copy] hostOptions:nil extraOptions:nil]
+        taskForRequest:[POSHTTPGET request] toHost:[hostURL copy] hostOptions:nil extraOptions:nil]
         execute]
         subscribeError:^(NSError *error) {
             XCTAssertEqualObjects(error.userInfo[NSURLErrorKey], hostURL);
@@ -124,7 +124,7 @@
         return [OHHTTPStubsResponse responseWithData:[responseData copy] statusCode:201 headers:nil];
     }];
     NSURL *hostURL = [NSURL URLWithString:@"https://github.com/pavelosipov"];
-    POSTask *task = [_gateway taskForRequest:[POSHTTPGET build] toHost:hostURL hostOptions:nil extraOptions:nil];
+    POSTask *task = [_gateway taskForRequest:[POSHTTPGET request] toHost:hostURL hostOptions:nil extraOptions:nil];
     [task.values subscribeNext:^(POSHTTPResponse *response) {
         XCTAssertTrue(response.metadata.statusCode == 201);
         [expectation fulfill];
