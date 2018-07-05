@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
     POS_CHECK(request);
     POS_CHECK(self.URL);
     return [[[[_gateway
-        taskForRequest:request toHost:self.URL options:[POSHTTPGatewayOptions merge:_options with:options]]
+        taskForRequest:request toHost:self.URL hostOptions:_options extraOptions:options]
         execute]
         takeUntil:self.rac_willDeallocSignal]
         flattenMap:^RACSignal *(POSHTTPResponse *response) {

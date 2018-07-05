@@ -7,6 +7,8 @@
 //
 
 #import "POSHTTPGatewayStub.h"
+#import "POSHTTPGatewayOptions.h"
+#import "POSHTTPRequest.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,8 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @implementation POSHTTPGatewayStub
-
-@synthesize options = _options;
 
 - (instancetype)initWithRequestHandler:(POSHTTPGatewayStubRequestHandler)requestHandler {
     POS_CHECK(requestHandler);
@@ -27,6 +27,10 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark POSHTTPGateway
+
+- (nullable POSHTTPGatewayOptions *)options {
+    return nil;
+}
 
 - (NSURLSession *)foregroundSession {
     POS_CHECK(!"Not supported");
@@ -39,8 +43,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id<POSTask>)taskForRequest:(id<POSHTTPRequest>)request
                        toHost:(NSURL *)hostURL
-                      options:(nullable POSHTTPGatewayOptions *)options {
+                  hostOptions:(nullable POSHTTPGatewayOptions *)hostOptions
+                 extraOptions:(nullable POSHTTPGatewayOptions *)extraOptions {
     @weakify(self)
+    POSHTTPGatewayOptions *options = [self p_combineSelfOptions:self.options
+                                                    hostOptions:hostOptions
+                                                   extraOptions:extraOptions
+                                                 requestOptions:request.options];
     return [POSTask createTask:^RACSignal * _Nonnull(POSTask *task) {
         @strongify(self);
         return [self.requestHandler(request, hostURL, options) takeUntil:self.rac_willDeallocSignal];
@@ -54,6 +63,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (RACSignal *)invalidateForced:(BOOL)forced {
     return [RACSignal empty];
+}
+
+#pragma mark - Private
+
+- (nullable POSHTTPGatewayOptions *)p_combineSelfOptions:(nullable POSHTTPGatewayOptions *)gatewayOptions
+                                             hostOptions:(nullable POSHTTPGatewayOptions *)hostOptions
+                                            extraOptions:(nullable POSHTTPGatewayOptions *)extraOptions
+                                          requestOptions:(POSHTTPRequestOptions *)requestOptions {
+    POSHTTPGatewayOptions *combinedOptions = gatewayOptions;
+    combinedOptions = [POSHTTPGatewayOptions merge:combinedOptions with:hostOptions];
+    combinedOptions = [POSHTTPGatewayOptions merge:combinedOptions withRequestOptions:requestOptions];
+    combinedOptions = [POSHTTPGatewayOptions merge:combinedOptions with:extraOptions];
+    return combinedOptions;
 }
 
 @end

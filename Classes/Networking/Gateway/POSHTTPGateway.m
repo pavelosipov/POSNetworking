@@ -30,8 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 @synthesize backgroundSession = _backgroundSession;
 
 - (instancetype)initWithScheduler:(RACTargetQueueScheduler *)scheduler
-      backgroundSessionIdentifier:(nullable NSString *)ID {
+      backgroundSessionIdentifier:(nullable NSString *)ID
+                          options:(nullable POSHTTPGatewayOptions *)options {
     if (self = [super initWithScheduler:scheduler safetyPredicate:nil]) {
+        _options = options;
         NSURLSessionConfiguration *foregroundConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
         operationQueue.underlyingQueue = scheduler.queue;
@@ -55,27 +57,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (id<POSTask>)taskForRequest:(id<POSHTTPRequest>)request
                        toHost:(NSURL *)hostURL
-                      options:(nullable POSHTTPGatewayOptions *)options {
+                  hostOptions:(nullable POSHTTPGatewayOptions *)hostOptions
+                 extraOptions:(nullable POSHTTPGatewayOptions *)extraOptions {
     POS_CHECK(request);
     POS_CHECK(hostURL);
-    POSHTTPGatewayOptions *mergedOptions = [POSHTTPGatewayOptions merge:_options with:options];
-    mergedOptions = [POSHTTPGatewayOptions merge:mergedOptions withRequestOptions:request.options];
+    POSHTTPGatewayOptions *options = [self p_combineSelfOptions:_options
+                                                    hostOptions:hostOptions
+                                                   extraOptions:extraOptions
+                                                 requestOptions:request.options];
     return [POSTask createTask:^RACSignal *(POSTask *task) {
         return [RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
             NSError *error = nil;
             NSURLSessionTask *sessionTask = [request taskWithURL:hostURL
                                                       forGateway:self
-                                                         options:mergedOptions.requestOptions
+                                                         options:options.requestOptions
                                                            error:&error];
             if (!sessionTask) {
                 [subscriber sendError:error];
                 [subscriber sendCompleted];
                 return nil;
             }
-            POSHTTPResponse *simulatedResponse = [mergedOptions.responseOptions
+            POSHTTPResponse *simulatedResponse = [options.responseOptions
                                                   probeSimulationForRequest:request
                                                   hostURL:hostURL
-                                                  options:mergedOptions.requestOptions];
+                                                  options:options.requestOptions];
             if (simulatedResponse) {
                 [subscriber sendNext:simulatedResponse];
                 [subscriber sendCompleted];
@@ -83,7 +88,7 @@ NS_ASSUME_NONNULL_BEGIN
             }
             NSMutableData *responseData = [[NSMutableData alloc] init];
             @weakify(sessionTask);
-            sessionTask.pos_allowUntrustedSSLCertificates = mergedOptions.requestOptions.allowUntrustedSSLCertificates;
+            sessionTask.pos_allowUntrustedSSLCertificates = options.requestOptions.allowUntrustedSSLCertificates;
             sessionTask.pos_completionHandler = ^(NSError *error) {
                 @strongify(sessionTask);
                 NSURL *responseURL = sessionTask.originalRequest.URL ?: hostURL;
@@ -148,6 +153,19 @@ NS_ASSUME_NONNULL_BEGIN
         [_backgroundSession finishTasksAndInvalidate];
     }
     return invalidateSignal;
+}
+
+#pragma mark - Private
+
+- (nullable POSHTTPGatewayOptions *)p_combineSelfOptions:(nullable POSHTTPGatewayOptions *)gatewayOptions
+                                             hostOptions:(nullable POSHTTPGatewayOptions *)hostOptions
+                                            extraOptions:(nullable POSHTTPGatewayOptions *)extraOptions
+                                          requestOptions:(POSHTTPRequestOptions *)requestOptions {
+    POSHTTPGatewayOptions *combinedOptions = gatewayOptions;
+    combinedOptions = [POSHTTPGatewayOptions merge:combinedOptions with:hostOptions];
+    combinedOptions = [POSHTTPGatewayOptions merge:combinedOptions withRequestOptions:requestOptions];
+    combinedOptions = [POSHTTPGatewayOptions merge:combinedOptions with:extraOptions];
+    return combinedOptions;
 }
 
 #pragma mark - NSURLSessionDelegate
