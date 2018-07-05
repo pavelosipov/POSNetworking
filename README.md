@@ -1,2 +1,2 @@
-# POSRx
-Utilities around ReactiveCocoa library
+# POSNetworking
+Reactive interface to NSURLSession API.
