@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation POSHTTPGatewayStub
 
+@synthesize options = _options;
+
 - (instancetype)initWithRequestHandler:(POSHTTPGatewayStubRequestHandler)requestHandler {
     POS_CHECK(requestHandler);
     if (self = [super initWithScheduler:RACTargetQueueScheduler.pos_mainThreadScheduler safetyPredicate:nil]) {
@@ -27,10 +29,6 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark POSHTTPGateway
-
-- (nullable POSHTTPGatewayOptions *)options {
-    return nil;
-}
 
 - (NSURLSession *)foregroundSession {
     POS_CHECK(!"Not supported");
