@@ -55,7 +55,7 @@ POS_INIT_UNAVAILABLE
 
 - (POSHTTPRequestOptions *)build;
 
-- (instancetype)withPath:(nullable NSString *)path;
+- (instancetype)withPath:(nullable NSString *)pathFormat, ...;
 - (instancetype)withHeaderFields:(nullable NSDictionary<NSString *, NSString *> *)headerFields;
 - (instancetype)withQuery:(nullable NSDictionary<NSString *, id<NSObject>> *)query;
 - (instancetype)withBody:(nullable NSData *)body;

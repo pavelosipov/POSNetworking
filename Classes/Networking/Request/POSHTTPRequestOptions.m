@@ -86,7 +86,14 @@ allowedUntrustedSSLCertificates:(nullable NSNumber *)allowed {
         allowedUntrustedSSLCertificates:_allowUntrustedSSLCertificates];
 }
 
-- (instancetype)withPath:(nullable NSString *)URLPath {
+- (instancetype)withPath:(nullable NSString *)pathFormat, ... {
+    NSString *URLPath = nil;
+    if (pathFormat) {
+        va_list args;
+        va_start(args, pathFormat);
+        URLPath = [[NSString alloc] initWithFormat:pathFormat arguments:args];
+        va_end(args);
+    }
     self.URLPath = URLPath;
     return self;
 }
