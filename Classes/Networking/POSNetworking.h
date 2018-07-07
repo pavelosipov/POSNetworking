@@ -26,4 +26,5 @@
 #import "NSError+POSNetworking.h"
 #import "NSString+POSNetworking.h"
 #import "NSURL+POSNetworking.h"
+#import "NSNumber+POSNetworking.h"
 #import "NSHTTPURLResponse+POSNetworking.h"

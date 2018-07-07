@@ -1,0 +1,19 @@
+//
+//  NSNumber+POSNetworking.h
+//  POSNetworking
+//
+//  Created by Pavel Osipov on 03/07/2018.
+//  Copyright © 2018 Pavel Osipov. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSNumber (POSNetworking)
+
+- (BOOL)pos_contains2XXStatusCode;
+
+@end
+
+NS_ASSUME_NONNULL_END

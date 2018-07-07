@@ -37,6 +37,7 @@
 		693894054DEF9FF6F314B1C7 /* libPods-All-POSNetworkingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33AFE476D4CF036B2D844EAA /* libPods-All-POSNetworkingTests.a */; };
 		E986A4BB20ED4B7D008E71E0 /* POSHTTPRequestTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AFBB9C20E546B3009549C5 /* POSHTTPRequestTests.m */; };
 		E986A4BD20ED5E24008E71E0 /* POSHTTPGatewayOptionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E986A4BC20ED5E24008E71E0 /* POSHTTPGatewayOptionsTests.m */; };
+		E986A4C120F0C0D6008E71E0 /* NSNumber+POSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = E986A4BF20F0C0D5008E71E0 /* NSNumber+POSNetworking.m */; };
 		F9ABCF34F638B393659F05A4 /* libPods-All-POSNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA9A09350182F5122550DFE7 /* libPods-All-POSNetworking.a */; };
 /* End PBXBuildFile section */
 
@@ -126,6 +127,8 @@
 		A6ED25F461A5027F42E9C31D /* Pods-All-POSNetworkingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSNetworkingTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSNetworkingTests/Pods-All-POSNetworkingTests.release.xcconfig"; sourceTree = "<group>"; };
 		B03DDB3C96938F8D775A5D19 /* Pods-All-POSNetworking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-All-POSNetworking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-All-POSNetworking/Pods-All-POSNetworking.debug.xcconfig"; sourceTree = "<group>"; };
 		E986A4BC20ED5E24008E71E0 /* POSHTTPGatewayOptionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = POSHTTPGatewayOptionsTests.m; sourceTree = "<group>"; };
+		E986A4BF20F0C0D5008E71E0 /* NSNumber+POSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+POSNetworking.m"; sourceTree = "<group>"; };
+		E986A4C020F0C0D5008E71E0 /* NSNumber+POSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+POSNetworking.h"; sourceTree = "<group>"; };
 		FA9A09350182F5122550DFE7 /* libPods-All-POSNetworking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-All-POSNetworking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -210,6 +213,8 @@
 				68EDC22720EBAC3A0088EF8A /* NSError+POSNetworking.m */,
 				68EDC22C20EBAC3A0088EF8A /* NSHTTPURLResponse+POSNetworking.h */,
 				68EDC22A20EBAC3A0088EF8A /* NSHTTPURLResponse+POSNetworking.m */,
+				E986A4C020F0C0D5008E71E0 /* NSNumber+POSNetworking.h */,
+				E986A4BF20F0C0D5008E71E0 /* NSNumber+POSNetworking.m */,
 				68EDC22D20EBAC3A0088EF8A /* NSString+POSNetworking.h */,
 				68EDC23020EBAC3B0088EF8A /* NSString+POSNetworking.m */,
 				68EDC23120EBAC3B0088EF8A /* NSURL+POSNetworking.h */,
@@ -462,6 +467,7 @@
 				68EDC23520EBAC3B0088EF8A /* NSHTTPURLResponse+POSNetworking.m in Sources */,
 				68EDC26120ECDB810088EF8A /* POSHTTPGatewayStub.m in Sources */,
 				68EDC22220EBAC010088EF8A /* POSHTTPResponse.m in Sources */,
+				E986A4C120F0C0D6008E71E0 /* NSNumber+POSNetworking.m in Sources */,
 				68EDC25820EBEAC40088EF8A /* POSHTTPHEAD.m in Sources */,
 				68EDC25B20EBF9330088EF8A /* POSHost.m in Sources */,
 				68EDC23A20EBAC3B0088EF8A /* NSURLSessionTask+POSNetworking.m in Sources */,
