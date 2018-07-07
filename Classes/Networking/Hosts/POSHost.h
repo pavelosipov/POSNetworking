@@ -16,6 +16,17 @@ NS_ASSUME_NONNULL_BEGIN
 @class POSHTTPGatewayOptions;
 @class POSHTTPRequestOptions;
 
+@interface POSHostURLInfo : NSObject
+
+@property (nonatomic, readonly) NSURL *URL;
+@property (nonatomic, readonly, nullable) POSHTTPRequestOptions *options;
+
+- (instancetype)initWithURL:(NSURL *)URL options:(nullable POSHTTPRequestOptions *)options;
+
+POS_INIT_UNAVAILABLE
+
+@end
+
 /// Base host implementation.
 @protocol POSHost <POSSchedulable>
 
@@ -26,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) POSHTTPGatewayOptions *options;
 
 /// Provides possibility to fetch NSURL if corresponding URL property is nil.
-- (RACSignal<NSURL *> *)fetchURL;
+- (RACSignal<POSHostURLInfo *> *)fetchURLInfo;
 
 /// @brief Sends request.
 /// @param request Sending request.

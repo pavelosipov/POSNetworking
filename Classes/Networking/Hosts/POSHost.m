@@ -37,9 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
     return nil;
 }
 
-- (RACSignal<NSURL *> *)fetchURL {
+- (RACSignal<POSHostURLInfo *> *)fetchURLInfo {
     POS_CHECK(self.URL);
-    return [RACSignal return:self.URL];
+    return [RACSignal return:[[POSHostURLInfo alloc] initWithURL:self.URL options:self.options.requestOptions]];
 }
 
 - (RACSignal *)pushRequest:(id<POSHTTPRequest>)request {
@@ -68,6 +68,21 @@ NS_ASSUME_NONNULL_BEGIN
                 return [RACSignal error:[NSError pos_serverErrorWithTag:@"exception" format:exception.reason]];
             }
         }];
+}
+
+@end
+
+#pragma mark -
+
+@implementation POSHostURLInfo
+
+- (instancetype)initWithURL:(NSURL *)URL options:(nullable POSHTTPRequestOptions *)options {
+    POS_CHECK(URL);
+    if (self = [super init]) {
+        _URL = URL;
+        _options = options;
+    }
+    return self;
 }
 
 @end
