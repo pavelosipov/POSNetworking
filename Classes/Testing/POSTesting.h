@@ -7,5 +7,5 @@
 //
 
 #import "POSHTTPGatewayStub.h"
-#import "POSHTTPHostStub.h"
+#import "POSHostStub.h"
 #import "POSNetworking.h"
