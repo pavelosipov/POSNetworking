@@ -270,8 +270,8 @@ didFinishDownloadingToURL:(NSURL *)location {
 totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
     if (downloadTask.pos_downloadProgress) {
         downloadTask.pos_downloadProgress((POSHTTPRequestProgress) {
-            .ready = bytesWritten,
-            .total = totalBytesWritten
+            .ready = totalBytesWritten,
+            .total = totalBytesExpectedToWrite
         });
     }
 }
