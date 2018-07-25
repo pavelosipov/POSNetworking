@@ -29,8 +29,9 @@ typedef id _Nullable (^POSHTTPResponseHandler)(POSHTTPResponse *response, NSErro
 /// Represents repeatable request to remote server.
 @protocol POSHTTPRequest <NSObject>
 
-@property (nonatomic, readonly) POSHTTPResponseHandler responseHandler;
+@property (nonatomic, readonly) NSString *HTTPMethod;
 @property (nonatomic, readonly, nullable) POSHTTPRequestOptions *options;
+@property (nonatomic, readonly) POSHTTPResponseHandler responseHandler;
 
 /// Creates network task using one of NSURLSessions inside POSHTTPGateway.
 - (nullable NSURLSessionTask *)taskWithURL:(NSURL *)hostURL

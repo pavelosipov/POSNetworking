@@ -16,13 +16,13 @@ uint64_t const POSProgressValueUnknownUnitsCount = UINT64_MAX;
 
 @interface POSHTTPRequest ()
 @property (nonatomic, readonly) POSURLSessionTaskFactory taskFactory;
-@property (nonatomic, readonly) NSString *HTTPMethod;
 @end
 
 @implementation POSHTTPRequest
 
 @synthesize responseHandler = _responseHandler;
 @synthesize options = _options;
+@synthesize HTTPMethod = _HTTPMethod;
 
 - (instancetype)initWithHTTPMethod:(NSString *)HTTPMethod
                        taskFactory:(POSURLSessionTaskFactory)taskFactory
