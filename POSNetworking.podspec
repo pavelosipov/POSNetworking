@@ -10,6 +10,8 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
   s.default_subspec = 'Networking'
+  s.resource_bundle = { 'POSNetworking-Resources' => ['Resources/*.lproj'] }
+  s.preserve_paths = 'Resources'
 
   s.subspec 'Networking' do |ss|
     ss.source_files = 'Classes/Networking/**/*.{h,m}'

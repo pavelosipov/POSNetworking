@@ -16,6 +16,19 @@ NSString * const kPOSNetworkErrorCategory = @"Network";
 NSString * const kPOSNetworkCancelErrorCategory = @"Cancel";
 NSString * const kPOSServerErrorCategory = @"Server";
 
+@interface NSString (POSNetworkingError)
+@end
+
+@implementation NSString (POSNetworkingError)
+
+- (nullable NSString *)pos_localizedNetworkingErrorCategory {
+    return [self pos_localizedInBundle:@"POSNetworking-Resources" table:@"NSError"];
+}
+
+@end
+
+#pragma mark -
+
 @implementation NSError (POSNetworking)
 
 - (BOOL)pos_issuedBySSL {
@@ -39,9 +52,11 @@ NSString * const kPOSServerErrorCategory = @"Server";
 }
 
 + (NSError *)pos_serverErrorWithHTTPStatusCode:(NSInteger)statusCode {
-    return [self pos_errorWithCategory:kPOSServerErrorCategory userInfo:@{
-        kPOSHTTPStatusCodeErrorKey: @(statusCode),
-        kPOSTrackableTagsKey: @[@"badcode", @(statusCode).stringValue]}];
+    NSMutableDictionary *userInfo = [[NSMutableDictionary alloc] init];
+    userInfo[kPOSHTTPStatusCodeErrorKey] = @(statusCode);
+    userInfo[kPOSTrackableTagsKey] = @[@"badcode", @(statusCode).stringValue];
+    userInfo[NSLocalizedDescriptionKey] = [kPOSServerErrorCategory pos_localizedNetworkingErrorCategory];
+    return [self pos_errorWithCategory:kPOSServerErrorCategory userInfo:userInfo];
 }
 
 + (NSError *)pos_serverErrorWithReason:(nullable NSError *)reason format:(nullable NSString *)format, ... {
@@ -54,6 +69,7 @@ NSString * const kPOSServerErrorCategory = @"Server";
     }
     userInfo[kPOSTrackableTagsKey] = @[@"response", @"unknown"];
     userInfo[NSUnderlyingErrorKey] = reason;
+    userInfo[NSLocalizedDescriptionKey] = [kPOSServerErrorCategory pos_localizedNetworkingErrorCategory];
     return [self pos_errorWithCategory:kPOSServerErrorCategory userInfo:userInfo];
 }
 
@@ -67,6 +83,7 @@ NSString * const kPOSServerErrorCategory = @"Server";
         userInfo[kPOSTrackableDescriptionKey] = [[NSString alloc] initWithFormat:format arguments:args];
         va_end(args);
     }
+    userInfo[NSLocalizedDescriptionKey] = [kPOSServerErrorCategory pos_localizedNetworkingErrorCategory];
     return [self pos_errorWithCategory:kPOSServerErrorCategory userInfo:userInfo];
 }
 
@@ -75,9 +92,11 @@ NSString * const kPOSServerErrorCategory = @"Server";
     userInfo[NSURLErrorKey] = URL;
     userInfo[NSUnderlyingErrorKey] = reason;
     if (reason.code == NSURLErrorCancelled) {
+        userInfo[NSLocalizedDescriptionKey] = [kPOSNetworkCancelErrorCategory pos_localizedNetworkingErrorCategory];
         return [self pos_errorWithCategory:kPOSNetworkCancelErrorCategory userInfo:userInfo];
     } else {
         userInfo[kPOSTrackableTagsKey] = [reason p_pos_networkErrorTags];
+        userInfo[NSLocalizedDescriptionKey] = [kPOSNetworkErrorCategory pos_localizedNetworkingErrorCategory];
         return [self pos_errorWithCategory:kPOSNetworkErrorCategory userInfo:userInfo];
     }
 }
