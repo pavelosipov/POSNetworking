@@ -27,14 +27,8 @@ POS_INIT_UNAVAILABLE
 
 @end
 
-/// Base host implementation.
+/// Segregated host interface which contains only methods for interacting with remote endpoint.
 @protocol POSHost <POSSchedulable>
-
-/// URL of the host. May be nil.
-@property (nonatomic, readonly, nullable) NSURL *URL;
-
-/// Shared options for all requests performing by that host.
-@property (nonatomic, readonly, nullable) POSHTTPGatewayOptions *options;
 
 /// Provides possibility to fetch NSURL if corresponding URL property is nil.
 - (RACSignal<POSHostURLInfo *> *)fetchURLInfo;
@@ -55,8 +49,21 @@ POS_INIT_UNAVAILABLE
 
 #pragma mark -
 
+/// Host interface which contains methods for access to its state.
+@protocol POSStatefulHost <POSHost>
+
+/// URL of the host. May be nil.
+@property (nonatomic, readonly, nullable) NSURL *URL;
+
+/// Shared options for all requests performing by that host.
+@property (nonatomic, readonly, nullable) POSHTTPGatewayOptions *options;
+
+@end
+
+#pragma mark -
+
 /// Base implementation for POSHost protocol.
-@interface POSHost : POSSchedulableObject <POSHost>
+@interface POSHost : POSSchedulableObject <POSStatefulHost>
 
 - (instancetype)initWithGateway:(id<POSHTTPGateway>)gateway
                         options:(nullable POSHTTPGatewayOptions *)options NS_DESIGNATED_INITIALIZER;

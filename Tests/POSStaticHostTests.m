@@ -12,7 +12,7 @@
 
 @interface POSStaticHostTests : XCTestCase
 @property (nonatomic) id<POSHTTPGateway> gateway;
-@property (nonatomic) id<POSHost> host;
+@property (nonatomic) id<POSStatefulHost> host;
 @property (nonatomic, copy) RACSignal *(^errorHandlingBlock)(NSError *error);
 @end
 

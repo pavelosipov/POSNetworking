@@ -454,10 +454,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-All-POSNetworkingTests/Pods-All-POSNetworkingTests-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/POSErrorHandling/POSErrorHandling-Resources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/POSNetworking/POSNetworking-Resources.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/POSErrorHandling-Resources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/POSNetworking-Resources.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
