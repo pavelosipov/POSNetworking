@@ -17,7 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (NSString *)pos_URLEncoded {
-    return [self stringByAddingPercentEncodingWithAllowedCharacters:NSCharacterSet.URLPathAllowedCharacterSet];
+    return [self stringByAddingPercentEncodingWithAllowedCharacters:
+            [NSCharacterSet characterSetWithCharactersInString:@"!*'();:@&=+$,/?%#[] <>{}"].invertedSet];
 }
 
 - (NSString *)pos_trimSymbol:(NSString *)symbol {
