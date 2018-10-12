@@ -28,7 +28,7 @@ POS_INIT_UNAVAILABLE
 @end
 
 /// Segregated host interface which contains only methods for interacting with remote endpoint.
-@protocol POSHost <POSSchedulable>
+@protocol POSHost <POSSchedulableObject>
 
 /// Provides possibility to fetch NSURL if corresponding URL property is nil.
 - (RACSignal<POSHostURLInfo *> *)fetchURLInfo;

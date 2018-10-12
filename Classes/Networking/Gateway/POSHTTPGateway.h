@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class POSHTTPGatewayOptions;
 
 /// Performs network requests.
-@protocol POSHTTPGateway <POSSchedulable>
+@protocol POSHTTPGateway <POSSchedulableObject>
 
 @property (nonatomic, nullable) POSHTTPGatewayOptions *options;
 @property (nonatomic, readonly) NSURLSession *foregroundSession;
