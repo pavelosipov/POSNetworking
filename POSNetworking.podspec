@@ -15,6 +15,8 @@ Pod::Spec.new do |s|
   s.subspec 'Networking' do |ss|
     ss.source_files = 'Classes/Networking/**/*.{h,m}'
     ss.dependency 'POSScheduling'
+    ss.dependency 'ReactiveObjC'
+    ss.dependency 'POSErrorHandling'
   end
 
   s.subspec 'Testing' do |ss|
