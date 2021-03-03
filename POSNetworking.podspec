@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = 'POSNetworking'
-  s.version      = '3.0.0'
+  s.version      = '3.0.1'
   s.license      = 'MIT'
   s.summary      = 'Reactive network components which are made in compliance with Schedulable Architecture design pattern.'
   s.homepage     = 'https://github.com/pavelosipov/POSNetworking'
@@ -15,6 +15,8 @@ Pod::Spec.new do |s|
   s.subspec 'Networking' do |ss|
     ss.source_files = 'Classes/Networking/**/*.{h,m}'
     ss.dependency 'POSScheduling'
+    ss.dependency 'ReactiveObjC'
+    ss.dependency 'POSErrorHandling'
   end
 
   s.subspec 'Testing' do |ss|
